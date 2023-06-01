@@ -6,7 +6,7 @@
 #    By: pollo <pollo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 10:24:02 by pollo             #+#    #+#              #
-#    Updated: 2023/05/31 13:18:38 by pollo            ###   ########.fr        #
+#    Updated: 2023/06/01 10:51:12 by pollo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LDFLAGS := ${LDFLAGS}
 CPPFLAGS := ${CPPFLAGS}
 
 CFLAGS = -Wall -Wextra -Werror $(CPPFLAGS) -I$(INCDIR) -I$(LIBFTDIR)
-SRCFILES = main.c error_msg.c init.c
+SRCFILES = error_msg.c main.c parser_map.c 
 OBJFILES = $(SRCFILES:.c=.o)
 
 SRCOBJ = $(addprefix $(OBJDIR), $(OBJFILES))

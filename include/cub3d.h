@@ -13,6 +13,7 @@ typedef struct s_map
 	int		p;
 	int		p_x;
 	int		p_y;
+	char	init_pos;
 	t_cub	*cub;
 }			t_map;
 
@@ -26,7 +27,8 @@ typedef struct s_cub
 // Error
 int	error_msg(t_cub *cub, char *msg);
 
-// Init
-int	get_map(t_map *map, char *file);
+// Parser
+int	get_map(t_map *map, int fd);
+int	find_the_exit(t_map *map, int y, int x, char c);
 
 #endif

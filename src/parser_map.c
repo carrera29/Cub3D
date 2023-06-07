@@ -6,7 +6,7 @@
 /*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/06/01 10:39:23 by pollo            ###   ########.fr       */
+/*   Updated: 2023/06/01 16:27:05 by pollo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	find_the_exit(t_map *map, int y, int x, char c)
 int	element_checker(t_map *map, char c, int y, int x)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		(map->p_x = x, map->p_y = y, map->p++, map->init_pos = c);
+		(map->pos_y = y, map->pos_x = x, map->blaz++, map->c_init = c);
 	else if (c != '0' && c != '1')
 		return (error_msg(map->cub, "Wrong map parameters"));
 	return (0);
@@ -55,7 +55,8 @@ int	check_char_to_char(t_map *map)
 			if (element_checker(map, map->map[y][x], y, x))
 				return (1);
 	}
-	if (map->p > 1 || map->p < 1)
+	(map->height = y, map->width = x);
+	if (map->blaz > 1 || map->blaz < 1)
 		return (error_msg(map->cub, "Wrong character number"));
 	return (0);
 }

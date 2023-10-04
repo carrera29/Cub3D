@@ -4,6 +4,8 @@
 # include "libft.h"
 # include <unistd.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <math.h>
 
 # define SPEED 3
 

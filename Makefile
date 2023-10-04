@@ -3,19 +3,25 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pollo <pollo@student.42.fr>                +#+  +:+       +#+         #
+#    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/31 10:24:02 by pollo             #+#    #+#              #
-#    Updated: 2023/06/02 10:28:02 by pollo            ###   ########.fr        #
+#    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
+#    Updated: 2023/10/04 20:46:04 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
-LDFLAGS := ${LDFLAGS}
-CPPFLAGS := ${CPPFLAGS}
+CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFTDIR)
 
-CFLAGS = -Wall -Wextra -Werror $(CPPFLAGS) -I$(INCDIR) -I$(LIBFTDIR)
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	CFLAGS += -D LINUX
+endif
+ifeq ($(UNAME_S),Darwin)
+	CFLAGS += -framework Cocoa -framework OpenGL -framework IOKit
+endif
+
 SRCFILES = error_msg.c main.c motion_math.c parser_map.c 
 OBJFILES = $(SRCFILES:.c=.o)
 

@@ -6,6 +6,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
+# include "MLX42.h"
 
 # define SPEED 3
 

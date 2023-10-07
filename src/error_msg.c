@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:35:28 by pollo             #+#    #+#             */
-/*   Updated: 2023/05/31 18:31:06 by pollo            ###   ########.fr       */
+/*   Updated: 2023/10/07 18:30:25 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,14 @@
 
 void	end_program(t_cub *cub)
 {
-	int	i;
-
-	i = 0;
-	if (cub->map->map)
-		while(cub->map->map[i])
-			(free(cub->map->map[i]), i++);
 }
 
-int	error_msg(t_cub *cub, char *msg)
+int	error_msg(t_map *map, char *msg)
 {
-	write (1, "Error\n", 7);
-	write (1, msg, ft_strlen(msg));
-	write (1, "\n", 1);
-	return (end_program(cub), 1);
+	ft_putstr_fd("[ERROR]\n", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
+	return (end_program(map), 1);
 }
 
 int	check_perror(int code, char *name)

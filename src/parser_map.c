@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/06/01 16:27:05 by pollo            ###   ########.fr       */
+/*   Updated: 2023/10/07 18:11:10 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	find_the_exit(t_map *map, int y, int x, char c)
 int	element_checker(t_map *map, char c, int y, int x)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		(map->pos_y = y, map->pos_x = x, map->blaz++, map->c_init = c);
+		(map->pos[Y] = y, map->pos[X] = x, map->blaz++, map->c_init = c);
 	else if (c != '0' && c != '1')
 		return (error_msg(map->cub, "Wrong map parameters"));
 	return (0);

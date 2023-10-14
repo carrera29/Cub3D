@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/07 18:29:45 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/14 22:40:44 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define GRID_SIZE 10
-# define SPEED 3
 # define X 0
 # define Y 1
 
@@ -41,6 +39,18 @@ typedef enum e_mapchar
 typedef struct s_map
 {
 	char	**map;
+	char	*north_texture;
+	char	*south_texture;
+	char	*west_texture;
+	char	*east_texture;
+	int		ceiling_color;
+	int		floor_color;
+
+}		t_map;
+
+typedef struct s_cub
+{
+	t_map	*map_data;
 	int		height;
 	int		width;
 	int		blaz;
@@ -48,21 +58,15 @@ typedef struct s_map
 	double	dir[2];
 	double	plane[2];
 	double	angle;
-	char	c_init;
-	t_cub	*cub;
-}			t_map;
 
-typedef struct s_cub
-{
-	t_map	*map;
-}				t_cub;
+}			t_cub;
 
-// Error
-int		error_msg(t_map *map, char *msg);
 
-// Parser
-int		get_map(t_map *map, int fd);
-int		find_the_exit(t_map *map, int y, int x, char c);
+// error.c
+void	error(char *msg, int perror_function);
+
+// load_map_data.c
+t_map	*load_map_data(int fd);
 
 // Math
 void	rotate_vectors(t_map *map, double x, double y);

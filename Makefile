@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/10/07 16:27:11 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/10/14 22:38:26 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ ifeq ($(UNAME_S), Darwin)
 	CFLAGS += -framework Cocoa -framework OpenGL -framework IOKit
 endif
 
-SRCFILES = error_msg.c main.c motion_math.c parser_map.c 
+SRCFILES = error.c main.c load_map_data.c 
 OBJFILES = $(SRCFILES:.c=.o)
 
 SRCOBJ = $(addprefix $(OBJDIR), $(OBJFILES))

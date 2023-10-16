@@ -6,12 +6,11 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:35:28 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/15 01:48:45 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:24:04 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 void	error(char *msg, int perror_function)
 {

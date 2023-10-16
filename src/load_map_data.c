@@ -6,29 +6,38 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/16 15:30:37 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:46:00 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	load_texture_filename(char **texture, char *line)
+static void	load_texture_filename(char **texture, char *line)
 {
 	*texture = ft_strdup(ft_strnstr(line, "./", ft_strlen(line)));
+	ft_bzero(ft_strrchr(*texture, '\n'), 1);
 }
 
-void	load_rgb_color(int *color, char *line)
+static void	load_rgb_color(int *color, char *line)
 {
-	char	**rgb;
+	char	**rgb_str;
+	int		rgb[3];
+	int		i;
 
-	rgb = ft_split(line + 2, ',');
-	if (!rgb || ft_atoi(rgb[0]) < 0 || ft_atoi(rgb[0]) > 255
-		|| ft_atoi(rgb[1]) < 0 || ft_atoi(rgb[1]) > 255
-		|| ft_atoi(rgb[2]) < 0 || ft_atoi(rgb[2]) > 255)
+	rgb_str = ft_split(line + 2, ',');
+	if (!rgb_str)
 		error("Bad syntax for RGB color(s)\n"
 			"Correct syntax: [0-255], [0-255], [0-255]", false);
-	*color = (ft_atoi(rgb[0]) << 16 | ft_atoi(rgb[1]) << 8 | ft_atoi(rgb[2]));
-	ft_freedp(rgb);
+	i = -1;
+	while (rgb_str[++i])
+		rgb[i] = ft_atoi(rgb_str[i]);
+	if (rgb[0] < 0 || rgb[0] > 255 || (!rgb[0] && *rgb_str[0] != '0')
+		|| rgb[1] < 0 || rgb[1] > 255 || (!rgb[1] && *rgb_str[1] != '0')
+		|| rgb[2] < 0 || rgb[2] > 255 || (!rgb[2] && *rgb_str[2] != '0'))
+		error("Bad syntax for RGB color(s)\n"
+			"Correct syntax: [0-255], [0-255], [0-255]", false);
+	*color = (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
+	ft_freedp(rgb_str);
 }
 
 static int	check_for_elements(t_map *map_data, char *line)
@@ -58,7 +67,7 @@ static int	check_for_elements(t_map *map_data, char *line)
 	return (false);
 }
 
-char	**load_map(int fd)
+static char	**load_map(int fd)
 {
 	char	**map;
 	char	*line;
@@ -74,7 +83,8 @@ char	**load_map(int fd)
 			(free(line), line = get_next_line(fd));
 			continue ;
 		}
-		map[i++] = ft_strdup(line);
+		map[i] = ft_strdup(line);
+		ft_bzero(ft_strrchr(map[i++], '\n'), 1);
 		map = ft_realloc(map, i + 1, i + 2, sizeof(char *));
 		(free(line), line = get_next_line(fd));
 	}

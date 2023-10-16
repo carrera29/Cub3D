@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/10/14 22:38:26 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/10/16 16:50:04 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,15 +17,14 @@ LIBFLAGS = $(MINILIBXDIR)build/libmlx42.a -L$(LIBFTDIR) -lglfw -lft
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
-	LIBFLAGS += -ldl -pthread -lm
+	LIBFLAGS += -ldl -pthread -lm 
 endif
 
 ifeq ($(UNAME_S), Darwin)
-#añadir if brew install
 	CFLAGS += -framework Cocoa -framework OpenGL -framework IOKit
 endif
 
-SRCFILES = error.c main.c load_map_data.c 
+SRCFILES = debug.c error.c main.c load_map_data.c 
 OBJFILES = $(SRCFILES:.c=.o)
 
 SRCOBJ = $(addprefix $(OBJDIR), $(OBJFILES))
@@ -48,13 +47,13 @@ $(NAME): $(SRCOBJ)
 	@gcc $^ $(LIBFLAGS) -o $@
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
-	mkdir -p obj
+	mkdir -p $(OBJDIR)
 	gcc -c $(CFLAGS) $^ -o $@
 
 clean:
 	$(MAKE) clean -C $(LIBFTDIR)
 	rm -rf $(OBJDIR)
-	rm -rf $(MINILIBXDIR)/build
+	rm -rf $(MINILIBXDIR)build
 
 fclean: clean
 	$(MAKE) fclean -C $(LIBFTDIR)
@@ -62,11 +61,13 @@ fclean: clean
 
 re: fclean all
 
-install:
+linux-dep:
 	@for package in build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev; do \
 		if [ $$(apt list --installed 2>/dev/null $$package | wc -l) -eq 1 ]; then \
 				sudo apt install $$package; \
 		fi; \
 	done
+
+mac-dep:
 
 .PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/14 22:40:44 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:51:32 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ typedef struct s_cub
 
 }			t_cub;
 
+
+// debug.c
+void	print_data(t_cub *cub_data);
 
 // error.c
 void	error(char *msg, int perror_function);

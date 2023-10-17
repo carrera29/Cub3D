@@ -1,5 +1,6 @@
 .DS_Store
 *.o
+*.txt
 cub3D
 .vscode
 minilibx/build

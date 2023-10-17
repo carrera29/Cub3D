@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/10/16 16:50:04 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/10/17 15:17:18 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ ifeq ($(UNAME_S), Linux)
 endif
 
 ifeq ($(UNAME_S), Darwin)
-	CFLAGS += -framework Cocoa -framework OpenGL -framework IOKit
+	LIBFLAGS += -framework Cocoa -framework OpenGL -framework IOKit \
+				-L$(shell which brew)/../../opt/glfw/lib/
 endif
 
 SRCFILES = debug.c error.c main.c load_map_data.c 
@@ -69,5 +70,8 @@ linux-dep:
 	done
 
 mac-dep:
+	@if [ -z $(brew list | grep glfw) ]; then \
+		brew install glfw; \
+	fi;
 
 .PHONY: all clean fclean re

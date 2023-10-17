@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:28:58 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/16 17:45:23 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:07:58 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_cub	*initialization(char *file)
 	if (!cub_data)
 		error("malloc", true);
 	if (ft_strncmp(ft_strrchr(file, '.'), ".cub\0", 4))
-		error("Extension not valid", false);
+		error(EXT_ERROR, false);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		error("open", true);

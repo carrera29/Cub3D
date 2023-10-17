@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/16 16:51:32 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:46:34 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
+
+// ERROR MESAGGES
+# define RGB_ERROR "Bad syntax for RGB color(s)"
+# define EXT_ERROR "Extension not valid"
+# define EMPTYFILE_ERROR "Empty file"
+# define MISSINGELEM_ERROR "Element(s) missing"
+# define EMPTYMAP_ERROR "Map content not found"
 
 # define X 0
 # define Y 1

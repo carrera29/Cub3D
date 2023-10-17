@@ -1,6 +1,12 @@
 #!bin/bash
 
 rm -rf *.txt
+make -C ..
+
+if [ -z $1 ]
+then
+	exit
+fi
 
 { for invalid_map in "$1/"*
 	do
@@ -11,6 +17,8 @@ rm -rf *.txt
 		echo ✓
 	else
 		echo ×
-		echo "code $invalid_map" >> error.txt
+		echo "$invalid_map:" >> error.txt
+		cat $invalid_map >> error.txt
+		echo >> error.txt
 	fi
-done } &> log.txt
+done }

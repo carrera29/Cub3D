@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/18 18:37:07 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/18 19:17:15 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ char	**load_map(int fd)
 	i = 0;
 	while (line)
 	{
-		if (!ft_strncmp(line, "\n", 1))
+		// ARREGLAR PARSEO DEL MAP.CUB ACTUAL
+		if (*line == '\n')
 		{
 			(free(line), line = get_next_line(fd));
 			continue ;

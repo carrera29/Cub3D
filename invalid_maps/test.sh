@@ -20,5 +20,7 @@ fi
 		echo >> error.txt
 	else
 		echo ✓
+		../cub3D $invalid_map 2>&1
+		echo
 	fi
 done }

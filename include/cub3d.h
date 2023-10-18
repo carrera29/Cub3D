@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/18 18:20:48 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:35:26 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,24 @@
 # include <math.h>
 
 // ERROR MESAGGES
-# define RGB_ERROR "Bad syntax for RGB color(s)"
-# define EXT_ERROR "Extension not valid"
-# define EMPTYFILE_ERROR "Empty file"
-# define MISSINGELEM_ERROR "Element(s) missing"
-# define EXTRAELEM_ERROR "Extra element(s) found"
-# define EMPTYMAP_ERROR "Map content not found"
-# define TEXTURESYNTAX_ERROR "Incorrect texture(s) syntax"
+# define RGB_ERROR				"Bad syntax for RGB color(s)"
+# define EXT_ERROR				"Extension not valid"
+# define EMPTYFILE_ERROR		"Empty file"
+# define MISSINGELEM_ERROR		"Element(s) missing"
+# define EXTRAELEM_ERROR		"Extra element(s) found"
+# define EMPTYMAP_ERROR			"Map content not found"
+# define TEXTURESYNTAX_ERROR	"Incorrect texture(s) syntax"
 
+// ELEMENT MASKS
+# define NO_MASK	0b1
+# define SO_MASK	0b10
+# define WE_MASK	0b100
+# define EA_MASK	0b1000
+# define F_MASK		0b10000
+# define C_MASK		0b100000
+# define ALL_MASK	0b00111111
+
+// COORDINATES
 # define X 0
 # define Y 1
 
@@ -36,13 +46,13 @@ typedef struct s_cub	t_cub;
 
 typedef enum e_mapchar
 {
-	NORTH = 'N',
-	SOUTH = 'S',
-	EAST = 'E',
-	WEST = 'W',
-	NOTHING = '0',
-	WALL = '1',
-	SPACE = ' ',
+	NORTH =		'N',
+	SOUTH =		'S',
+	EAST =		'E',
+	WEST =		'W',
+	NOTHING =	'0',
+	WALL =		'1',
+	SPACE =		' ',
 }			t_mapchar;
 
 typedef struct s_map

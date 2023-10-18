@@ -1,4 +1,3 @@
-R 100 720
 W ./textures/greystone.xpm
 WE ./textures/greystone.xpm
 SO ./textures/redbrick.xpm

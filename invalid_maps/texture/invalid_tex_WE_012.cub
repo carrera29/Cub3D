@@ -1,4 +1,3 @@
-R 100 720
 W3 ./textures/greystone.xpm
 SO ./textures/redbrick.xpm
 EA ./textures/wood.xpm

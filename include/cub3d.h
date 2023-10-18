@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/17 17:46:34 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:20:48 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@
 # define EXT_ERROR "Extension not valid"
 # define EMPTYFILE_ERROR "Empty file"
 # define MISSINGELEM_ERROR "Element(s) missing"
+# define EXTRAELEM_ERROR "Extra element(s) found"
 # define EMPTYMAP_ERROR "Map content not found"
+# define TEXTURESYNTAX_ERROR "Incorrect texture(s) syntax"
 
 # define X 0
 # define Y 1
@@ -60,11 +62,9 @@ typedef struct s_cub
 	t_map	*map_data;
 	int		height;
 	int		width;
-	int		blaz;
 	double	pos[2];
 	double	dir[2];
 	double	plane[2];
-	double	angle;
 
 }			t_cub;
 
@@ -75,8 +75,13 @@ void	print_data(t_cub *cub_data);
 // error.c
 void	error(char *msg, int perror_function);
 
-// load_map_data.c
+// load_map.c
+char	**load_map(int fd);
+int		check_for_elements(t_map *map_data, char *line);
+
+// initialization.c
 t_map	*load_map_data(int fd);
+t_cub	*initialization(char *file);
 
 // Math
 void	rotate_vectors(t_map *map, double x, double y);

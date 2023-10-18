@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 16:48:47 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/16 16:49:49 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:31:43 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	print_data(t_cub *cub_data)
 {
 	printf("NO path: %s\n", cub_data->map_data->north_texture);
 	printf("SO path: %s\n", cub_data->map_data->south_texture);
-	printf("WO path: %s\n", cub_data->map_data->west_texture);
-	printf("EO path: %s\n", cub_data->map_data->east_texture);
+	printf("WE path: %s\n", cub_data->map_data->west_texture);
+	printf("EA path: %s\n", cub_data->map_data->east_texture);
 
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	printf("Floor color: [%d][%d][%d]\n",

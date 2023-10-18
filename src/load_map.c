@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_map_data.c                                    :+:      :+:    :+:   */
+/*   load_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/17 19:36:29 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:20:39 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	load_texture_filename(char **texture, char *line)
 {
 	*texture = ft_strdup(ft_strnstr(line, "./", ft_strlen(line)));
 	ft_bzero(ft_strrchr(*texture, '\n'), 1);
+	if (ft_strncmp(ft_strrchr(*texture, '.'), ".xpm\0", 5))
+		error(TEXTURESYNTAX_ERROR, false);
 }
 
 static int	check_rgb_syntax(char *line)
@@ -60,9 +62,9 @@ static void	load_rgb_color(int *color, char *line)
 	ft_freedp(rgb_str);
 }
 
-static int	check_for_elements(t_map *map_data, char *line)
+int	check_for_elements(t_map *map_data, char *line)
 {
-	static int	check_elements = 0;
+	static int	check_elements;
 
 	if (!ft_strncmp(line, "NO ", 3))
 		(load_texture_filename(&map_data->north_texture, line),
@@ -82,12 +84,14 @@ static int	check_for_elements(t_map *map_data, char *line)
 	else if (!ft_strncmp(line, "C ", 2))
 		(load_rgb_color(&map_data->ceiling_color, line),
 			check_elements |= 0b100000);
+	else if (*line != '\n' && *line != '1')
+		error(EXTRAELEM_ERROR, false);
 	if (check_elements == 0b00111111)
 		return (true);
 	return (false);
 }
 
-static char	**load_map(int fd)
+char	**load_map(int fd)
 {
 	char	**map;
 	char	*line;
@@ -109,26 +113,4 @@ static char	**load_map(int fd)
 		(free(line), line = get_next_line(fd));
 	}
 	return (map);
-}
-
-t_map	*load_map_data(int fd)
-{
-	t_map	*map_data;
-	char	*line;
-
-	map_data = ft_calloc(1, sizeof(t_map));
-	if (!map_data)
-		error("malloc", true);
-	line = get_next_line(fd);
-	if (!line)
-		error(EMPTYFILE_ERROR, false);
-	while (line && !check_for_elements(map_data, line))
-		(free(line), line = get_next_line(fd));
-	if (!line)
-		error(MISSINGELEM_ERROR, false);
-	free(line);
-	map_data->map = load_map(fd);
-	if (!*map_data->map)
-		error(EMPTYMAP_ERROR, false);
-	return (map_data);
 }

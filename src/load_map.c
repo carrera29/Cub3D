@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/18 19:17:15 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:29:11 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char	**load_map(int fd)
 {
 	char	**map;
 	char	*line;
+	char	*is_map;
 	int		i;
 
 	map = ft_calloc(2, sizeof(char *));
@@ -102,12 +103,15 @@ char	**load_map(int fd)
 	i = 0;
 	while (line)
 	{
-		// ARREGLAR PARSEO DEL MAP.CUB ACTUAL
 		if (*line == '\n')
 		{
 			(free(line), line = get_next_line(fd));
 			continue ;
 		}
+		is_map = ft_strtrim(line, "NSEW01 ");
+		if (*is_map != '\n' && *is_map)
+			error(EXTRAELEM_ERROR, false);
+		free(is_map);
 		map[i] = ft_strdup(line);
 		ft_bzero(ft_strrchr(map[i++], '\n'), 1);
 		map = ft_realloc(map, i + 1, i + 2, sizeof(char *));

@@ -6,13 +6,15 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/10/18 18:19:25 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/10/21 01:37:20 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
-CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFTDIR) -I$(MINILIBXDIR)include/MLX42
+CFLAGS = -Wall -Wextra $(WERROR) -I$(INCDIR) -I$(LIBFTDIR) -I$(MINILIBXDIR)include/MLX42
+WERROR = -Werror
+
 LIBFLAGS = $(MINILIBXDIR)build/libmlx42.a -L$(LIBFTDIR) -lglfw -lft
 
 UNAME_S := $(shell uname -s)
@@ -25,7 +27,7 @@ ifeq ($(UNAME_S), Darwin)
 				-L$(shell which brew)/../../opt/glfw/lib/
 endif
 
-SRCFILES = debug.c error.c main.c load_map.c initialization.c
+SRCFILES = debug.c error.c main.c load_map.c check_map.c initialization.c
 OBJFILES = $(SRCFILES:.c=.o)
 
 SRCOBJ = $(addprefix $(OBJDIR), $(OBJFILES))
@@ -39,6 +41,7 @@ MINILIBXDIR = minilibx/
 all: $(NAME)
 
 debug: CFLAGS += -g
+debug: WERROR =
 debug: re
 
 $(NAME): $(SRCOBJ)

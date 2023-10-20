@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/20 18:07:00 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/21 01:31:21 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@
 # define X 0
 # define Y 1
 
+// MAP SIZE
+# define WIDTH 0
+# define HEIGHT 1
+
 // RESOLUTION
 # define SCREENWIDTH	800
 # define SCREENHEIGHT	600
@@ -56,7 +60,8 @@ typedef enum e_mapchar
 	WEST =		'W',
 	NOTHING =	'0',
 	WALL =		'1',
-	SPACE =		' ',
+	SPACE =		' '
+
 }			t_mapchar;
 
 typedef struct s_map
@@ -68,6 +73,7 @@ typedef struct s_map
 	char	*east_texture;
 	int		ceiling_color;
 	int		floor_color;
+	int		size[2];
 
 }		t_map;
 
@@ -93,9 +99,15 @@ void	error(char *msg, int perror_function);
 char	**load_map(int fd);
 int		check_for_elements(t_map *map_data, char *line);
 
+// check_map.c
+int		check_map(t_map *map_data);
+
 // initialization.c
 t_map	*load_map_data(int fd);
 t_cub	*initialization(char *file);
+
+// rgb.c
+void	load_rgb_color(int *color, char *line);
 
 // Math
 void	rotate_vectors(t_map *map, double x, double y);

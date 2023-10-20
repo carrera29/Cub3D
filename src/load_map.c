@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/19 16:29:11 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/21 01:36:50 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ static int	check_rgb_syntax(char *line)
 			commas_count++;
 		if (line[i] != ',' && line[i] != ' '
 			&& line[i] != '\n' && !ft_isdigit(line[i]))
-			return (1);
+			return (true);
 	}
 	if (commas_count != 2)
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }
 
 static void	load_rgb_color(int *color, char *line)

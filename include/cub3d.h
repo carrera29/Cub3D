@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/18 18:35:26 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:07:00 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,21 @@
 # define TEXTURESYNTAX_ERROR	"Incorrect texture(s) syntax"
 
 // ELEMENT MASKS
-# define NO_MASK	0b1
-# define SO_MASK	0b10
-# define WE_MASK	0b100
-# define EA_MASK	0b1000
-# define F_MASK		0b10000
-# define C_MASK		0b100000
+# define NO_MASK	0b00000001
+# define SO_MASK	0b00000010
+# define WE_MASK	0b00000100
+# define EA_MASK	0b00001000
+# define F_MASK		0b00010000
+# define C_MASK		0b00100000
 # define ALL_MASK	0b00111111
 
-// COORDINATES
+// AXIS
 # define X 0
 # define Y 1
+
+// RESOLUTION
+# define SCREENWIDTH	800
+# define SCREENHEIGHT	600
 
 typedef struct s_cub	t_cub;
 

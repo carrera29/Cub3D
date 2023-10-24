@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/24 16:59:34 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:12:50 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define ELEM_ERROR				"Missing or extra element(s) found"
 # define EMPTYMAP_ERROR			"Map content not found"
 # define TEXTURESYNTAX_ERROR	"Incorrect texture(s) syntax"
+# define WALL_ERROR				"Map walls not closed"
+# define MAPNOTVALID_ERROR		"Map content not valid"
 
 // ELEMENT MASKS
 # define NO_MASK	0b00000001
@@ -73,14 +75,15 @@ typedef enum e_mapchar
 
 typedef struct s_map
 {
-	char	**map;
-	char	*north_texture;
-	char	*south_texture;
-	char	*west_texture;
-	char	*east_texture;
-	int		ceiling_color;
-	int		floor_color;
-	int		size[2];
+	char		**map;
+	char		*north_texture;
+	char		*south_texture;
+	char		*west_texture;
+	char		*east_texture;
+	int			ceiling_color;
+	int			floor_color;
+	int			size[2];
+	t_mapchar	pos;
 
 }		t_map;
 
@@ -107,9 +110,6 @@ int		check_for_elements(t_map *map_data, char *line);
 
 // check_map.c
 int		check_map(t_map *map_data);
-
-// check_walls.c 
-int		check_walls(char **map, int *size);
 
 // initialization.c
 t_map	*load_map_data(int fd);

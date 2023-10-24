@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/10/24 17:00:04 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/10/24 18:23:27 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ ifeq ($(UNAME_S), Darwin)
 				-L$(shell which brew)/../../opt/glfw/lib/
 endif
 
-SRCFILES =	debug.c error.c main.c load_map.c check_map.c check_walls.c \
-			initialization.c math.c free_mem.c
+SRCFILES =	debug.c error.c main.c load_map.c check_map.c initialization.c \
+			math.c free_mem.c
 OBJFILES = $(SRCFILES:.c=.o)
 
 SRCOBJ = $(addprefix $(OBJDIR), $(OBJFILES))
@@ -49,7 +49,7 @@ $(NAME): $(SRCOBJ)
 	cmake $(MINILIBXDIR) -DGLFW_FETCH=1 -B $(MINILIBXDIR)build
 	cmake --build $(MINILIBXDIR)build -j4 
 	$(MAKE) -C $(LIBFTDIR)
-	@gcc $^ $(LIBFLAGS) -o $@
+	gcc $^ $(LIBFLAGS) -o $@
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	mkdir -p $(OBJDIR)

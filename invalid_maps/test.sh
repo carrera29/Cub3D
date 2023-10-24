@@ -16,7 +16,7 @@ fi
 		echo ×
 		echo "$invalid_map:" >> error.txt
 		echo >> error.txt
-		cat $invalid_map | grep -m 1 -B 1000 '1111111' >> error.txt
+		cat $invalid_map | sed '1,7d' >> error.txt
 		echo >> error.txt
 	else
 		echo ✓

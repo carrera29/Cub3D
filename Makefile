@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/10/21 01:37:20 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/10/23 15:13:09 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ ifeq ($(UNAME_S), Darwin)
 				-L$(shell which brew)/../../opt/glfw/lib/
 endif
 
-SRCFILES = debug.c error.c main.c load_map.c check_map.c initialization.c
+SRCFILES =	debug.c error.c main.c load_map.c check_map.c check_walls.c \
+			initialization.c math.c
 OBJFILES = $(SRCFILES:.c=.o)
 
 SRCOBJ = $(addprefix $(OBJDIR), $(OBJFILES))

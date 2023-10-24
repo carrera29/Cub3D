@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 16:48:47 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/18 18:45:53 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:02:18 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,16 @@ void	print_data(t_cub *cub_data)
 	printf("SO path: %s\n", cub_data->map_data->south_texture);
 	printf("WE path: %s\n", cub_data->map_data->west_texture);
 	printf("EA path: %s\n", cub_data->map_data->east_texture);
-
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	printf("Floor color: [%d][%d][%d]\n",
 		(cub_data->map_data->floor_color >> 0x10) & 0xFF,
 		(cub_data->map_data->floor_color >> 8) & 0xFF,
 		cub_data->map_data->floor_color & 0xFF);
-
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	printf("Ceiling color: [%d][%d][%d]\n",
 		(cub_data->map_data->ceiling_color >> 0x10) & 0xFF,
 		(cub_data->map_data->ceiling_color >> 8) & 0xFF,
 		cub_data->map_data->ceiling_color & 0xFF);
-
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	i = -1;
 	while (cub_data->map_data->map[++i])

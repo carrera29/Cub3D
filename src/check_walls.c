@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 03:02:39 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/24 16:56:58 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:03:48 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	is_valid(bool **visited, int row, int col, int *size, char **map)
 {
 	if (visited[row][col] || row < 0 || col < 0
-		|| row > size[HEIGHT || col > size[WIDTH]])
+		|| row > size[HEIGHT] || col > size[WIDTH])
 		return (false);
 	return (true);
 }

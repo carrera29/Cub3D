@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/21 01:31:21 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:26:07 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,15 @@
 # define SCREENWIDTH	800
 # define SCREENHEIGHT	600
 
-typedef struct s_cub	t_cub;
+// ARGUMENTS FOR DIR_VECTORS()
+typedef enum e_dir_vectors
+{
+	V_UP =		0b0001,
+	V_DOWN =	0b0011,
+	V_LEFT =	0b1100,
+	V_RIGHT =	0b0100,
+
+}	t_dir_vectors;
 
 typedef enum e_mapchar
 {
@@ -88,7 +96,6 @@ typedef struct s_cub
 
 }			t_cub;
 
-
 // debug.c
 void	print_data(t_cub *cub_data);
 
@@ -102,14 +109,14 @@ int		check_for_elements(t_map *map_data, char *line);
 // check_map.c
 int		check_map(t_map *map_data);
 
+// check_walls.c 
+int		check_walls(char **map, int *size);
+
 // initialization.c
 t_map	*load_map_data(int fd);
 t_cub	*initialization(char *file);
 
-// rgb.c
-void	load_rgb_color(int *color, char *line);
-
-// Math
-void	rotate_vectors(t_map *map, double x, double y);
+// math.c
+int		*dir_vector(t_dir_vectors dir);
 
 #endif

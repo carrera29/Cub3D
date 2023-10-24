@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/21 01:36:50 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:53:54 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_for_elements(t_map *map_data, char *line)
 		(load_rgb_color(&map_data->ceiling_color, line),
 			check_elements |= C_MASK);
 	else if (*line != '\n' && *line != '1')
-		error(EXTRAELEM_ERROR, false);
+		error(ELEM_ERROR, false);
 	if (check_elements == ALL_MASK)
 		return (true);
 	return (false);
@@ -110,7 +110,7 @@ char	**load_map(int fd)
 		}
 		is_map = ft_strtrim(line, "NSEW01 ");
 		if (*is_map != '\n' && *is_map)
-			error(EXTRAELEM_ERROR, false);
+			error(ELEM_ERROR, false);
 		free(is_map);
 		map[i] = ft_strdup(line);
 		ft_bzero(ft_strrchr(map[i++], '\n'), 1);

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:17:04 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/21 01:07:02 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:41:00 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_map	*load_map_data(int fd)
 	while (line && !check_for_elements(map_data, line))
 		(free(line), line = get_next_line(fd));
 	if (!line)
-		error(MISSINGELEM_ERROR, false);
+		error(ELEM_ERROR, false);
 	free(line);
 	map_data->map = load_map(fd);
 	check_map(map_data);

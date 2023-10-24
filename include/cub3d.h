@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/24 15:26:07 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:59:34 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@
 # define RGB_ERROR				"Bad syntax for RGB color(s)"
 # define EXT_ERROR				"Extension not valid"
 # define EMPTYFILE_ERROR		"Empty file"
-# define MISSINGELEM_ERROR		"Element(s) missing"
-# define EXTRAELEM_ERROR		"Extra element(s) found"
+# define ELEM_ERROR				"Missing or extra element(s) found"
 # define EMPTYMAP_ERROR			"Map content not found"
 # define TEXTURESYNTAX_ERROR	"Incorrect texture(s) syntax"
 
@@ -118,5 +117,8 @@ t_cub	*initialization(char *file);
 
 // math.c
 int		*dir_vector(t_dir_vectors dir);
+
+//free_mem.c
+void	free_all(t_cub *cub_data);
 
 #endif

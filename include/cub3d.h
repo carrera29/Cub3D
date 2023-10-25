@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/24 18:12:50 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:56:18 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <math.h>
 
 // ERROR MESAGGES
+# define USAGE_ERROR			"Usage: ./cub3D [.cub extension map]"
 # define RGB_ERROR				"Bad syntax for RGB color(s)"
 # define EXT_ERROR				"Extension not valid"
 # define EMPTYFILE_ERROR		"Empty file"
@@ -29,6 +30,8 @@
 # define TEXTURESYNTAX_ERROR	"Incorrect texture(s) syntax"
 # define WALL_ERROR				"Map walls not closed"
 # define MAPNOTVALID_ERROR		"Map content not valid"
+
+# define MLXINIT_ERROR			"MLX initialization failed"
 
 // ELEMENT MASKS
 # define NO_MASK	0b00000001
@@ -89,12 +92,14 @@ typedef struct s_map
 
 typedef struct s_cub
 {
-	t_map	*map_data;
-	int		height;
-	int		width;
-	double	pos[2];
-	double	dir[2];
-	double	plane[2];
+	t_map		*map_data;
+	mlx_t		*mlx;
+	mlx_image_t	*img;
+	int			height;
+	int			width;
+	double		pos[2];
+	double		dir[2];
+	double		plane[2];
 
 }			t_cub;
 

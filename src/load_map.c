@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/24 16:53:54 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/25 20:50:02 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 static void	load_texture_filename(char **texture, char *line)
 {
+	int	test_fd;
+
 	*texture = ft_strdup(ft_strnstr(line, "./", ft_strlen(line)));
 	ft_bzero(ft_strrchr(*texture, '\n'), 1);
 	if (ft_strncmp(ft_strrchr(*texture, '.'), ".xpm\0", 5))
 		error(TEXTURESYNTAX_ERROR, false);
+	test_fd = open(*texture, O_RDONLY);
+	if (test_fd < 0)
+		error(TEXTUREPATH_ERROR, true);
+	close(test_fd);
 }
 
 static int	check_rgb_syntax(char *line)
@@ -31,7 +37,7 @@ static int	check_rgb_syntax(char *line)
 	{
 		if (line[i] == ',')
 			commas_count++;
-		if (line[i] != ',' && line[i] != ' '
+		if (line[i] != ',' && line[i] != SPACE
 			&& line[i] != '\n' && !ft_isdigit(line[i]))
 			return (true);
 	}
@@ -58,7 +64,7 @@ static void	load_rgb_color(int *color, char *line)
 		|| rgb[1] < 0 || rgb[1] > 255 || (!rgb[1] && *rgb_str[1] != '0')
 		|| rgb[2] < 0 || rgb[2] > 255 || (!rgb[2] && *rgb_str[2] != '0'))
 		error(RGB_ERROR, false);
-	*color = (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
+	*color = (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 0xFF);
 	ft_freedp(rgb_str);
 }
 
@@ -67,16 +73,16 @@ int	check_for_elements(t_map *map_data, char *line)
 	static int	check_elements;
 
 	if (!ft_strncmp(line, "NO ", 3) && !(check_elements & NO_MASK))
-		(load_texture_filename(&map_data->north_texture, line),
+		(load_texture_filename(&map_data->texture_path[NORTH_TEX], line),
 			check_elements |= NO_MASK);
 	else if (!ft_strncmp(line, "SO ", 3) && !(check_elements & SO_MASK))
-		(load_texture_filename(&map_data->south_texture, line),
+		(load_texture_filename(&map_data->texture_path[SOUTH_TEX], line),
 			check_elements |= SO_MASK);
 	else if (!ft_strncmp(line, "WE ", 3) && !(check_elements & WE_MASK))
-		(load_texture_filename(&map_data->west_texture, line),
+		(load_texture_filename(&map_data->texture_path[WEST_TEX], line),
 			check_elements |= WE_MASK);
 	else if (!ft_strncmp(line, "EA ", 3) && !(check_elements & EA_MASK))
-		(load_texture_filename(&map_data->east_texture, line),
+		(load_texture_filename(&map_data->texture_path[EAST_TEX], line),
 			check_elements |= EA_MASK);
 	else if (!ft_strncmp(line, "F ", 2) && !(check_elements & F_MASK))
 		(load_rgb_color(&map_data->floor_color, line),
@@ -84,7 +90,7 @@ int	check_for_elements(t_map *map_data, char *line)
 	else if (!ft_strncmp(line, "C ", 2) && !(check_elements & C_MASK))
 		(load_rgb_color(&map_data->ceiling_color, line),
 			check_elements |= C_MASK);
-	else if (*line != '\n' && *line != '1')
+	else if (*line != '\n' && *line != WALL)
 		error(ELEM_ERROR, false);
 	if (check_elements == ALL_MASK)
 		return (true);

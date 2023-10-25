@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/25 12:19:34 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/25 20:10:13 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,43 @@
 
 // ERROR MESAGGES
 # define USAGE_ERROR			"Usage: ./cub3D [.cub extension map]"
+
 # define RGB_ERROR				"Bad syntax for RGB color(s)"
 # define EXT_ERROR				"Extension not valid"
 # define EMPTYFILE_ERROR		"Empty file"
 # define ELEM_ERROR				"Missing or extra element(s) found"
 # define EMPTYMAP_ERROR			"Map content not found"
 # define TEXTURESYNTAX_ERROR	"Incorrect texture(s) syntax"
+# define TEXTUREPATH_ERROR		"Texture(s) path not valid"
 # define WALL_ERROR				"Map walls not closed"
 # define MAPNOTVALID_ERROR		"Map content not valid"
 
 # define MLXINIT_ERROR			"MLX initialization failed"
 
 // ELEMENT MASKS
-# define NO_MASK	0b00000001
-# define SO_MASK	0b00000010
-# define WE_MASK	0b00000100
-# define EA_MASK	0b00001000
-# define F_MASK		0b00010000
-# define C_MASK		0b00100000
-# define ALL_MASK	0b00111111
-
-// AXIS
-# define X 0
-# define Y 1
-
-// MAP SIZE
-# define WIDTH 0
-# define HEIGHT 1
+# define NO_MASK				0b00000001
+# define SO_MASK				0b00000010
+# define WE_MASK				0b00000100
+# define EA_MASK				0b00001000
+# define F_MASK					0b00010000
+# define C_MASK					0b00100000
+# define ALL_MASK				0b00111111
 
 // RESOLUTION
-# define SCREENWIDTH	800
-# define SCREENHEIGHT	600
+# define SCREENWIDTH			800
+# define SCREENHEIGHT			600
+
+enum e_axis
+{
+	X,
+	Y
+};
+
+enum e_map_dimensions
+{
+	WIDTH,
+	HEIGHT
+};
 
 // ARGUMENTS FOR DIR_VECTORS()
 typedef enum e_dir_vectors
@@ -64,7 +70,7 @@ typedef enum e_dir_vectors
 
 }	t_dir_vectors;
 
-typedef enum e_mapchar
+enum e_mapchar
 {
 	NORTH =		'N',
 	SOUTH =		'S',
@@ -73,40 +79,33 @@ typedef enum e_mapchar
 	NOTHING =	'0',
 	WALL =		'1',
 	SPACE =		' '
+};
 
-}			t_mapchar;
-
-typedef struct s_map
-{
-	char		**map;
-	char		*north_texture;
-	char		*south_texture;
-	char		*west_texture;
-	char		*east_texture;
-	int			ceiling_color;
-	int			floor_color;
-	int			size[2];
-	t_mapchar	pos;
-
-}		t_map;
-
-typedef enum e_textures
+enum e_textures
 {
 	NORTH_TEX,
 	SOUTH_TEX,
 	WEST_TEX,
-	EAST_TEX,
-	CEILING_TEX,
-	FLOOR_TEX
+	EAST_TEX
+};
 
-}	t_textures;
+typedef struct s_map
+{
+	char			**map;
+	char			*texture_path[4];
+	int				ceiling_color;
+	int				floor_color;
+	int				size[2];
+	enum e_mapchar	pos;
+
+}		t_map;
 
 typedef struct s_cub
 {
 	t_map			*map_data;
 	mlx_t			*mlx;
-	mlx_texture_t	texture[6];
-	mlx_image_t		image[6];
+	xpm_t			*texture[4];
+	mlx_image_t		*image[6];
 	int				height;
 	int				width;
 	double			pos[2];

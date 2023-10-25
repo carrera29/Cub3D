@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/25 11:56:18 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:19:34 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,28 @@ typedef struct s_map
 
 }		t_map;
 
+typedef enum e_textures
+{
+	NORTH_TEX,
+	SOUTH_TEX,
+	WEST_TEX,
+	EAST_TEX,
+	CEILING_TEX,
+	FLOOR_TEX
+
+}	t_textures;
+
 typedef struct s_cub
 {
-	t_map		*map_data;
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	int			height;
-	int			width;
-	double		pos[2];
-	double		dir[2];
-	double		plane[2];
+	t_map			*map_data;
+	mlx_t			*mlx;
+	mlx_texture_t	texture[6];
+	mlx_image_t		image[6];
+	int				height;
+	int				width;
+	double			pos[2];
+	double			dir[2];
+	double			plane[2];
 
 }			t_cub;
 

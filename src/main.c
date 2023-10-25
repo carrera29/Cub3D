@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:28:58 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/25 12:22:36 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:30:50 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	debug(void)
 {
 }
 
-void	key_hook(mlx_key_data_t keydata, void *param)
+void	loop_hook(void *param)
 {
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		(void) param;
+	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
+		mlx_close_window(param);
 }
 
 int	screen_initialization(t_cub *cub_data, mlx_t *mlx)
 {
-	mlx_key_hook(mlx, key_hook, cub_data);
+	mlx_loop_hook(mlx, loop_hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(cub_data->mlx);
 	return (EXIT_SUCCESS);

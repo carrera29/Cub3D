@@ -1,5 +1,6 @@
 NO        ./path_to_the_north_texture.xpm
 F 250,10,10
+S     ./path_to_the_sprite_texture.xpm
 C                  45,30,0
 SO        ./path_to_the_south_texture.xpm
 WE        ./path_to_the_west_texture.xpm

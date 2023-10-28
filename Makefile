@@ -6,16 +6,17 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/10/25 19:28:14 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/10/28 17:03:51 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
-CFLAGS = -Wall -Wextra $(WERROR) -I$(INCDIR) -I$(LIBFTDIR) -I$(MINILIBXDIR)include/MLX42
-WERROR = -Werror
+CFLAGS =	-Wall -Wextra $(WERROR) \
+			-I$(INCDIR) -I$(LIBFTDIR) -I$(MINILIBXDIR)include/MLX42
+WERROR =	-Werror
 
-LIBFLAGS = $(MINILIBXDIR)build/libmlx42.a -L$(LIBFTDIR) -lglfw -lft
+LIBFLAGS =	$(MINILIBXDIR)build/libmlx42.a -L$(LIBFTDIR) -lglfw -lft
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
@@ -27,17 +28,18 @@ ifeq ($(UNAME_S), Darwin)
 				-L$(shell which brew)/../../opt/glfw/lib/
 endif
 
-SRCFILES =	debug.c error.c main.c load_map.c check_map.c initialization.c \
-			math.c free_mem.c
-OBJFILES = $(SRCFILES:.c=.o)
+SRCDIR =		src/
+INITDIR =		init/
 
-SRCOBJ = $(addprefix $(OBJDIR), $(OBJFILES))
+INCDIR =		include/
+OBJDIR =		obj/
+LIBFTDIR =		libft/
+MINILIBXDIR =	minilibx/
 
-SRCDIR = src/
-INCDIR = include/
-OBJDIR = obj/
-LIBFTDIR = libft/
-MINILIBXDIR = minilibx/
+SRCFILES =	$(addprefix $(INITDIR), initialization.c load_map.c check_map.c) \
+			debug.c error.c main.c math.c free_mem.c
+OBJFILES =	$(SRCFILES:.c=.o)
+SRCOBJ =	$(addprefix $(OBJDIR), $(OBJFILES))
 
 all: $(NAME)
 
@@ -53,6 +55,7 @@ $(NAME): $(SRCOBJ)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	mkdir -p $(OBJDIR)
+	mkdir -p $(OBJDIR)$(INITDIR)
 	gcc -c $(CFLAGS) $^ -o $@
 
 clean:

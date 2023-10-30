@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:28:58 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/30 21:01:26 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/30 21:12:58 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ int	load_images(t_cub *cub_data, t_map *map_data)
 	return (EXIT_SUCCESS);
 }
 
-int	start_game(t_cub *cub_data, mlx_t *mlx)
+int	start_game(t_cub *cub_data)
 {
-	mlx = mlx_init(SCREENWIDTH, SCREENHEIGHT, "cub3D", true);
-	if (!mlx)
+	cub_data->mlx = mlx_init(SCREENWIDTH, SCREENHEIGHT, "cub3D", true);
+	if (!cub_data->mlx)
 		(free_all(cub_data), error(MLXINIT_ERROR, false));
 	load_images(cub_data, cub_data->map_data);
-	mlx_loop_hook(mlx, loop_hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_loop_hook(cub_data->mlx, loop_hook, cub_data->mlx);
+	mlx_loop(cub_data->mlx);
+	mlx_terminate(cub_data->mlx);
 	return (EXIT_SUCCESS);
 }
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		error(USAGE_ERROR, false);
 	cub_data = initialization(argv[1]);
-	start_game(cub_data, cub_data->mlx);
+	start_game(cub_data);
 	free_all(cub_data);
 	return (EXIT_SUCCESS);
 }

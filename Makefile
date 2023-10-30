@@ -6,15 +6,15 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/10/28 17:03:51 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/10/30 20:53:16 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
-CFLAGS =	-Wall -Wextra $(WERROR) \
-			-I$(INCDIR) -I$(LIBFTDIR) -I$(MINILIBXDIR)include/MLX42
-WERROR =	-Werror
+CFLAGS =		-Wall -Wextra $(WERROR) \
+				-I$(INCDIR) -I$(LIBFTDIR) -I$(MINILIBXDIR)include/MLX42
+WERROR =		-Werror
 
 LIBFLAGS =	$(MINILIBXDIR)build/libmlx42.a -L$(LIBFTDIR) -lglfw -lft
 
@@ -36,7 +36,7 @@ OBJDIR =		obj/
 LIBFTDIR =		libft/
 MINILIBXDIR =	minilibx/
 
-SRCFILES =	$(addprefix $(INITDIR), initialization.c load_map.c check_map.c) \
+SRCFILES =	$(addprefix $(INITDIR), initialization.c load_from_file.c check_map.c) \
 			debug.c error.c main.c math.c free_mem.c
 OBJFILES =	$(SRCFILES:.c=.o)
 SRCOBJ =	$(addprefix $(OBJDIR), $(OBJFILES))
@@ -45,10 +45,11 @@ all: $(NAME)
 
 debug: CFLAGS += -g
 debug: WERROR =
+debug: MINILIBXDEBUG = -DDEBUG=1
 debug: re
 
 $(NAME): $(SRCOBJ)
-	cmake $(MINILIBXDIR) -DGLFW_FETCH=1 -B $(MINILIBXDIR)build
+	cmake $(MINILIBXDIR) $(MINILIBXDEBUG) -DGLFW_FETCH=1 -B $(MINILIBXDIR)build
 	cmake --build $(MINILIBXDIR)build -j4 
 	$(MAKE) -C $(LIBFTDIR)
 	gcc $^ $(LIBFLAGS) -o $@

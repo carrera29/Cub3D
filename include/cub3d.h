@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/28 17:32:09 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/30 20:39:24 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,22 +122,24 @@ typedef struct s_cub
 
 }			t_cub;
 
+//init/
+	// check_map.c
+int		check_map(t_map *map_data);
+
+	// initialization.c
+t_map	*load_map_data(int fd);
+t_cub	*initialization(char *file);
+
+	// load_from_file.c
+char	**load_map(int fd);
+void	load_texture_filename(char **texture, char *line);
+void	load_rgb_color(int *color, char *line);
+
 // debug.c
 void	print_data(t_cub *cub_data);
 
 // error.c
-void	error(char *msg, int perror_function);
-
-// load_map.c
-char	**load_map(int fd);
-int		check_for_elements(t_map *map_data, char *line);
-
-// check_map.c
-int		check_map(t_map *map_data);
-
-// initialization.c
-t_map	*load_map_data(int fd);
-t_cub	*initialization(char *file);
+void	error(const char *msg, int perror_function);
 
 // math.c
 int		*dir_vector(t_dir_vectors dir);

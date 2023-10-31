@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/10/30 20:53:16 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/10/31 16:50:26 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ LIBFTDIR =		libft/
 MINILIBXDIR =	minilibx/
 
 SRCFILES =	$(addprefix $(INITDIR), initialization.c load_from_file.c check_map.c) \
-			debug.c error.c main.c math.c free_mem.c
+			mlx.c debug.c error.c main.c math.c free_mem.c
 OBJFILES =	$(SRCFILES:.c=.o)
 SRCOBJ =	$(addprefix $(OBJDIR), $(OBJFILES))
 

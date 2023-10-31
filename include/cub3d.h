@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/30 20:39:24 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/31 16:46:34 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_cub
 
 }			t_cub;
 
-//init/
+// init/
 	// check_map.c
 int		check_map(t_map *map_data);
 
@@ -134,6 +134,9 @@ t_cub	*initialization(char *file);
 char	**load_map(int fd);
 void	load_texture_filename(char **texture, char *line);
 void	load_rgb_color(int *color, char *line);
+
+// mlx.c
+int		start_game(t_cub *cub_data);
 
 // debug.c
 void	print_data(t_cub *cub_data);

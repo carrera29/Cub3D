@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:17:04 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/30 20:47:57 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/31 16:56:25 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,27 @@ char	*trim(char *line)
 	return (trim_line);
 }
 
-int	check_for_elements(t_map *map_data, char *line)
+int	check_for_elements(t_map *map_data, char **tex_path, char *line)
 {
-	static int	check_elements;
+	static int	check;
 
-	if (!ft_strncmp(line, "NO ", 3) && !(check_elements & NO_MASK))
-		(load_texture_filename(&map_data->texture_path[NORTH_TEX], line),
-			check_elements |= NO_MASK);
-	else if (!ft_strncmp(line, "SO ", 3) && !(check_elements & SO_MASK))
-		(load_texture_filename(&map_data->texture_path[SOUTH_TEX], line),
-			check_elements |= SO_MASK);
-	else if (!ft_strncmp(line, "WE ", 3) && !(check_elements & WE_MASK))
-		(load_texture_filename(&map_data->texture_path[WEST_TEX], line),
-			check_elements |= WE_MASK);
-	else if (!ft_strncmp(line, "EA ", 3) && !(check_elements & EA_MASK))
-		(load_texture_filename(&map_data->texture_path[EAST_TEX], line),
-			check_elements |= EA_MASK);
-	else if (!ft_strncmp(line, "S ", 2) && !(check_elements & S_MASK))
-		(load_texture_filename(&map_data->texture_path[SPRITE_TEX], line),
-			check_elements |= S_MASK);
-	else if (!ft_strncmp(line, "F ", 2) && !(check_elements & F_MASK))
-		(load_rgb_color(&map_data->floor_color, line),
-			check_elements |= F_MASK);
-	else if (!ft_strncmp(line, "C ", 2) && !(check_elements & C_MASK))
-		(load_rgb_color(&map_data->ceiling_color, line),
-			check_elements |= C_MASK);
+	if (!ft_strncmp(line, "NO ", 3) && !(check & NO_MASK))
+		(load_texture_filename(&tex_path[NORTH_TEX], line), check |= NO_MASK);
+	else if (!ft_strncmp(line, "SO ", 3) && !(check & SO_MASK))
+		(load_texture_filename(&tex_path[SOUTH_TEX], line), check |= SO_MASK);
+	else if (!ft_strncmp(line, "WE ", 3) && !(check & WE_MASK))
+		(load_texture_filename(&tex_path[WEST_TEX], line), check |= WE_MASK);
+	else if (!ft_strncmp(line, "EA ", 3) && !(check & EA_MASK))
+		(load_texture_filename(&tex_path[EAST_TEX], line), check |= EA_MASK);
+	else if (!ft_strncmp(line, "S ", 2) && !(check & S_MASK))
+		(load_texture_filename(&tex_path[SPRITE_TEX], line), check |= S_MASK);
+	else if (!ft_strncmp(line, "F ", 2) && !(check & F_MASK))
+		(load_rgb_color(&map_data->floor_color, line), check |= F_MASK);
+	else if (!ft_strncmp(line, "C ", 2) && !(check & C_MASK))
+		(load_rgb_color(&map_data->ceiling_color, line), check |= C_MASK);
 	else if (*line != '\n' && *line != WALL)
 		error(ELEM_ERROR, false);
-	return (check_elements);
+	return (check);
 }
 
 t_map	*load_map_data(int fd)
@@ -64,7 +57,8 @@ t_map	*load_map_data(int fd)
 	line = trim(get_next_line(fd));
 	if (!line)
 		error(EMPTYFILE_ERROR, false);
-	while (line && check_for_elements(map_data, line) != ALL_MASK)
+	while (line && check_for_elements(map_data, map_data->texture_path, line)
+		!= ALL_MASK)
 		(free(line), line = trim(get_next_line(fd)));
 	free(line);
 	map_data->map = load_map(fd);

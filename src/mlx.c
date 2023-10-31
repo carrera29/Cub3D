@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:45:34 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 16:51:29 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/31 18:59:38 by pollo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	load_images(t_cub *cub_data, t_map *map_data)
 	while (++i <= EAST_TEX)
 	{
 		cub_data->texture[i] = mlx_load_xpm42(map_data->texture_path[i]);
-		cub_data->image[i] = mlx_texture_to_image(
-				cub_data->mlx, &cub_data->texture[i]->texture);
+		cub_data->image[i] = mlx_texture_to_image(cub_data->mlx,
+			&cub_data->texture[i]->texture);
 		mlx_delete_xpm42(cub_data->texture[i]);
 	}
 	return (EXIT_SUCCESS);

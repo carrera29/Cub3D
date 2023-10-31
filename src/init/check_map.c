@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 01:06:41 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/24 18:13:05 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/31 19:02:52 by pollo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,29 +68,31 @@ static int	check_walls(char **map, int *size)
 
 static int	check_initial_pos(t_map *map_data, char **map)
 {
-	int	i;
-	int	j;
+	int	Y;
+	int	X;
 	int	floor_count;
 
-	i = -1;
+	Y = -1;
 	floor_count = 0;
-	while (map[++i])
+	while (map[++Y])
 	{
-		j = -1;
-		while (map[i][++j])
+		X = -1;
+		while (map[Y][++X])
 		{
-			if (map[i][j] == NORTH || map[i][j] == SOUTH
-				|| map[i][j] == EAST || map[i][j] == WEST)
+			if (map[Y][X] == NORTH || map[Y][X] == SOUTH
+				|| map[Y][X] == EAST || map[Y][X] == WEST)
 			{
-				if (map_data->pos)
+				if (map_data->dir)
 					error(MAPNOTVALID_ERROR, false);
-				map_data->pos = map[i][j];
+				map_data->dir = map[Y][X];
+				map_data->pos[X] = X;
+				map_data->pos[Y] = Y;
 			}
-			if (map[i][j] == NOTHING)
+			if (map[Y][X] == NOTHING)
 				floor_count++;
 		}
 	}
-	if (!floor_count || !map_data->pos)
+	if (!floor_count || !map_data->dir)
 		error(MAPNOTVALID_ERROR, false);
 	return (false);
 }

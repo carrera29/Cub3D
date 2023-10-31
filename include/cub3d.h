@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 16:46:34 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/31 18:23:21 by pollo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ typedef struct s_map
 	int				ceiling_color;
 	int				floor_color;
 	int				size[2];
-	enum e_mapchar	pos;
+	enum e_mapchar	dir;
+	int				pos[2];
 
 }		t_map;
 
@@ -114,8 +115,6 @@ typedef struct s_cub
 	mlx_t			*mlx;
 	xpm_t			*texture[5];
 	mlx_image_t		*image[7];
-	int				height;
-	int				width;
 	double			pos[2];
 	double			dir[2];
 	double			plane[2];

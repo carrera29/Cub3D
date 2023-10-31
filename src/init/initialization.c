@@ -6,13 +6,13 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:17:04 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 20:24:10 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/31 21:01:42 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*trim(char *line)
+static char	*trim(char *line)
 {
 	char	*trim_line;
 
@@ -23,7 +23,33 @@ char	*trim(char *line)
 	return (trim_line);
 }
 
-int	check_for_elements(t_map *map_data, char **tex_path, char *line)
+static void	initial_dir_vector(enum e_mapchar dir, double *vector)
+{
+	if (!dir)
+		return ;
+	if (dir == NORTH)
+	{
+		vector[X] = 0;
+		vector[Y] = 1;
+	}
+	else if (dir == SOUTH)
+	{
+		vector[X] = 0;
+		vector[Y] = -1;
+	}
+	else if (dir == WEST)
+	{
+		vector[X] = -1;
+		vector[Y] = 0;
+	}
+	else if (dir == EAST)
+	{
+		vector[X] = 1;
+		vector[Y] = 0;
+	}
+}
+
+static int	check_for_elements(t_map *map_data, char **tex_path, char *line)
 {
 	static int	check;
 

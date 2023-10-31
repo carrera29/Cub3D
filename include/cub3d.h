@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 20:25:31 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/31 21:02:19 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,6 @@ void	print_data(t_cub *cub_data);
 
 // error.c
 void	error(const char *msg, int perror_function);
-
-// math.c
-void	initial_dir_vector(enum e_mapchar dir, double *vector);
 
 //free_mem.c
 void	free_all(t_cub *cub_data);

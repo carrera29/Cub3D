@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 01:06:41 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 20:39:01 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/31 21:14:17 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,13 @@ static int	check_walls(char **map, int *size)
 	return (false);
 }
 
-static int	check_initial_pos(t_map *map_data, char **map)
+static void	check_initial_pos(t_map *map_data, char **map)
 {
-	int	y;
-	int	x;
-	int	floor_count;
+	int			y;
+	int			x;
+	static int	space_count;
 
 	y = -1;
-	floor_count = 0;
 	while (map[++y])
 	{
 		x = -1;
@@ -93,12 +92,11 @@ static int	check_initial_pos(t_map *map_data, char **map)
 				map_data->initial_pos[Y] = y;
 			}
 			if (map[y][x] == SPACE)
-				floor_count++;
+				space_count++;
 		}
 	}
-	if (!floor_count || !map_data->initial_dir)
+	if (!space_count || !map_data->initial_dir)
 		error(MAPNOTVALID_ERROR, false);
-	return (false);
 }
 
 int	check_map(t_map *map_data)

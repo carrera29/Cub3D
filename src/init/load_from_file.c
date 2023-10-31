@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/30 20:25:20 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/31 20:26:32 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	check_rgb_syntax(char *line)
 	{
 		if (line[i] == ',')
 			commas_count++;
-		if (line[i] != ',' && line[i] != SPACE
+		if (line[i] != ',' && line[i] != ' '
 			&& line[i] != '\n' && !ft_isdigit(line[i]))
 			return (true);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:28:58 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/31 19:04:18 by pollo            ###   ########.fr       */
+/*   Updated: 2023/10/31 20:29:52 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
 {
 	t_cub	*cub_data;
 
+	debug();
 	if (argc != 2)
 		error(USAGE_ERROR, false);
 	cub_data = initialization(argv[1]);

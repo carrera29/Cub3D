@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 18:23:21 by pollo            ###   ########.fr       */
+/*   Updated: 2023/10/31 20:25:31 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,14 @@ enum e_map_dimensions
 	HEIGHT
 };
 
-// ARGUMENTS FOR DIR_VECTORS()
-typedef enum e_dir_vectors
-{
-	V_UP =		0b0001,
-	V_DOWN =	0b0011,
-	V_LEFT =	0b1100,
-	V_RIGHT =	0b0100,
-
-}	t_dir_vectors;
-
 enum e_mapchar
 {
 	NORTH =		'N',
 	SOUTH =		'S',
 	EAST =		'E',
 	WEST =		'W',
-	NOTHING =	'0',
-	WALL =		'1',
-	SPACE =		' '
+	SPACE =		'0',
+	WALL =		'1'
 };
 
 enum e_textures
@@ -104,8 +93,8 @@ typedef struct s_map
 	int				ceiling_color;
 	int				floor_color;
 	int				size[2];
-	enum e_mapchar	dir;
-	int				pos[2];
+	enum e_mapchar	initial_dir;
+	int				initial_pos[2];
 
 }		t_map;
 
@@ -144,7 +133,7 @@ void	print_data(t_cub *cub_data);
 void	error(const char *msg, int perror_function);
 
 // math.c
-int		*dir_vector(t_dir_vectors dir);
+void	initial_dir_vector(enum e_mapchar dir, double *vector);
 
 //free_mem.c
 void	free_all(t_cub *cub_data);

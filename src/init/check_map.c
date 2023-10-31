@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 01:06:41 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 19:02:52 by pollo            ###   ########.fr       */
+/*   Updated: 2023/10/31 20:39:01 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	find_map_size(int *width, int *height, char **map)
 static void	rearrange_map(char **map, int width)
 {
 	int	i;
+	int	j;
 	int	line_len;
 
 	i = -1;
@@ -42,7 +43,11 @@ static void	rearrange_map(char **map, int width)
 		line_len = ft_strlen(map[i]);
 		map[i] = ft_realloc(map[i], line_len--, width + 1, sizeof(char));
 		while (++line_len < width)
-			map[i][line_len] = SPACE;
+			map[i][line_len] = WALL;
+		j = -1;
+		while (map[i][++j])
+			if (map[i][j] == ' ')
+				map[i][j] = WALL;
 	}
 }
 
@@ -51,48 +56,47 @@ static int	check_walls(char **map, int *size)
 	char	*check_line;
 	int		i;
 
-	check_line = ft_strtrim(map[0], "1 ");
+	check_line = ft_strtrim(map[0], "1");
 	if (*check_line)
 		(free(check_line), error(WALL_ERROR, false));
-	(free(check_line), check_line = ft_strtrim(map[size[HEIGHT] - 1], "1 "));
+	(free(check_line), check_line = ft_strtrim(map[size[HEIGHT] - 1], "1"));
 	if (*check_line)
 		(free(check_line), error(WALL_ERROR, false));
 	free(check_line);
 	i = -1;
 	while (map[++i])
-		if ((map[i][0] != SPACE && map[i][0] != WALL) ||
-		(map[i][size[WIDTH] - 1] != SPACE && map[i][size[WIDTH] - 1] != WALL))
+		if ((map[i][0] != WALL || map[i][size[WIDTH] - 1] != WALL))
 			error(WALL_ERROR, false);
 	return (false);
 }
 
 static int	check_initial_pos(t_map *map_data, char **map)
 {
-	int	Y;
-	int	X;
+	int	y;
+	int	x;
 	int	floor_count;
 
-	Y = -1;
+	y = -1;
 	floor_count = 0;
-	while (map[++Y])
+	while (map[++y])
 	{
-		X = -1;
-		while (map[Y][++X])
+		x = -1;
+		while (map[y][++x])
 		{
-			if (map[Y][X] == NORTH || map[Y][X] == SOUTH
-				|| map[Y][X] == EAST || map[Y][X] == WEST)
+			if (map[y][x] == NORTH || map[y][x] == SOUTH
+				|| map[y][x] == EAST || map[y][x] == WEST)
 			{
-				if (map_data->dir)
+				if (map_data->initial_dir)
 					error(MAPNOTVALID_ERROR, false);
-				map_data->dir = map[Y][X];
-				map_data->pos[X] = X;
-				map_data->pos[Y] = Y;
+				map_data->initial_dir = map[y][x];
+				map_data->initial_pos[X] = x;
+				map_data->initial_pos[Y] = y;
 			}
-			if (map[Y][X] == NOTHING)
+			if (map[y][x] == SPACE)
 				floor_count++;
 		}
 	}
-	if (!floor_count || !map_data->dir)
+	if (!floor_count || !map_data->initial_dir)
 		error(MAPNOTVALID_ERROR, false);
 	return (false);
 }

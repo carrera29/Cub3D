@@ -6,20 +6,34 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 15:12:53 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/24 15:24:06 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/10/31 20:23:45 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	*dir_vector(t_dir_vectors dir)
+void	initial_dir_vector(enum e_mapchar dir, double *vector)
 {
-	int	*vector;
-
 	if (!dir)
-		return (NULL);
-	vector = ft_calloc(2, sizeof(int));
-	vector[X] = ((dir >> 2) & 1) | (((dir >> 3) & 1) * 0x7FFFFFFF << 1);
-	vector[Y] = (dir & 1) | (((dir >> 1) & 1) * 0x7FFFFFFF << 1);
-	return (vector);
+		return ;
+	if (dir == NORTH)
+	{
+		vector[X] = 0;
+		vector[Y] = 1;
+	}
+	else if (dir == SOUTH)
+	{
+		vector[X] = 0;
+		vector[Y] = -1;
+	}
+	else if (dir == WEST)
+	{
+		vector[X] = -1;
+		vector[Y] = 0;
+	}
+	else if (dir == EAST)
+	{
+		vector[X] = 1;
+		vector[Y] = 0;
+	}
 }

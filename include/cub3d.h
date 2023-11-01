@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 21:02:19 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/01 22:24:59 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ enum e_element_masks
 	S_MASK =	0b01000000,
 	ALL_MASK =	0b01111111
 };
+
+// ARGUMENTS FOR INITIAL_DIR_VECTORS()
+typedef enum e_dir_vectors
+{
+	V_UP =		0b0001,
+	V_DOWN =	0b0011,
+	V_LEFT =	0b1100,
+	V_RIGHT =	0b0100
+
+}	t_dir_vectors;
 
 enum e_axis
 {
@@ -117,6 +127,7 @@ int		check_map(t_map *map_data);
 	// initialization.c
 t_map	*load_map_data(int fd);
 t_cub	*initialization(char *file);
+double	*initial_dir_vector(enum e_mapchar dir, double *vector);
 
 	// load_from_file.c
 char	**load_map(int fd);

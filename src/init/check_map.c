@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 01:06:41 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 21:14:17 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/01 22:39:55 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,26 @@ static void	rearrange_map(char **map, int width)
 	}
 }
 
-static int	check_walls(char **map, int *size)
+static int	check_walls(char **map, int *size, int posX, int posY)
 {
-	char	*check_line;
-	int		i;
+	static bool	**visited = 0;
 
-	check_line = ft_strtrim(map[0], "1");
-	if (*check_line)
-		(free(check_line), error(WALL_ERROR, false));
-	(free(check_line), check_line = ft_strtrim(map[size[HEIGHT] - 1], "1"));
-	if (*check_line)
-		(free(check_line), error(WALL_ERROR, false));
-	free(check_line);
-	i = -1;
-	while (map[++i])
-		if ((map[i][0] != WALL || map[i][size[WIDTH] - 1] != WALL))
-			error(WALL_ERROR, false);
-	return (false);
+	if (!visited)
+		visited = (bool **)ft_callocdp(size[HEIGHT], size[WIDTH], sizeof(bool));
+	if (posY >= size[HEIGHT] || posX >= size[WIDTH])
+		return (false);
+	if (visited[posY][posX] == true || map[posY][posX] == WALL)
+		return (true);
+	visited[posY][posX] = true;
+	if (!check_walls(map, size, posX, posY + 1))
+		return (false);
+	if (!check_walls(map, size, posX, posY - 1))
+		return (false);
+	if (!check_walls(map, size, posX - 1, posY))
+		return (false);
+	if (!check_walls(map, size, posX + 1, posY))
+		return (false);
+	return (true);
 }
 
 static void	check_initial_pos(t_map *map_data, char **map)
@@ -104,7 +107,9 @@ int	check_map(t_map *map_data)
 	find_map_size(&map_data->size[WIDTH], &map_data->size[HEIGHT],
 		map_data->map);
 	rearrange_map(map_data->map, map_data->size[WIDTH]);
-	check_walls(map_data->map, map_data->size);
 	check_initial_pos(map_data, map_data->map);
+	if (!check_walls(map_data->map, map_data->size,
+			map_data->initial_pos[X], map_data->initial_pos[Y]))
+		error(WALL_ERROR, false);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:17:04 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 21:01:42 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/01 22:19:23 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,17 @@ static char	*trim(char *line)
 	return (trim_line);
 }
 
-static void	initial_dir_vector(enum e_mapchar dir, double *vector)
+double	*initial_dir_vector(enum e_mapchar dir, double *vector)
 {
+	int		value;
+
 	if (!dir)
-		return ;
-	if (dir == NORTH)
-	{
-		vector[X] = 0;
-		vector[Y] = 1;
-	}
-	else if (dir == SOUTH)
-	{
-		vector[X] = 0;
-		vector[Y] = -1;
-	}
-	else if (dir == WEST)
-	{
-		vector[X] = -1;
-		vector[Y] = 0;
-	}
-	else if (dir == EAST)
-	{
-		vector[X] = 1;
-		vector[Y] = 0;
-	}
+		return (NULL);
+	value = ((dir >> 2) & 1) | (((dir >> 3) & 1) * 0x7FFFFFFF << 1);
+	vector[X] = (double) value;
+	value = (dir & 1) | (((dir >> 1) & 1) * 0x7FFFFFFF << 1);
+	vector[Y] = (double) value;
+	return (vector);
 }
 
 static int	check_for_elements(t_map *map_data, char **tex_path, char *line)

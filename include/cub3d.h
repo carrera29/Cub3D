@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/01 22:45:01 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/01 22:48:39 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,10 @@ typedef struct s_map
 	int				initial_pos[2];
 
 }		t_map;
+
+typedef struct s_ray
+{
+}	t_ray;
 
 typedef struct s_cub
 {

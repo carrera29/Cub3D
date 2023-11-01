@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/31 21:02:19 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/01 18:52:28 by pollo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_map
 typedef struct s_cub
 {
 	t_map			*map_data;
+	t_ray			*ray_data;
 	mlx_t			*mlx;
 	xpm_t			*texture[5];
 	mlx_image_t		*image[7];

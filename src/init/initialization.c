@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:17:04 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/01 22:19:23 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/01 23:34:57 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,23 @@ static char	*trim(char *line)
 	return (trim_line);
 }
 
-double	*initial_dir_vector(enum e_mapchar dir, double *vector)
+double	*initial_dir_vector(enum e_mapchar dir_char, double *vector)
 {
-	int		value;
+	int				i;
+	int				value;
+	t_dir_vectors	dir_mask;
+	const int		table[4][2] = {{'N', V_UP}, {'S', V_DOWN},
+	{'W', V_LEFT}, {'E', V_RIGHT}};
 
-	if (!dir)
+	if (!dir_char)
 		return (NULL);
-	value = ((dir >> 2) & 1) | (((dir >> 3) & 1) * 0x7FFFFFFF << 1);
+	i = -1;
+	while (++i < 4)
+		if ((int)dir_char == table[i][0])
+			dir_mask = table[i][1];
+	value = ((dir_mask >> 2) & 1) | (((dir_mask >> 3) & 1) * 0x7FFFFFFF << 1);
 	vector[X] = (double) value;
-	value = (dir & 1) | (((dir >> 1) & 1) * 0x7FFFFFFF << 1);
+	value = (dir_mask & 1) | (((dir_mask >> 1) & 1) * 0x7FFFFFFF << 1);
 	vector[Y] = (double) value;
 	return (vector);
 }

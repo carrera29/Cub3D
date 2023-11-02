@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/10/31 21:01:08 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/11/02 17:19:16 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ endif
 
 SRCDIR =		src/
 INITDIR =		init/
+OTHERDIR =		other/
 
 INCDIR =		include/
 OBJDIR =		obj/
@@ -37,7 +38,8 @@ LIBFTDIR =		libft/
 MINILIBXDIR =	minilibx/
 
 SRCFILES =	$(addprefix $(INITDIR), initialization.c load_from_file.c check_map.c) \
-			mlx.c debug.c error.c main.c free_mem.c
+			$(addprefix $(OTHERDIR), debug.c error.c free_mem.c) \
+			raycasting.c mlx.c main.c
 OBJFILES =	$(SRCFILES:.c=.o)
 SRCOBJ =	$(addprefix $(OBJDIR), $(OBJFILES))
 
@@ -57,6 +59,7 @@ $(NAME): $(SRCOBJ)
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	mkdir -p $(OBJDIR)
 	mkdir -p $(OBJDIR)$(INITDIR)
+	mkdir -p $(OBJDIR)$(OTHERDIR)
 	gcc -c $(CFLAGS) $^ -o $@
 
 clean:

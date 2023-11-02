@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/01 23:03:09 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/02 17:13:28 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,13 +142,17 @@ void	load_rgb_color(int *color, char *line);
 // mlx.c
 int		start_game(t_cub *cub_data);
 
-// debug.c
+// raycasting.c
+int		raycasting(t_cub *cub_data);
+
+// other/
+	// debug.c
 void	print_data(t_cub *cub_data);
 
-// error.c
+	// error.c
 void	error(const char *msg, int perror_function);
 
-//free_mem.c
+	// free_mem.c
 void	free_all(t_cub *cub_data);
 
 #endif

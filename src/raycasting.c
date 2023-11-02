@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/02 17:49:51 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/02 19:57:28 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,28 @@ int	raycasting(t_cub *cub_data)
 	int		i;
 	int		step[2];
 	int		map[2];
-	double	cameraX;
+	double	camera;
 	double	raydir[2];
 	double	side_dist[2];
 	double	delta_dist[2];
-	double	plane[2];
 
 	i = -1;
 	while (++i < SCREENWIDTH)
 	{
 		//raycasting
-		plane[X] = 0;
-		plane[Y] = 0.66;
-		cameraX = (i * 2) / (SCREENWIDTH - 1);
-		raydir[X] = cub_data->dir[X] + plane[X] * cameraX;
-		raydir[Y] = cub_data->dir[Y] + plane[Y] * cameraX;
+		camera = i * 2 / (double)SCREENWIDTH - 1;
+		raydir[X] = cub_data->dir[X] + cub_data->plane[X] * camera;
+		raydir[Y] = cub_data->dir[Y] + cub_data->plane[Y] * camera;
 
 		// calculo delta_dist y side_dist
 		if (raydir[X] == 0)
-			delta_dist[X] = fabs(1 / 1e30);
+			delta_dist[X] = 0;
 		else
 			delta_dist[X] = fabs(1 / raydir[X]);
 		if (raydir[Y] == 0)
-			delta_dist[Y] = fabs(1 / raydir[Y]);
+			delta_dist[Y] = 0;
 		else
 			delta_dist[Y] = fabs(1 / raydir[Y]);
-		
 		map[X] = (int)cub_data->pos[X];
 		map[Y] = (int)cub_data->pos[Y];
 		if (raydir[X] < 0)
@@ -77,7 +73,7 @@ int	raycasting(t_cub *cub_data)
 				map[Y] += step[Y];
 				perpWallDist = (side_dist[Y] - delta_dist[Y]);
 			}
-			if (cub_data->map_data->map[map[X]][map[Y]] < 0)
+			if (cub_data->map_data->map[map[X]][map[Y]] == WALL)
 				hit = 1;
 		}
 	}

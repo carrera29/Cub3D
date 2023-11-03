@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/02 19:57:28 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:13:00 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	raycasting(t_cub *cub_data)
 			if (cub_data->map_data->map[map[X]][map[Y]] == WALL)
 				hit = 1;
 		}
+		(void) perpWallDist;
 	}
 	return (EXIT_SUCCESS);
 }

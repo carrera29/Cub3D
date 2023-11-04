@@ -12,34 +12,69 @@
 
 #include "cub3d.h"
 
-void	key_hook(t_cub *cub_data)
+void	key_hook(t_cub *cub_data, char **map)
 {
-	// double	move_speed;
-	// double	pos[2];
-	// double	dir[2];
-	//double	old_dir[2];
+	double	old_dirx;
+	double	old_planex;
+	int forward[2];
+	int bckward[2];
+
+	forward[X] = (int)cub_data->pos[X] + ((int)cub_data->dir[X] * (int)cub_data->move_speed);
+	forward[Y] = (int)cub_data->pos[X] + ((int)cub_data->dir[X] * (int)cub_data->move_speed);
+	bckward[X] = (int)cub_data->pos[X] - ((int)cub_data->dir[X] * (int)cub_data->move_speed);
+	bckward[Y] = (int)cub_data->pos[X] - ((int)cub_data->dir[X] * (int)cub_data->move_speed);
 
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(cub_data->mlx);
-	// if (mlx_is_key_down(cub_data->mlx, MLX_KEY_W))
-	// {
-	// 	if (!(cub_data->map_data->map[(int)pos[X] + (int)dir[X] * (int)move_speed][(int)pos[Y]]))
-	// 		pos[X] += dir[X] * move_speed;
-	// 	if (!(cub_data->map_data->map[(int)pos[X]][(int)pos[Y] + (int)dir[Y] * (int)move_speed]))
-	// 		pos[Y] += dir[Y] * move_speed;
-	// }
-	// if (mlx_is_key_down(cub_data->mlx, MLX_KEY_S))
-	// {
+	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_W))
+	{
+		if (map[forward[X]][(int)cub_data->pos[Y]] != WALL)
+			cub_data->pos[X] += cub_data->dir[X] * cub_data->move_speed;
+		if (map[(int)cub_data->pos[X]][forward[Y]] != WALL)
+			cub_data->pos[Y] += cub_data->dir[Y] * cub_data->move_speed;
+	}
+	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_S))
+	{
+		if (map[bckward[X]][(int)cub_data->pos[Y]] != WALL)
+			cub_data->pos[X] -= cub_data->dir[X] * cub_data->move_speed;
+		if (map[(int)cub_data->pos[X]][bckward[Y]] != WALL)
+			cub_data->pos[Y] -= cub_data->dir[Y] * cub_data->move_speed;
+	}
+	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_D))
+	{
+		old_dirx = cub_data->dir[X];
+		cub_data->dir[Y] = (old_dirx * sin(-cub_data->rot_speed)) + (cub_data->dir[Y] * cos(-cub_data->rot_speed));
+		cub_data->dir[X] = (old_dirx * cos(-cub_data->rot_speed)) - (cub_data->dir[Y] * sin(-cub_data->rot_speed));
+		
+      	old_planex = cub_data->plane[X];
+      	cub_data->plane[X] = old_dirx * cos(-cub_data->rot_speed) - (cub_data->plane[Y] * sin(-cub_data->rot_speed));
+		cub_data->plane[Y] = old_dirx * sin(-cub_data->rot_speed) + (cub_data->plane[Y] * cos(-cub_data->rot_speed));
+	}
+	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_A))
+	{
+		old_dirx = cub_data->dir[X];
+		cub_data->dir[Y] = (old_dirx * sin(cub_data->rot_speed)) + (cub_data->dir[Y] * cos(cub_data->rot_speed));
+		cub_data->dir[X] = (old_dirx * cos(cub_data->rot_speed)) - (cub_data->dir[Y] * sin(cub_data->rot_speed));
+		
+      	old_planex = cub_data->plane[X];
+      	cub_data->plane[X] = old_dirx * cos(cub_data->rot_speed) - (cub_data->plane[Y] * sin(cub_data->rot_speed));
+		cub_data->plane[Y] = old_dirx * sin(cub_data->rot_speed) + (cub_data->plane[Y] * cos(cub_data->rot_speed));
+	}
+}
 
-	// }
-	// if (mlx_is_key_down(cub_data->mlx, MLX_KEY_A))
-	// {
+int	timing_and_fps(t_cub *cub_data)
+{
+	double	old_time;
+	double	frametime;
 
-	// }
-	// if (mlx_is_key_down(cub_data->mlx, MLX_KEY_D))
-	// {
-
-	// }
+	old_time = cub_data->time;
+	cub_data->time = mlx_get_time();
+	frametime = (cub_data->time - old_time) / 1000.0;
+	cub_data->move_speed = frametime * 5.0;
+	cub_data->rot_speed = frametime * 3.0;
+	// print(1.0 / frameTime); //FPS counter
+	// redraw();
+	// cls();
 }
 
 void	loop_hook(void *param)
@@ -47,8 +82,9 @@ void	loop_hook(void *param)
 	t_cub	*cub_data;
 
 	cub_data = param;
-	key_hook(cub_data);
+	key_hook(cub_data, cub_data->map_data->map);
 	raycasting(cub_data);
+
 }
 
 int	load_images(t_cub *cub_data, t_map *map_data)

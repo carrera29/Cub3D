@@ -124,6 +124,9 @@ typedef struct s_cub
 	double			pos[2];
 	double			dir[2];
 	double			plane[2];
+	double			time;
+	double			move_speed;
+	double			rot_speed;
 
 }			t_cub;
 

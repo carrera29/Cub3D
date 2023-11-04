@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/03 15:01:14 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/04 07:27:47 by pollo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,15 @@ typedef struct s_map
 
 typedef struct s_ray
 {
-}	t_ray;
+	int				step[2];
+	int				map[2];
+	double			camera;
+	double			raydir[2];
+	double			side_dist[2];
+	double			delta_dist[2];
+	double			perpWallDist;
+
+}		t_ray;
 
 typedef struct s_cub
 {

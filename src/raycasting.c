@@ -3,80 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/03 15:13:00 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/04 07:33:17 by pollo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 
-// int	step_by_step(t_cub *cub_data)
-// {
-// }
+int	step_by_step(t_ray *ry, char **map)
+{
+	int hit;
+	hit = 0; 
+	while (hit == 0)
+	{
+		if (ry->side_dist[X] < ry->side_dist[Y])
+		{
+			ry->side_dist[X] += ry->delta_dist[X];
+			ry->map[X] += ry->step[X];
+			ry->perpWallDist = ry->side_dist[X] - ry->delta_dist[X];
+		}
+		else
+		{
+			ry->side_dist[Y] += ry->delta_dist[Y];
+			ry->map[Y] += ry->step[Y];
+			ry->perpWallDist = ry->side_dist[Y] - ry->delta_dist[Y];
+		}
+		if (map[ry->map[X]][ry->map[Y]] == WALL)
+			hit = 1;
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	step_calculator(t_ray *ry, char coor, double pos)
+{
+	ry->delta_dist[coor] = fabs(1 / ry->raydir[coor]);
+	ry->map[coor] = (int)pos;
+
+	if (ry->raydir[coor] < 0)
+	{
+		ry->step[coor] = -1;
+		ry->side_dist[coor] = (pos - ry->map[coor]) * ry->delta_dist[coor];
+	}
+	else
+	{
+		ry->step[coor] = 1;
+		ry->side_dist[coor] = (ry->map[coor] + 1 - pos) * ry->delta_dist[coor];
+	}
+	return (EXIT_SUCCESS);
+}
 
 int	raycasting(t_cub *cub_data)
 {
+	t_ray	*ry;
 	int		i;
-	int		step[2];
-	int		map[2];
-	double	camera;
-	double	raydir[2];
-	double	side_dist[2];
-	double	delta_dist[2];
 
 	i = -1;
 	while (++i < SCREENWIDTH)
 	{
-		//raycasting
-		camera = i * 2 / (double)SCREENWIDTH - 1;
-		raydir[X] = cub_data->dir[X] + cub_data->plane[X] * camera;
-		raydir[Y] = cub_data->dir[Y] + cub_data->plane[Y] * camera;
+		ry->camera = i * 2 / (double)SCREENWIDTH - 1;
+		ry->raydir[X] = cub_data->dir[X] + cub_data->plane[X] * ry->camera;
+		if (ry->raydir[X] == 0)
+			ry->raydir[X] = 1e30;
+		ry->raydir[Y] = cub_data->dir[Y] + cub_data->plane[Y] * ry->camera;
+		if (ry->raydir[Y] == 0)
+			ry->raydir[Y] = 1e30;
 
-		// calculo delta_dist y side_dist
-		if (raydir[X] == 0)
-			delta_dist[X] = 0;
-		else
-			delta_dist[X] = fabs(1 / raydir[X]);
-		if (raydir[Y] == 0)
-			delta_dist[Y] = 0;
-		else
-			delta_dist[Y] = fabs(1 / raydir[Y]);
-		map[X] = (int)cub_data->pos[X];
-		map[Y] = (int)cub_data->pos[Y];
-		if (raydir[X] < 0)
-			(step[X] = -1, side_dist[X] = (cub_data->pos[X] - map[X]) * delta_dist[X]);
-		else
-			(step[X] = 1, side_dist[X] = (map[X] + 1 - cub_data->pos[X]) * delta_dist[X]);
-		if (raydir[Y] < 0)
-			(step[Y] = -1, side_dist[Y] = (cub_data->pos[Y] - map[Y]) * delta_dist[Y]);
-		else
-			(step[Y] = 1, side_dist[Y] = (map[Y] + 1 - cub_data->pos[Y]) * delta_dist[Y]);
-
-		// step by step
-		int hit;
-		double perpWallDist;
-		hit = 0; 
-		while (hit == 0)
-		{
-			if (side_dist[X] < side_dist[Y])
-			{
-				side_dist[X] += delta_dist[X];
-				map[X] += step[X];
-				perpWallDist = (side_dist[X] - delta_dist[X]);
-			}
-			else
-			{
-				side_dist[Y] += delta_dist[Y];
-				map[Y] += step[Y];
-				perpWallDist = (side_dist[Y] - delta_dist[Y]);
-			}
-			if (cub_data->map_data->map[map[X]][map[Y]] == WALL)
-				hit = 1;
-		}
-		(void) perpWallDist;
+		step_calculator(ry, X, cub_data->pos[X]);
+		step_calculator(ry, Y, cub_data->pos[Y]);
+		
+		step_by_step(ry, cub_data->map_data->map);
 	}
 	return (EXIT_SUCCESS);
 }

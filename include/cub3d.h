@@ -109,8 +109,10 @@ typedef struct s_ray
 	double			side_dist[2];
 	double			delta_dist[2];
 	double			perpWallDist;
+	int				start_draw;
+	int				end_draw;
 
-}		t_ray;
+}					t_ray;
 
 typedef struct s_cub
 {

@@ -12,6 +12,17 @@
 
 #include "cub3d.h"
 
+int wall_height(t_ray *ry)
+{
+	int line_height;
+	line_height = (int)(SCREENHEIGHT / ry->perpWallDist);
+	ry->start_draw = (- line_height / 2) + (SCREENHEIGHT / 2);
+	if (ry->start_draw < 0)
+		ry->start_draw = 0;
+	ry->end_draw = (line_height / 2) + (SCREENHEIGHT / 2);
+	if (ry->end_draw >= SCREENHEIGHT)
+		ry->end_draw = SCREENHEIGHT - 1;
+}
 
 int	step_by_step(t_ray *ry, char **map)
 {
@@ -75,6 +86,10 @@ int	raycasting(t_cub *cub_data)
 		step_calculator(ry, Y, cub_data->pos[Y]);
 		
 		step_by_step(ry, cub_data->map_data->map);
+
+		wall_height(ry);
+
+		// color time
 	}
 	return (EXIT_SUCCESS);
 }

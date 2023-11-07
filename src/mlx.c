@@ -12,54 +12,56 @@
 
 #include "cub3d.h"
 
-void	key_hook(t_cub *cub_data, char **map)
+void	straight(t_cub *cub_data, double move_speed, char **map, char sign)
+{
+	int coor[2];
+
+	if (sign == '+')
+	{
+		coor[X] = (int)cub_data->pos[X] + ((int)cub_data->dir[X] * (int)cub_data->move_speed);
+		coor[Y] = (int)cub_data->pos[Y] + ((int)cub_data->dir[Y] * (int)cub_data->move_speed);
+		if (map[coor[X]][(int)cub_data->pos[Y]] != WALL)
+			cub_data->pos[X] += cub_data->dir[X] * cub_data->move_speed;
+		if (map[(int)cub_data->pos[X]][coor[Y]] != WALL)
+			cub_data->pos[Y] += cub_data->dir[Y] * cub_data->move_speed;
+	}
+	else
+	{
+		coor[X] = (int)cub_data->pos[X] - ((int)cub_data->dir[X] * (int)cub_data->move_speed);
+		coor[Y] = (int)cub_data->pos[Y] - ((int)cub_data->dir[Y] * (int)cub_data->move_speed);
+		if (map[coor[X]][(int)cub_data->pos[Y]] != WALL)
+			cub_data->pos[X] -= cub_data->dir[X] * cub_data->move_speed;
+		if (map[(int)cub_data->pos[X]][coor[Y]] != WALL)
+			cub_data->pos[Y] -= cub_data->dir[Y] * cub_data->move_speed;
+	}
+}
+
+void	rotate(t_cub *cub_data, double rot_speed)
 {
 	double	old_dirx;
 	double	old_planex;
-	int forward[2];
-	int bckward[2];
 
-	forward[X] = (int)cub_data->pos[X] + ((int)cub_data->dir[X] * (int)cub_data->move_speed);
-	forward[Y] = (int)cub_data->pos[X] + ((int)cub_data->dir[X] * (int)cub_data->move_speed);
-	bckward[X] = (int)cub_data->pos[X] - ((int)cub_data->dir[X] * (int)cub_data->move_speed);
-	bckward[Y] = (int)cub_data->pos[X] - ((int)cub_data->dir[X] * (int)cub_data->move_speed);
+	old_dirx = cub_data->dir[X];
+	cub_data->dir[Y] = (old_dirx * sin(rot_speed)) + (cub_data->dir[Y] * cos(rot_speed));
+	cub_data->dir[X] = (old_dirx * cos(rot_speed)) - (cub_data->dir[Y] * sin(rot_speed));
+	
+	old_planex = cub_data->plane[X];
+	cub_data->plane[X] = old_dirx * cos(rot_speed) - (cub_data->plane[Y] * sin(rot_speed));
+	cub_data->plane[Y] = old_dirx * sin(rot_speed) + (cub_data->plane[Y] * cos(rot_speed));
+}
 
+void	key_hook(t_cub *cub_data, char **map)
+{
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(cub_data->mlx);
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_W))
-	{
-		if (map[forward[X]][(int)cub_data->pos[Y]] != WALL)
-			cub_data->pos[X] += cub_data->dir[X] * cub_data->move_speed;
-		if (map[(int)cub_data->pos[X]][forward[Y]] != WALL)
-			cub_data->pos[Y] += cub_data->dir[Y] * cub_data->move_speed;
-	}
+		straight(cub_data, cub_data->move_speed, map, '+');
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_S))
-	{
-		if (map[bckward[X]][(int)cub_data->pos[Y]] != WALL)
-			cub_data->pos[X] -= cub_data->dir[X] * cub_data->move_speed;
-		if (map[(int)cub_data->pos[X]][bckward[Y]] != WALL)
-			cub_data->pos[Y] -= cub_data->dir[Y] * cub_data->move_speed;
-	}
+		straight(cub_data, cub_data->move_speed, map, '-');
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_D))
-	{
-		old_dirx = cub_data->dir[X];
-		cub_data->dir[Y] = (old_dirx * sin(-cub_data->rot_speed)) + (cub_data->dir[Y] * cos(-cub_data->rot_speed));
-		cub_data->dir[X] = (old_dirx * cos(-cub_data->rot_speed)) - (cub_data->dir[Y] * sin(-cub_data->rot_speed));
-		
-      	old_planex = cub_data->plane[X];
-      	cub_data->plane[X] = old_dirx * cos(-cub_data->rot_speed) - (cub_data->plane[Y] * sin(-cub_data->rot_speed));
-		cub_data->plane[Y] = old_dirx * sin(-cub_data->rot_speed) + (cub_data->plane[Y] * cos(-cub_data->rot_speed));
-	}
+		rotate(cub_data, (-1 * cub_data->rot_speed));
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_A))
-	{
-		old_dirx = cub_data->dir[X];
-		cub_data->dir[Y] = (old_dirx * sin(cub_data->rot_speed)) + (cub_data->dir[Y] * cos(cub_data->rot_speed));
-		cub_data->dir[X] = (old_dirx * cos(cub_data->rot_speed)) - (cub_data->dir[Y] * sin(cub_data->rot_speed));
-		
-      	old_planex = cub_data->plane[X];
-      	cub_data->plane[X] = old_dirx * cos(cub_data->rot_speed) - (cub_data->plane[Y] * sin(cub_data->rot_speed));
-		cub_data->plane[Y] = old_dirx * sin(cub_data->rot_speed) + (cub_data->plane[Y] * cos(cub_data->rot_speed));
-	}
+		rotate(cub_data, cub_data->rot_speed);
 }
 
 int	timing_and_fps(t_cub *cub_data)

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:45:34 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/03 15:14:24 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 22:20:21 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,6 @@ void	key_hook(t_cub *cub_data, char **map)
 		rotate(cub_data, cub_data->rot_speed);
 }
 
-int	timing_and_fps(t_cub *cub_data)
-{
-	double	old_time;
-	double	frametime;
-
-	old_time = cub_data->time;
-	cub_data->time = mlx_get_time();
-	frametime = (cub_data->time - old_time) / 1000.0;
-	cub_data->move_speed = frametime * 5.0;
-	cub_data->rot_speed = frametime * 3.0;
-	// print(1.0 / frameTime); //FPS counter
-	// redraw();
-	// cls();
-	return (EXIT_SUCCESS);
-}
-
 void	loop_hook(void *param)
 {
 	t_cub	*cub_data;
@@ -87,7 +71,6 @@ void	loop_hook(void *param)
 	cub_data = param;
 	key_hook(cub_data, cub_data->map_data->map);
 	raycasting(cub_data);
-
 }
 
 int	load_images(t_cub *cub_data, t_map *map_data)
@@ -110,6 +93,9 @@ int	load_images(t_cub *cub_data, t_map *map_data)
 	memset(cub_data->image[CEILING_TEX]->pixels, map_data->ceiling_color,
 		cub_data->image[CEILING_TEX]->width
 		* cub_data->image[CEILING_TEX]->height * sizeof(int32_t));
+	i = -1;
+	while (++i < SCREENWIDTH)
+		cub_data->line[i] = mlx_new_image(cub_data->mlx, 1, SCREENHEIGHT);
 	return (EXIT_SUCCESS);
 }
 

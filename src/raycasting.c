@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/07 21:48:51 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 22:27:41 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,16 @@ int	step_calculator(t_ray *ry, double *pos)
 
 int	paint_color(t_cub *cub_data, t_ray *ry, int screen_pos)
 {
-	mlx_image_t	*line;
-	int			i;
+	int	i;
 
-	line = mlx_new_image(cub_data->mlx, 1, ry->end_draw - ry->start_draw);
 	i = -1;
-	while (++i < (int) line->height)
-		mlx_put_pixel(line, 0, i, 0x210d91);
-	mlx_image_to_window(cub_data->mlx, line, screen_pos, ry->start_draw);
+	while (++i < (int) cub_data->line[screen_pos]->height)
+	{
+		mlx_put_pixel(cub_data->line[i], 0, i, 0);
+		if (i >= ry->start_draw && i <= ry->end_draw)
+			mlx_put_pixel(cub_data->line[i], 0, i, 0x210d91);
+	}
+	mlx_image_to_window(cub_data->mlx, cub_data->line[screen_pos], screen_pos, 0);
 	return (EXIT_SUCCESS);
 }
 
@@ -104,5 +106,7 @@ int	raycasting(t_cub *cub_data)
 		wall_height(&ry);
 		paint_color(cub_data, &ry, i);
 	}
+	cub_data->move_speed = cub_data->mlx->delta_time * 5.0;
+	cub_data->rot_speed = cub_data->mlx->delta_time * 3.0;
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pollo <pollo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/04 07:27:47 by pollo            ###   ########.fr       */
+/*   Updated: 2023/11/07 22:16:01 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,10 @@ typedef struct s_cub
 	mlx_t			*mlx;
 	xpm_t			*texture[5];
 	mlx_image_t		*image[7];
+	mlx_image_t		*line[SCREENWIDTH];
 	double			pos[2];
 	double			dir[2];
 	double			plane[2];
-	double			time;
 	double			move_speed;
 	double			rot_speed;
 

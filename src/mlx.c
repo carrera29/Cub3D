@@ -18,8 +18,8 @@ void	straight(t_cub *cub_data, double move_speed, char **map, char sign)
 
 	if (sign == '+')
 	{
-		coor[X] = (int)cub_data->pos[X] + ((int)cub_data->dir[X] * (int)cub_data->move_speed);
-		coor[Y] = (int)cub_data->pos[Y] + ((int)cub_data->dir[Y] * (int)cub_data->move_speed);
+		coor[X] = (int)cub_data->pos[X] + ((int)cub_data->dir[X] * (int)move_speed);
+		coor[Y] = (int)cub_data->pos[Y] + ((int)cub_data->dir[Y] * (int)move_speed);
 		if (map[coor[X]][(int)cub_data->pos[Y]] != WALL)
 			cub_data->pos[X] += cub_data->dir[X] * cub_data->move_speed;
 		if (map[(int)cub_data->pos[X]][coor[Y]] != WALL)
@@ -27,12 +27,12 @@ void	straight(t_cub *cub_data, double move_speed, char **map, char sign)
 	}
 	else
 	{
-		coor[X] = (int)cub_data->pos[X] - ((int)cub_data->dir[X] * (int)cub_data->move_speed);
-		coor[Y] = (int)cub_data->pos[Y] - ((int)cub_data->dir[Y] * (int)cub_data->move_speed);
+		coor[X] = (int)cub_data->pos[X] - ((int)cub_data->dir[X] * (int)move_speed);
+		coor[Y] = (int)cub_data->pos[Y] - ((int)cub_data->dir[Y] * (int)move_speed);
 		if (map[coor[X]][(int)cub_data->pos[Y]] != WALL)
-			cub_data->pos[X] -= cub_data->dir[X] * cub_data->move_speed;
+			cub_data->pos[X] -= cub_data->dir[X] * move_speed;
 		if (map[(int)cub_data->pos[X]][coor[Y]] != WALL)
-			cub_data->pos[Y] -= cub_data->dir[Y] * cub_data->move_speed;
+			cub_data->pos[Y] -= cub_data->dir[Y] * move_speed;
 	}
 }
 
@@ -46,8 +46,8 @@ void	rotate(t_cub *cub_data, double rot_speed)
 	cub_data->dir[X] = (old_dirx * cos(rot_speed)) - (cub_data->dir[Y] * sin(rot_speed));
 	
 	old_planex = cub_data->plane[X];
-	cub_data->plane[X] = old_dirx * cos(rot_speed) - (cub_data->plane[Y] * sin(rot_speed));
-	cub_data->plane[Y] = old_dirx * sin(rot_speed) + (cub_data->plane[Y] * cos(rot_speed));
+	cub_data->plane[X] = old_planex * cos(rot_speed) - (cub_data->plane[Y] * sin(rot_speed));
+	cub_data->plane[Y] = old_planex * sin(rot_speed) + (cub_data->plane[Y] * cos(rot_speed));
 }
 
 void	key_hook(t_cub *cub_data, char **map)
@@ -77,6 +77,7 @@ int	timing_and_fps(t_cub *cub_data)
 	// print(1.0 / frameTime); //FPS counter
 	// redraw();
 	// cls();
+	return (EXIT_SUCCESS);
 }
 
 void	loop_hook(void *param)

@@ -23,6 +23,7 @@ int	wall_height(t_ray *ry)
 	ry->end_draw = (line_height / 2) + (SCREENHEIGHT / 2);
 	if (ry->end_draw >= SCREENHEIGHT)
 		ry->end_draw = SCREENHEIGHT - 1;
+	return (EXIT_SUCCESS);
 }
 
 int	step_by_step(t_ray *ry, char **map)
@@ -47,6 +48,7 @@ int	step_by_step(t_ray *ry, char **map)
 		if (map[ry->map[X]][ry->map[Y]] == WALL)
 			hit = 1;
 	}
+	exit(0);
 	return (EXIT_SUCCESS);
 }
 
@@ -55,10 +57,10 @@ int	step_calculator(t_ray *ry, double *pos)
 	int	i;
 
 	i = -1;
-	while (i <= Y)
+	while (++i <= Y)
 	{
 		ry->delta_dist[i] = fabs(1 / ry->raydir[i]);
-		ry->map[i] = (int)pos;
+		ry->map[i] = (int)pos[i];
 		if (ry->raydir[i] < 0)
 		{
 			ry->step[i] = -1;
@@ -88,7 +90,7 @@ int	raycasting(t_cub *cub_data)
 		ry.raydir[Y] = cub_data->dir[Y] + cub_data->plane[Y] * ry.camera;
 		if (ry.raydir[Y] == 0)
 			ry.raydir[Y] = 1e30;
-		step_calculator(&ry, cub_data);
+		step_calculator(&ry, cub_data->pos);
 		step_by_step(&ry, cub_data->map_data->map);
 		wall_height(&ry);
 		// color time

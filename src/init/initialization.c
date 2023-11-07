@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:17:04 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/03 15:00:50 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 20:06:19 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,7 @@ t_cub	*initialization(char *file)
 		error("open", true);
 	cub_data->map_data = load_map_data(fd);
 	init_vct(cub_data->map_data->initial_dir, cub_data->dir, cub_data->plane);
+	cub_data->pos[X] = cub_data->map_data->initial_pos[X] + 0.5;
+	cub_data->pos[Y] = cub_data->map_data->initial_pos[Y] + 0.5;
 	return (cub_data);
 }

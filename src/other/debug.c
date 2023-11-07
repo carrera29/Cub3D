@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 16:48:47 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/10/30 20:44:00 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 20:03:28 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void	print_data(t_cub *cub_data)
 	i = -1;
 	while (cub_data->map_data->map[++i])
 		printf("|%s|\n", cub_data->map_data->map[i]);
+	ft_putchar_fd('\n', STDOUT_FILENO);
 }

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/07 18:58:10 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 21:48:51 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	step_by_step(t_ray *ry, char **map)
 	int	hit;
 
 	hit = 0;
+
 	while (hit == 0)
 	{
 		if (ry->side_dist[X] < ry->side_dist[Y])
@@ -45,10 +46,9 @@ int	step_by_step(t_ray *ry, char **map)
 			ry->map[Y] += ry->step[Y];
 			ry->perpWallDist = ry->side_dist[Y] - ry->delta_dist[Y];
 		}
-		if (map[ry->map[X]][ry->map[Y]] == WALL)
+		if (map[ry->map[Y]][ry->map[X]] == WALL)
 			hit = 1;
 	}
-	exit(0);
 	return (EXIT_SUCCESS);
 }
 
@@ -75,6 +75,19 @@ int	step_calculator(t_ray *ry, double *pos)
 	return (EXIT_SUCCESS);
 }
 
+int	paint_color(t_cub *cub_data, t_ray *ry, int screen_pos)
+{
+	mlx_image_t	*line;
+	int			i;
+
+	line = mlx_new_image(cub_data->mlx, 1, ry->end_draw - ry->start_draw);
+	i = -1;
+	while (++i < (int) line->height)
+		mlx_put_pixel(line, 0, i, 0x210d91);
+	mlx_image_to_window(cub_data->mlx, line, screen_pos, ry->start_draw);
+	return (EXIT_SUCCESS);
+}
+
 int	raycasting(t_cub *cub_data)
 {
 	t_ray	ry;
@@ -85,15 +98,11 @@ int	raycasting(t_cub *cub_data)
 	{
 		ry.camera = i * 2 / (double)SCREENWIDTH - 1;
 		ry.raydir[X] = cub_data->dir[X] + cub_data->plane[X] * ry.camera;
-		if (ry.raydir[X] == 0)
-			ry.raydir[X] = 1e30;
 		ry.raydir[Y] = cub_data->dir[Y] + cub_data->plane[Y] * ry.camera;
-		if (ry.raydir[Y] == 0)
-			ry.raydir[Y] = 1e30;
 		step_calculator(&ry, cub_data->pos);
 		step_by_step(&ry, cub_data->map_data->map);
 		wall_height(&ry);
-		// color time
+		paint_color(cub_data, &ry, i);
 	}
 	return (EXIT_SUCCESS);
 }

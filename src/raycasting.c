@@ -6,17 +6,18 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/07 18:47:13 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/07 18:58:10 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int wall_height(t_ray *ry)
+int	wall_height(t_ray *ry)
 {
-	int line_height;
+	int	line_height;
+
 	line_height = (int)(SCREENHEIGHT / ry->perpWallDist);
-	ry->start_draw = (- line_height / 2) + (SCREENHEIGHT / 2);
+	ry->start_draw = (-line_height / 2) + (SCREENHEIGHT / 2);
 	if (ry->start_draw < 0)
 		ry->start_draw = 0;
 	ry->end_draw = (line_height / 2) + (SCREENHEIGHT / 2);
@@ -26,8 +27,9 @@ int wall_height(t_ray *ry)
 
 int	step_by_step(t_ray *ry, char **map)
 {
-	int hit;
-	hit = 0; 
+	int	hit;
+
+	hit = 0;
 	while (hit == 0)
 	{
 		if (ry->side_dist[X] < ry->side_dist[Y])
@@ -73,25 +75,22 @@ int	step_calculator(t_ray *ry, double *pos)
 
 int	raycasting(t_cub *cub_data)
 {
-	t_ray	*ry;
+	t_ray	ry;
 	int		i;
 
 	i = -1;
 	while (++i < SCREENWIDTH)
 	{
-		ry->camera = i * 2 / (double)SCREENWIDTH - 1;
-		ry->raydir[X] = cub_data->dir[X] + cub_data->plane[X] * ry->camera;
-		if (ry->raydir[X] == 0)
-			ry->raydir[X] = 1e30;
-		ry->raydir[Y] = cub_data->dir[Y] + cub_data->plane[Y] * ry->camera;
-		if (ry->raydir[Y] == 0)
-			ry->raydir[Y] = 1e30;
-		step_calculator(ry, X, cub_data->pos[X]);
-		
-		step_by_step(ry, cub_data->map_data->map);
-
-		wall_height(ry);
-
+		ry.camera = i * 2 / (double)SCREENWIDTH - 1;
+		ry.raydir[X] = cub_data->dir[X] + cub_data->plane[X] * ry.camera;
+		if (ry.raydir[X] == 0)
+			ry.raydir[X] = 1e30;
+		ry.raydir[Y] = cub_data->dir[Y] + cub_data->plane[Y] * ry.camera;
+		if (ry.raydir[Y] == 0)
+			ry.raydir[Y] = 1e30;
+		step_calculator(&ry, cub_data);
+		step_by_step(&ry, cub_data->map_data->map);
+		wall_height(&ry);
 		// color time
 	}
 	return (EXIT_SUCCESS);

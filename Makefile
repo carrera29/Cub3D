@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/11/08 10:47:56 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/11/08 10:51:51 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ endif
 SRCDIR =		src/
 INITDIR =		init/
 OTHERDIR =		other/
+GAMEDIR =		game/
 
 INCDIR =		include/
 OBJDIR =		obj/
@@ -39,7 +40,8 @@ MINILIBXDIR =	minilibx/
 
 SRCFILES =	$(addprefix $(INITDIR), initialization.c load_from_file.c check_map.c) \
 			$(addprefix $(OTHERDIR), debug.c error.c free_mem.c) \
-			raycasting.c mlx.c player.c main.c
+			$(addprefix $(GAMEDIR), raycasting.c mlx.c player.c) \
+			main.c
 OBJFILES =	$(SRCFILES:.c=.o)
 SRCOBJ =	$(addprefix $(OBJDIR), $(OBJFILES))
 
@@ -60,6 +62,7 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 	mkdir -p $(OBJDIR)
 	mkdir -p $(OBJDIR)$(INITDIR)
 	mkdir -p $(OBJDIR)$(OTHERDIR)
+	mkdir -p $(OBJDIR)$(GAMEDIR)
 	gcc -c $(CFLAGS) $^ -o $@
 
 clean:

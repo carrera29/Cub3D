@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:45:34 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 10:47:25 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 11:00:35 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	key_hook(t_cub *cub_data, char **map)
 		move(cub_data, map, -cub_data->dir[X], -cub_data->dir[Y]);
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_RIGHT))
 		rotate(cub_data, (-1 * cub_data->rot_speed));
-	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_LEFT))
+	else if (mlx_is_key_down(cub_data->mlx, MLX_KEY_LEFT))
 		rotate(cub_data, cub_data->rot_speed);
 }
 

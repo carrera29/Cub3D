@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:45:34 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/07 22:20:21 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 01:18:25 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ int	load_images(t_cub *cub_data, t_map *map_data)
 		* cub_data->image[CEILING_TEX]->height * sizeof(int32_t));
 	i = -1;
 	while (++i < SCREENWIDTH)
+	{
 		cub_data->line[i] = mlx_new_image(cub_data->mlx, 1, SCREENHEIGHT);
+		mlx_image_to_window(cub_data->mlx, cub_data->line[i], i, 0);
+	}
 	return (EXIT_SUCCESS);
 }
 

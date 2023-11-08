@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/07 22:27:41 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 01:17:55 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,10 @@ int	paint_color(t_cub *cub_data, t_ray *ry, int screen_pos)
 	i = -1;
 	while (++i < (int) cub_data->line[screen_pos]->height)
 	{
-		mlx_put_pixel(cub_data->line[i], 0, i, 0);
+		mlx_put_pixel(cub_data->line[screen_pos], 0, i, 0xFF);
 		if (i >= ry->start_draw && i <= ry->end_draw)
-			mlx_put_pixel(cub_data->line[i], 0, i, 0x210d91);
+			mlx_put_pixel(cub_data->line[screen_pos], 0, i, 0x210d91FF);
 	}
-	mlx_image_to_window(cub_data->mlx, cub_data->line[screen_pos], screen_pos, 0);
 	return (EXIT_SUCCESS);
 }
 
@@ -107,6 +106,6 @@ int	raycasting(t_cub *cub_data)
 		paint_color(cub_data, &ry, i);
 	}
 	cub_data->move_speed = cub_data->mlx->delta_time * 5.0;
-	cub_data->rot_speed = cub_data->mlx->delta_time * 3.0;
+	cub_data->rot_speed = cub_data->mlx->delta_time * 2.0;
 	return (EXIT_SUCCESS);
 }

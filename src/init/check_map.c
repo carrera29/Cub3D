@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 01:06:41 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/02 18:58:09 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 22:01:57 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	check_walls(char **map, int *size, int posX, int posY)
 
 	if (!visited)
 		visited = (bool **)ft_callocdp(size[HEIGHT], size[WIDTH], sizeof(bool));
-	if (posY >= size[HEIGHT] || posX >= size[WIDTH])
+	if (posY >= size[HEIGHT] || posY < 0 || posX >= size[WIDTH] || posX < 0)
 		return (false);
 	if (visited[posY][posX] == true || map[posY][posX] == WALL)
 		return (true);

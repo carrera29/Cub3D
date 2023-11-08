@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/07 22:16:01 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 02:41:08 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@
 # define SCREENWIDTH			800
 # define SCREENHEIGHT			600
 
+// GAME OPTIONS
 # define FOV					0.90
+# define HITBOX					0.03
 
 // ELEMENT MASKS
 enum e_element_masks
@@ -108,7 +110,7 @@ typedef struct s_ray
 	double			raydir[2];
 	double			side_dist[2];
 	double			delta_dist[2];
-	double			perpWallDist;
+	double			perp_wall_dist;
 	int				start_draw;
 	int				end_draw;
 
@@ -117,11 +119,10 @@ typedef struct s_ray
 typedef struct s_cub
 {
 	t_map			*map_data;
-	t_ray			*ray_data;
 	mlx_t			*mlx;
 	xpm_t			*texture[5];
-	mlx_image_t		*image[7];
-	mlx_image_t		*line[SCREENWIDTH];
+	mlx_image_t		*image[5];
+	mlx_image_t		*view;
 	double			pos[2];
 	double			dir[2];
 	double			plane[2];

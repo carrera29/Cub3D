@@ -6,48 +6,39 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:45:34 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 01:18:25 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 02:40:29 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	straight(t_cub *cub_data, double move_speed, char **map, char sign)
+void	move(t_cub *cub_data, double move_speed, char **map, int dir)
 {
-	int coor[2];
+	const double	table[4][2] = {{0.0, -move_speed}, {0.0, move_speed},
+	{-move_speed, 0.0}, {move_speed, 0.0}};
+	const int		grid_table[4][2] = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
-	if (sign == '+')
-	{
-		coor[X] = (int)cub_data->pos[X] + ((int)cub_data->dir[X] * (int)move_speed);
-		coor[Y] = (int)cub_data->pos[Y] + ((int)cub_data->dir[Y] * (int)move_speed);
-		if (map[coor[X]][(int)cub_data->pos[Y]] != WALL)
-			cub_data->pos[X] += cub_data->dir[X] * cub_data->move_speed;
-		if (map[(int)cub_data->pos[X]][coor[Y]] != WALL)
-			cub_data->pos[Y] += cub_data->dir[Y] * cub_data->move_speed;
-	}
-	else
-	{
-		coor[X] = (int)cub_data->pos[X] - ((int)cub_data->dir[X] * (int)move_speed);
-		coor[Y] = (int)cub_data->pos[Y] - ((int)cub_data->dir[Y] * (int)move_speed);
-		if (map[coor[X]][(int)cub_data->pos[Y]] != WALL)
-			cub_data->pos[X] -= cub_data->dir[X] * move_speed;
-		if (map[(int)cub_data->pos[X]][coor[Y]] != WALL)
-			cub_data->pos[Y] -= cub_data->dir[Y] * move_speed;
-	}
+	if ((cub_data->pos[X] + table[dir][X] < HITBOX
+		|| cub_data->pos[X] + table[dir][X] > (1 - HITBOX)
+		|| cub_data->pos[Y] + table[dir][Y] < HITBOX
+		|| cub_data->pos[Y] + table[dir][Y] > (1 - HITBOX))
+		&& map[(int)cub_data->pos[Y] + grid_table[dir][Y]]
+		[(int)cub_data->pos[X] + grid_table[dir][X]] == WALL)
+		return ;
+	cub_data->pos[X] += table[dir][X];
+	cub_data->pos[Y] += table[dir][Y];
 }
 
 void	rotate(t_cub *cub_data, double rot_speed)
 {
-	double	old_dirx;
-	double	old_planex;
-
-	old_dirx = cub_data->dir[X];
-	cub_data->dir[Y] = (old_dirx * sin(rot_speed)) + (cub_data->dir[Y] * cos(rot_speed));
-	cub_data->dir[X] = (old_dirx * cos(rot_speed)) - (cub_data->dir[Y] * sin(rot_speed));
-	
-	old_planex = cub_data->plane[X];
-	cub_data->plane[X] = old_planex * cos(rot_speed) - (cub_data->plane[Y] * sin(rot_speed));
-	cub_data->plane[Y] = old_planex * sin(rot_speed) + (cub_data->plane[Y] * cos(rot_speed));
+	cub_data->dir[Y] = (cub_data->dir[X] * sin(rot_speed))
+		+ (cub_data->dir[Y] * cos(rot_speed));
+	cub_data->dir[X] = (cub_data->dir[X] * cos(rot_speed))
+		- (cub_data->dir[Y] * sin(rot_speed));
+	cub_data->plane[X] = cub_data->plane[X] * cos(rot_speed)
+		- (cub_data->plane[Y] * sin(rot_speed));
+	cub_data->plane[Y] = cub_data->plane[X] * sin(rot_speed)
+		+ (cub_data->plane[Y] * cos(rot_speed));
 }
 
 void	key_hook(t_cub *cub_data, char **map)
@@ -55,12 +46,16 @@ void	key_hook(t_cub *cub_data, char **map)
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(cub_data->mlx);
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_W))
-		straight(cub_data, cub_data->move_speed, map, '+');
-	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_S))
-		straight(cub_data, cub_data->move_speed, map, '-');
-	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_D))
-		rotate(cub_data, (-1 * cub_data->rot_speed));
+		move(cub_data, cub_data->move_speed, map, 0);
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_A))
+		move(cub_data, cub_data->move_speed, map, 3);
+	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_D))
+		move(cub_data, cub_data->move_speed, map, 2);
+	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_S))
+		move(cub_data, cub_data->move_speed, map, 1);
+	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_RIGHT))
+		rotate(cub_data, (-1 * cub_data->rot_speed));
+	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_LEFT))
 		rotate(cub_data, cub_data->rot_speed);
 }
 
@@ -69,6 +64,8 @@ void	loop_hook(void *param)
 	t_cub	*cub_data;
 
 	cub_data = param;
+	cub_data->move_speed = cub_data->mlx->delta_time * 5.0;
+	cub_data->rot_speed = cub_data->mlx->delta_time * 2.0;
 	key_hook(cub_data, cub_data->map_data->map);
 	raycasting(cub_data);
 }
@@ -85,20 +82,8 @@ int	load_images(t_cub *cub_data, t_map *map_data)
 				&cub_data->texture[i]->texture);
 		mlx_delete_xpm42(cub_data->texture[i]);
 	}
-	cub_data->image[FLOOR_TEX] = mlx_new_image(cub_data->mlx, 128, 128);
-	memset(cub_data->image[FLOOR_TEX]->pixels, map_data->floor_color,
-		cub_data->image[FLOOR_TEX]->width
-		* cub_data->image[FLOOR_TEX]->height * sizeof(int32_t));
-	cub_data->image[CEILING_TEX] = mlx_new_image(cub_data->mlx, 128, 128);
-	memset(cub_data->image[CEILING_TEX]->pixels, map_data->ceiling_color,
-		cub_data->image[CEILING_TEX]->width
-		* cub_data->image[CEILING_TEX]->height * sizeof(int32_t));
-	i = -1;
-	while (++i < SCREENWIDTH)
-	{
-		cub_data->line[i] = mlx_new_image(cub_data->mlx, 1, SCREENHEIGHT);
-		mlx_image_to_window(cub_data->mlx, cub_data->line[i], i, 0);
-	}
+	cub_data->view = mlx_new_image(cub_data->mlx, SCREENWIDTH, SCREENHEIGHT);
+	mlx_image_to_window(cub_data->mlx, cub_data->view, 0, 0);
 	return (EXIT_SUCCESS);
 }
 

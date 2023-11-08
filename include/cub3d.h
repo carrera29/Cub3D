@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 16:43:03 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:21:38 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,8 @@ typedef struct s_cub
 	mlx_t			*mlx;
 	xpm_t			*texture[5];
 	mlx_image_t		*image[5];
-	mlx_image_t		*view;
+	mlx_image_t		*screen;
+	int				center[2];
 	double			pos[2];
 	double			dir[2];
 	double			plane[2];
@@ -147,15 +148,21 @@ char	**load_map(int fd);
 void	load_texture_filename(char **texture, char *line);
 void	load_rgb_color(int *color, char *line);
 
-// mlx.c
+// game/
+	// mlx.c
 int		start_game(t_cub *cub_data);
 
-// raycasting.c
+	// raycasting.c
 int		raycasting(t_cub *cub_data);
 
-// player.c
+	// player.c
 void	rotate(t_cub *cub_data, double rot_speed);
 void	move(t_cub *cub_data, char **map, double dirX, double dirY);
+
+	// hooks.c
+int		mouse_hook(t_cub *cub_data, mlx_t *mlx, double rot_speed);
+void	key_hook(t_cub *cub_data, char **map);
+void	loop_hook(void *param);
 
 // other/
 	// debug.c

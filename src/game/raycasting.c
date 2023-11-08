@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 01:47:13 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:07:17 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ int	print_screen(t_cub *cub_data, t_ray ry, int screen_pos)
 	while (++i < SCREENHEIGHT)
 	{
 		if (i < ry.start_draw)
-			mlx_put_pixel(cub_data->view, screen_pos, i,
+			mlx_put_pixel(cub_data->screen, screen_pos, i,
 				cub_data->map_data->ceiling_color);
 		else if (i > ry.end_draw)
-			mlx_put_pixel(cub_data->view, screen_pos, i,
+			mlx_put_pixel(cub_data->screen, screen_pos, i,
 				cub_data->map_data->floor_color);
 		else
-			mlx_put_pixel(cub_data->view, screen_pos, i, 0x210d91FF);
+			mlx_put_pixel(cub_data->screen, screen_pos, i, 0x210d91FF);
 	}
 	return (EXIT_SUCCESS);
 }

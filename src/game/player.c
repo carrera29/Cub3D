@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:47:14 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 11:32:55 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:03:56 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,18 @@ void	move(t_cub *cub_data, char **map, double dirX, double dirY)
 
 void	rotate(t_cub *cub_data, double rot_speed)
 {
-	cub_data->dir[Y] = (cub_data->dir[X] * sin(rot_speed))
-		+ (cub_data->dir[Y] * cos(rot_speed));
-	cub_data->dir[X] = (cub_data->dir[X] * cos(rot_speed))
-		- (cub_data->dir[Y] * sin(rot_speed));
+	double	old_dir_x;
+	double	old_plane_x;
+
+	old_dir_x = cub_data->dir[X];
+	old_plane_x = cub_data->plane[X];
+
+	cub_data->dir[X] = cub_data->dir[X] * cos(rot_speed)
+		- cub_data->dir[Y] * sin(rot_speed);
+	cub_data->dir[Y] = old_dir_x * sin(rot_speed)
+		+ cub_data->dir[Y] * cos(rot_speed);
 	cub_data->plane[X] = cub_data->plane[X] * cos(rot_speed)
-		- (cub_data->plane[Y] * sin(rot_speed));
-	cub_data->plane[Y] = cub_data->plane[X] * sin(rot_speed)
-		+ (cub_data->plane[Y] * cos(rot_speed));
+		- cub_data->plane[Y] * sin(rot_speed);
+	cub_data->plane[Y] = old_plane_x * sin(rot_speed)
+		+ cub_data->plane[Y] * cos(rot_speed);
 }

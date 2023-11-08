@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 10:48:26 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:43:03 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # define HITBOX					0.03
 # define MOVE_SPEED				5.0
 # define ROTATION_SPEED			2.0
+# define MOUSE_ACC				0.0015
 
 // ELEMENT MASKS
 enum e_element_masks

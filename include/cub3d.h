@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 21:37:34 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/09 00:17:07 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,9 @@ void	move(t_cub *cub_data, char **map, double dirX, double dirY);
 int		mouse_hook(t_cub *cub_data, mlx_t *mlx, double rot_speed);
 void	key_hook(t_cub *cub_data, char **map);
 void	loop_hook(void *param);
+
+	// minimap.c
+int		minimap(t_cub *cub_data);
 
 // other/
 	// debug.c

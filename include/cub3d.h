@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 10:44:13 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:48:26 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,10 @@ int		start_game(t_cub *cub_data);
 
 // raycasting.c
 int		raycasting(t_cub *cub_data);
+
+// player.c
+void	rotate(t_cub *cub_data, double rot_speed);
+void	move(t_cub *cub_data, char **map, double dirX, double dirY);
 
 // other/
 	// debug.c

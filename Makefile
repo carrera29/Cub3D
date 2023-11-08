@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/11/02 17:19:16 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/11/08 10:47:56 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ MINILIBXDIR =	minilibx/
 
 SRCFILES =	$(addprefix $(INITDIR), initialization.c load_from_file.c check_map.c) \
 			$(addprefix $(OTHERDIR), debug.c error.c free_mem.c) \
-			raycasting.c mlx.c main.c
+			raycasting.c mlx.c player.c main.c
 OBJFILES =	$(SRCFILES:.c=.o)
 SRCOBJ =	$(addprefix $(OBJDIR), $(OBJFILES))
 

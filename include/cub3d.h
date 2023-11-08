@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 02:41:08 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:44:13 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 // GAME OPTIONS
 # define FOV					0.90
 # define HITBOX					0.03
+# define MOVE_SPEED				5.0
+# define ROTATION_SPEED			2.0
 
 // ELEMENT MASKS
 enum e_element_masks

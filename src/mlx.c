@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:45:34 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 10:40:27 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/08 10:43:06 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	loop_hook(void *param)
 	t_cub	*cub_data;
 
 	cub_data = param;
-	cub_data->move_speed = cub_data->mlx->delta_time * 5.0;
-	cub_data->rot_speed = cub_data->mlx->delta_time * 2.0;
+	cub_data->move_speed = cub_data->mlx->delta_time * MOVE_SPEED;
+	cub_data->rot_speed = cub_data->mlx->delta_time * ROTATION_SPEED;
 	key_hook(cub_data, cub_data->map_data->map);
 	raycasting(cub_data);
 }

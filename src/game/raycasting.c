@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 23:14:11 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:56:48 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	wall_height(t_ray *ry)
 int	step_by_step(t_ray *ry, char **map)
 {
 	int	hit;
+	int	side;
 
 	hit = 0;
 	while (hit == 0)
@@ -38,17 +39,19 @@ int	step_by_step(t_ray *ry, char **map)
 			ry->side_dist[X] += ry->delta_dist[X];
 			ry->map[X] += ry->step[X];
 			ry->perp_wall_dist = ry->side_dist[X] - ry->delta_dist[X];
+			side = X;
 		}
 		else
 		{
 			ry->side_dist[Y] += ry->delta_dist[Y];
 			ry->map[Y] += ry->step[Y];
 			ry->perp_wall_dist = ry->side_dist[Y] - ry->delta_dist[Y];
+			side = Y;
 		}
 		if (map[ry->map[Y]][ry->map[X]] == WALL)
 			hit = 1;
 	}
-	return (EXIT_SUCCESS);
+	return (side);
 }
 
 int	step_calculator(t_ray *ry, double *pos)
@@ -74,25 +77,6 @@ int	step_calculator(t_ray *ry, double *pos)
 	return (EXIT_SUCCESS);
 }
 
-int	print_screen(t_cub *cub_data, t_ray ry, int screen_pos)
-{
-	int	i;
-
-	i = -1;
-	while (++i < SCREENHEIGHT)
-	{
-		if (i < ry.start_draw)
-			mlx_put_pixel(cub_data->screen, screen_pos, i,
-				cub_data->map_data->ceiling_color);
-		else if (i > ry.end_draw)
-			mlx_put_pixel(cub_data->screen, screen_pos, i,
-				cub_data->map_data->floor_color);
-		else
-			mlx_put_pixel(cub_data->screen, screen_pos, i, 0x210d91FF);
-	}
-	return (EXIT_SUCCESS);
-}
-
 int	raycasting(t_cub *cub_data)
 {
 	t_ray	ry;
@@ -105,7 +89,8 @@ int	raycasting(t_cub *cub_data)
 		ry.raydir[X] = cub_data->dir[X] + cub_data->plane[X] * ry.camera;
 		ry.raydir[Y] = cub_data->dir[Y] + cub_data->plane[Y] * ry.camera;
 		step_calculator(&ry, cub_data->pos);
-		step_by_step(&ry, cub_data->map_data->map);
+		choose_texture(step_by_step(&ry, cub_data->map_data->map),
+			cub_data->pos, &ry);
 		wall_height(&ry);
 		print_screen(cub_data, ry, i);
 	}

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/09 00:17:07 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:57:45 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ enum e_mapchar
 	WALL =		'1'
 };
 
-enum e_textures
+enum e_xpm
 {
 	NORTH_TEX,
 	SOUTH_TEX,
@@ -116,6 +116,7 @@ typedef struct s_ray
 	double			perp_wall_dist;
 	int				start_draw;
 	int				end_draw;
+	int				wall_texture;
 
 }					t_ray;
 
@@ -123,8 +124,7 @@ typedef struct s_cub
 {
 	t_map			*map_data;
 	mlx_t			*mlx;
-	xpm_t			*texture[5];
-	mlx_image_t		*image[5];
+	xpm_t			*xpm[5];
 	mlx_image_t		*screen;
 	int				center[2];
 	double			pos[2];
@@ -154,6 +154,10 @@ int		start_game(t_cub *cub_data);
 
 	// raycasting.c
 int		raycasting(t_cub *cub_data);
+
+	// screen_rendering.c
+int		choose_texture(int side, double *pos, t_ray *ray);
+int		print_screen(t_cub *cub_data, t_ray ry, int screen_pos);
 
 	// player.c
 void	rotate(t_cub *cub_data, double rot_speed);

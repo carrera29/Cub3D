@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/09 19:08:26 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:01:08 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_ray
 	double			delta_dist[2];
 	double			perp_wall_dist;
 	int				side;
+	int				line_height;
 	int				start_draw;
 	int				end_draw;
 	int				wall_texture;

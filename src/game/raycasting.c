@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/09 19:11:46 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:01:33 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 int	wall_height(t_ray *ry)
 {
-	int	line_height;
-
-	line_height = (int)(SCREENHEIGHT / ry->perp_wall_dist);
-	ry->start_draw = (-line_height / 2) + (SCREENHEIGHT / 2);
+	ry->line_height = (int)(SCREENHEIGHT / ry->perp_wall_dist);
+	ry->start_draw = (-ry->line_height / 2) + (SCREENHEIGHT / 2);
 	if (ry->start_draw < 0)
 		ry->start_draw = 0;
-	ry->end_draw = (line_height / 2) + (SCREENHEIGHT / 2);
+	ry->end_draw = (ry->line_height / 2) + (SCREENHEIGHT / 2);
 	if (ry->end_draw >= SCREENHEIGHT)
 		ry->end_draw = SCREENHEIGHT - 1;
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/09 18:50:24 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/09 19:08:26 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,13 @@ typedef struct s_map
 typedef struct s_ray
 {
 	int				step[2];
-	int				map[2];
+	int				ray_pos[2];
 	double			camera;
 	double			raydir[2];
 	double			side_dist[2];
 	double			delta_dist[2];
 	double			perp_wall_dist;
+	int				side;
 	int				start_draw;
 	int				end_draw;
 	int				wall_texture;
@@ -156,7 +157,7 @@ int		start_game(t_cub *cub_data);
 int		raycasting(t_cub *cub_data);
 
 	// screen_rendering.c
-int		choose_texture(int side, double *pos, t_ray *ray);
+int		select_texture(t_ray *ray, double *pos);
 int		render_screen(t_cub *cub_data, t_ray ry, int screen_pos);
 
 	// player.c

@@ -1,13 +1,12 @@
-   R 20000    1000
 
 
 
 
-      NO ./textures/dieren.xpm
-      EA ./textures/pap2.xpm
-      SO ./textures/papegaai.xpm
-  WE ./textures/pap3.xpm
-      S ./sprites/tiger.png
+      NO ../textures/dieren.xpm42
+      EA ../textures/pap2.xpm42
+      SO ../textures/papegaai.xpm42
+  WE ../textures/pap3.xpm42
+      S ../textures/tiger.xpm42
 
      F    9, 36, 23
      C    161, 201, 182

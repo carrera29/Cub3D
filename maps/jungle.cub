@@ -1,8 +1,8 @@
-      NO ./textures/jungle2.xpm42
-      EA ./textures/diertjes.xpm42
-      SO ./textures/plantdonker.xpm42
-  WE ./textures/jungledonker.xpm42
-      S ./textures/tiger.xpm42
+      NO ../textures/jungle2.xpm42
+      EA ../textures/diertjes.xpm42
+      SO ../textures/plantdonker.xpm42
+  WE ../textures/jungledonker.xpm42
+      S ../textures/tiger.xpm42
 
      F    8, 54, 6
      C    101, 133, 161

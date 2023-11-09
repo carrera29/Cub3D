@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/09 14:00:33 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:49:37 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	raycasting(t_cub *cub_data)
 		choose_texture(step_by_step(&ry, cub_data->map_data->map),
 			cub_data->pos, &ry);
 		wall_height(&ry);
-		print_screen(cub_data, ry, i);
+		render_screen(cub_data, ry, i);
 	}
 	return (EXIT_SUCCESS);
 }

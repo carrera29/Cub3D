@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:56:28 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/09 15:39:07 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:50:00 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	render_wall(t_cub *cub_data, t_ray ry, int screen_pos, int i)
 	return (i);
 }
 
-int	print_screen(t_cub *cub_data, t_ray ry, int screen_pos)
+int	render_screen(t_cub *cub_data, t_ray ry, int screen_pos)
 {
 	int	i;
 

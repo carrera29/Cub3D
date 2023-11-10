@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 00:14:59 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/11 00:09:48 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 00:22:16 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ int	minimap(t_cub *cub_data, mlx_t *mlx, t_map *map_data)
 	while (++image_pos[Y] < (int)minimap->height)
 	{
 		image_pos[X] = 0;
-		map_pos[X] = map_data->size[WIDTH] - (cub_data->pos[X] - MINIMAP_TILES / 2.0) - MINIMAP_TILES;
+		map_pos[X] = cub_data->pos[X] + MINIMAP_TILES / 2.0;
 		while (++image_pos[X] < (int)minimap->width)
 		{
 			mlx_put_pixel(minimap, image_pos[X], image_pos[Y], 0x0b5345ff);
 			if (!check_boundaries(map_pos, map_data)
-				&& map_data->map[(int)map_pos[Y]][(int)map_pos[X]] == SPACE)
+				&& map_data->map[(int)map_pos[Y]][(int)map_pos[X]] != WALL)
 				mlx_put_pixel(minimap, image_pos[X], image_pos[Y], 0xfcf3cfff);
 			map_pos[X] -= MINIMAP_TILES / (minimap->width - 1);
 		}

@@ -6,83 +6,78 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 00:14:59 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/10 16:33:25 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 00:09:48 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	draw_grid(mlx_image_t *minimap, int i, int j, int color)
+int	render_minimap_hub(mlx_t *mlx)
 {
-	int	y;
-	int	x;
+	int			it[2];
+	int			thick;
+	mlx_image_t	*hub;
 
-	y = -1;
-	while (++y < GRID_SIZE)
+	hub = mlx_new_image(mlx, SCREENWIDTH / 5, SCREENWIDTH / 5);
+	thick = 5;
+	while (--thick)
 	{
-		x = -1;
-		while (++x < GRID_SIZE)
-			mlx_put_pixel(minimap, x + j * GRID_SIZE, y + i * GRID_SIZE, color);
+		it[X] = 0;
+		while (++it[X] < (int)hub->width)
+		{
+			mlx_put_pixel(hub, it[X], thick, 0xFF);
+			mlx_put_pixel(hub, it[X], hub->width - thick, 0xFF);
+			mlx_put_pixel(hub, thick, it[X], 0xFF);
+			mlx_put_pixel(hub, hub->width - thick, it[X], 0xFF);
+		}
 	}
+	mlx_image_to_window(mlx, hub, SCREENWIDTH * 0.73, SCREENHEIGHT * 0.65);
+	mlx_set_instance_depth(hub->instances, 2);
 	return (EXIT_SUCCESS);
 }
 
-mlx_image_t	*create_minimap(mlx_t *mlx, t_map *map_data)
+mlx_image_t	*init_minimap(mlx_t *mlx)
 {
 	mlx_image_t	*minimap;
-	int			i;
-	int			j;
 
-	minimap = mlx_new_image(mlx, (map_data->size[WIDTH] + EXTRA_GR) * GRID_SIZE,
-			(map_data->size[HEIGHT] + EXTRA_GR) * GRID_SIZE);
-	i = -1;
-	while (++i < (int)minimap->height / GRID_SIZE)
-	{
-		j = -1;
-		while (++j < (int)minimap->width / GRID_SIZE)
-			draw_grid(minimap, i, j, 0x6666FFFF);
-	}
-	i = -1;
-	while (++i < map_data->size[HEIGHT])
-	{
-		j = -1;
-		while (++j < map_data->size[WIDTH])
-			if (map_data->map[i][j] != WALL)
-				draw_grid(minimap, i + EXTRA_GR / 2, minimap->width / GRID_SIZE
-					- (j + EXTRA_GR / 2), 0xFFFF99FF);
-	}
+	minimap = mlx_new_image(mlx, SCREENWIDTH / 5, SCREENWIDTH / 5);
+	mlx_image_to_window(mlx, minimap, SCREENWIDTH * 0.73,
+		SCREENHEIGHT * 0.65);
+	mlx_set_instance_depth(minimap->instances, 1);
 	return (minimap);
 }
 
-int	draw_circle(mlx_image_t *screen)
+int	check_boundaries(double *map_pos, t_map *map_data)
 {
-	int		i;
-	int		j;
-	int		minimap_pos[2];
-	int		radius;
-	double	distance;
-
-	i = -1;
-	radius = 80;
-	minimap_pos[Y] = SCREENHEIGHT / 2;
-	minimap_pos[X] = SCREENWIDTH / 2;
-	while (++i <= 2 * radius)
-	{
-		j = -1;
-		while (++j < 2 * radius)
-		{
-			distance = sqrt((double)(i - radius)*(i - radius)
-					+ (j - radius) * (j - radius));
-			if (distance > radius - 0.5 && distance < radius + 0.5)
-				mlx_put_pixel(screen, minimap_pos[Y] + j,
-					minimap_pos[X] + i, 0xFF000000);
-		}
-	}
-	return (EXIT_SUCCESS);
+	if (map_pos[X] >= map_data->size[WIDTH] || map_pos[X] < 0
+		|| map_pos[Y] >= map_data->size[HEIGHT] || map_pos[Y] < 0)
+		return (true);
+	return (false);
 }
 
-int	minimap(t_cub *cub_data)
+int	minimap(t_cub *cub_data, mlx_t *mlx, t_map *map_data)
 {
-	draw_circle(cub_data->screen);
+	double				map_pos[2];
+	int					image_pos[2];
+	static mlx_image_t	*minimap = 0;
+
+	if (!minimap)
+		minimap = init_minimap(mlx);
+	image_pos[Y] = 0;
+	map_pos[Y] = cub_data->pos[Y] - MINIMAP_TILES / 2.0;
+	while (++image_pos[Y] < (int)minimap->height)
+	{
+		image_pos[X] = 0;
+		map_pos[X] = map_data->size[WIDTH] - (cub_data->pos[X] - MINIMAP_TILES / 2.0) - MINIMAP_TILES;
+		while (++image_pos[X] < (int)minimap->width)
+		{
+			mlx_put_pixel(minimap, image_pos[X], image_pos[Y], 0x0b5345ff);
+			if (!check_boundaries(map_pos, map_data)
+				&& map_data->map[(int)map_pos[Y]][(int)map_pos[X]] == SPACE)
+				mlx_put_pixel(minimap, image_pos[X], image_pos[Y], 0xfcf3cfff);
+			map_pos[X] -= MINIMAP_TILES / (minimap->width - 1);
+		}
+		map_pos[Y] += MINIMAP_TILES / (minimap->height - 1);
+	}
 	return (EXIT_SUCCESS);
 }

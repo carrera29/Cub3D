@@ -6,13 +6,13 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:56:28 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/09 21:40:02 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/10 09:54:55 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_pixel(int pixel_y, uint8_t *pixels, uint32_t width, int pixel_x)
+int	get_pixel(uint8_t *pixels, int pixel_y, uint32_t width, int pixel_x)
 {
 	int	pixel;
 
@@ -42,15 +42,15 @@ int	render_wall(t_cub *cub_data, t_ray ry, int screen_x, int i)
 	int				pixel_x;
 
 	texture = cub_data->xpm[ry.wall_texture]->texture;
-	pixel_x = get_texture_pos(cub_data, ry, texture.width);
 	resize_factor = 1.0 * texture.height / ry.line_height;
+	pixel_x = get_texture_pos(cub_data, ry, texture.width);
 	pixel_y = 0;
 	if (ry.line_height > SCREENHEIGHT)
 		pixel_y += (ry.line_height - SCREENHEIGHT) / 2 * resize_factor;
 	while (++i <= ry.end_draw)
 	{
-		mlx_put_pixel(cub_data->screen, screen_x, i, get_pixel((int)pixel_y,
-				texture.pixels, texture.width * texture.bytes_per_pixel,
+		mlx_put_pixel(cub_data->screen, screen_x, i, get_pixel(texture.pixels,
+				(int)pixel_y, texture.width * texture.bytes_per_pixel,
 				pixel_x * texture.bytes_per_pixel));
 		pixel_y += resize_factor;
 	}
@@ -71,7 +71,7 @@ int	render_screen(t_cub *cub_data, t_ray ry, int screen_x)
 				cub_data->map_data->ceiling_color);
 	}
 	i = ry.start_draw - 1;
-	while (++i < ry.end_draw)
+	while (++i <= ry.end_draw)
 		i = render_wall(cub_data, ry, screen_x, --i);
 	return (EXIT_SUCCESS);
 }

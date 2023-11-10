@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:45:34 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/09 11:53:59 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:27:23 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ int	load_images(t_cub *cub_data, t_map *map_data)
 	while (++i <= SPRITE_TEX)
 		cub_data->xpm[i] = mlx_load_xpm42(map_data->texture_path[i]);
 	cub_data->screen = mlx_new_image(cub_data->mlx, SCREENWIDTH, SCREENHEIGHT);
+	cub_data->minimap = create_minimap(cub_data->mlx, cub_data->map_data);
 	mlx_image_to_window(cub_data->mlx, cub_data->screen, 0, 0);
+	mlx_image_to_window(cub_data->mlx, cub_data->minimap, 400, 400);
+	mlx_set_instance_depth(cub_data->minimap->instances, 0);
+	mlx_set_instance_depth(cub_data->screen->instances, 1);
 	return (EXIT_SUCCESS);
 }
 

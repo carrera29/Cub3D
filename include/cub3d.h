@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/10 10:30:58 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:15:43 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@
 // MINIMAP
 # define GRID_SIZE				20
 # define EXTRA_GR				6
-# define CIRCLE_RADIUS			80
 
 // ELEMENT MASKS
 enum e_element_masks

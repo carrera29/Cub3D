@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 00:14:59 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/10 10:36:44 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:33:25 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,27 @@ mlx_image_t	*create_minimap(mlx_t *mlx, t_map *map_data)
 
 int	draw_circle(mlx_image_t *screen)
 {
-	int	i;
-	int	j;
-	int	minimap_pos[2];
+	int		i;
+	int		j;
+	int		minimap_pos[2];
+	int		radius;
+	double	distance;
 
 	i = -1;
-	j = -1;
-	minimap_pos[X] = SCREENHEIGHT - (SCREENHEIGHT / 4);
-	minimap_pos[Y] = SCREENWIDTH - (SCREENWIDTH / 4);
-	while (++i <= CIRCLE_RADIUS)
+	radius = 80;
+	minimap_pos[Y] = SCREENHEIGHT / 2;
+	minimap_pos[X] = SCREENWIDTH / 2;
+	while (++i <= 2 * radius)
 	{
-		j = -i - 1;
-		while (++j < i)
-			mlx_put_pixel(screen, minimap_pos[Y] + j,
-				minimap_pos[X] + i, 0xFF000000);
+		j = -1;
+		while (++j < 2 * radius)
+		{
+			distance = sqrt((double)(i - radius)*(i - radius)
+					+ (j - radius) * (j - radius));
+			if (distance > radius - 0.5 && distance < radius + 0.5)
+				mlx_put_pixel(screen, minimap_pos[Y] + j,
+					minimap_pos[X] + i, 0xFF000000);
+		}
 	}
 	return (EXIT_SUCCESS);
 }

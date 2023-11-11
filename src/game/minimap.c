@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 00:14:59 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/11 00:22:16 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 15:51:53 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,43 @@ int	check_boundaries(double *map_pos, t_map *map_data)
 	return (false);
 }
 
+int	render_arrow(t_cub *cub_data, mlx_t *mlx, mlx_image_t *minimap)
+{
+	static mlx_image_t	*arrow = 0;
+	double				image_pos[2];
+	int					it[2];
+
+	if (!arrow)
+	{
+		arrow = mlx_new_image(mlx, minimap->width / 5, minimap->height / 5);
+		mlx_image_to_window(mlx, arrow, minimap->instances->x
+			+ (minimap->width - arrow->width) / 2, minimap->instances->y
+			+ (minimap->height - arrow->height) / 2);
+		mlx_set_instance_depth(arrow->instances, 3);
+	}
+	it[0] = -1;
+	while (++it[0] < (int)arrow->height)
+	{
+		it[1] = -1;
+		while (++it[1] < (int)arrow->width)
+			mlx_put_pixel(arrow, it[1], it[0], 0);
+	}
+	it[0] = -1;
+	image_pos[Y] = arrow->height / 2;
+	while (++it[0] < (int)arrow->height / 2)
+	{
+		it[1] = -1;
+		image_pos[X] = arrow->width / 2;
+		while (++it[1] < (int)arrow->width / 2)
+		{
+			mlx_put_pixel(arrow, image_pos[X], image_pos[Y], 0xFF);
+			image_pos[X] -= cub_data->dir[X];
+		}
+		image_pos[Y] += cub_data->dir[Y];
+	}
+	return (EXIT_SUCCESS);
+}
+
 int	minimap(t_cub *cub_data, mlx_t *mlx, t_map *map_data)
 {
 	double				map_pos[2];
@@ -79,5 +116,6 @@ int	minimap(t_cub *cub_data, mlx_t *mlx, t_map *map_data)
 		}
 		map_pos[Y] += MINIMAP_TILES / (minimap->height - 1);
 	}
+	render_arrow(cub_data, mlx, minimap);
 	return (EXIT_SUCCESS);
 }

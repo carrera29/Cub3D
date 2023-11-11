@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:45:34 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/10 16:43:35 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 13:45:31 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	load_images(t_cub *cub_data, t_map *map_data)
 
 int	start_game(t_cub *cub_data)
 {
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	cub_data->mlx = mlx_init(SCREENWIDTH, SCREENHEIGHT, "cub3D", true);
 	if (!cub_data->mlx)
 		(free_all(cub_data), error(MLXINIT_ERROR, false));

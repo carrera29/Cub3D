@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:56:28 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/10 09:54:55 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 01:08:21 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 int	get_pixel(uint8_t *pixels, int pixel_y, uint32_t width, int pixel_x)
 {
 	int	pixel;
+	int	index;
 
-	pixel = pixels[pixel_y * width + pixel_x] << 24
-		| pixels[pixel_y * width + pixel_x + 1] << 16
-		| pixels[pixel_y * width + pixel_x + 2] << 8
-		| pixels[pixel_y * width + pixel_x + 3];
+	index = pixel_y * width + pixel_x;
+	pixel = pixels[index] << 24
+		| pixels[index + 1] << 16
+		| pixels[index + 2] << 8
+		| pixels[index + 3];
 	return (pixel);
 }
 
@@ -34,7 +36,7 @@ int	get_texture_pos(t_cub *cub_data, t_ray ry, int32_t width)
 	return (wall_x * width);
 }
 
-int	render_wall(t_cub *cub_data, t_ray ry, int screen_x, int i)
+int	render_wall(t_cub *cub_data, t_ray ry, int screen_x)
 {
 	mlx_texture_t	texture;
 	double			resize_factor;
@@ -42,19 +44,20 @@ int	render_wall(t_cub *cub_data, t_ray ry, int screen_x, int i)
 	int				pixel_x;
 
 	texture = cub_data->xpm[ry.wall_texture]->texture;
-	resize_factor = 1.0 * texture.height / ry.line_height;
+	resize_factor = 1.0 * texture.height / (ry.line_height + 1);
 	pixel_x = get_texture_pos(cub_data, ry, texture.width);
 	pixel_y = 0;
 	if (ry.line_height > SCREENHEIGHT)
-		pixel_y += (ry.line_height - SCREENHEIGHT) / 2 * resize_factor;
-	while (++i <= ry.end_draw)
+		pixel_y = (ry.line_height - SCREENHEIGHT) / 2 * resize_factor;
+	--ry.start_draw;
+	while (++ry.start_draw <= ry.end_draw)
 	{
-		mlx_put_pixel(cub_data->screen, screen_x, i, get_pixel(texture.pixels,
-				(int)pixel_y, texture.width * texture.bytes_per_pixel,
-				pixel_x * texture.bytes_per_pixel));
+		mlx_put_pixel(cub_data->screen, screen_x, ry.start_draw,
+			get_pixel(texture.pixels, (int)pixel_y, texture.width
+				* texture.bytes_per_pixel, pixel_x * texture.bytes_per_pixel));
 		pixel_y += resize_factor;
 	}
-	return (i);
+	return (EXIT_SUCCESS);
 }
 
 int	render_screen(t_cub *cub_data, t_ray ry, int screen_x)
@@ -70,9 +73,7 @@ int	render_screen(t_cub *cub_data, t_ray ry, int screen_x)
 			mlx_put_pixel(cub_data->screen, screen_x, i,
 				cub_data->map_data->ceiling_color);
 	}
-	i = ry.start_draw - 1;
-	while (++i <= ry.end_draw)
-		i = render_wall(cub_data, ry, screen_x, --i);
+	render_wall(cub_data, ry, screen_x);
 	return (EXIT_SUCCESS);
 }
 

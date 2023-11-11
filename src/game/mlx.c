@@ -6,13 +6,13 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:45:34 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/11 13:45:31 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:08:35 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_screen_center(int *center, mlx_t *mlx)
+static int	get_screen_center(int *center, mlx_t *mlx)
 {
 	int32_t	window_x;
 	int32_t	window_y;
@@ -23,7 +23,7 @@ int	get_screen_center(int *center, mlx_t *mlx)
 	return (EXIT_SUCCESS);
 }
 
-int	load_images(t_cub *cub_data, t_map *map_data)
+static int	load_images(t_cub *cub_data, t_map *map_data)
 {
 	int	i;
 

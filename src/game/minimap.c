@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 00:14:59 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/11 15:51:53 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:14:46 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,39 +36,14 @@ int	render_minimap_hub(mlx_t *mlx)
 	return (EXIT_SUCCESS);
 }
 
-mlx_image_t	*init_minimap(mlx_t *mlx)
-{
-	mlx_image_t	*minimap;
-
-	minimap = mlx_new_image(mlx, SCREENWIDTH / 5, SCREENWIDTH / 5);
-	mlx_image_to_window(mlx, minimap, SCREENWIDTH * 0.73,
-		SCREENHEIGHT * 0.65);
-	mlx_set_instance_depth(minimap->instances, 1);
-	return (minimap);
-}
-
-int	check_boundaries(double *map_pos, t_map *map_data)
-{
-	if (map_pos[X] >= map_data->size[WIDTH] || map_pos[X] < 0
-		|| map_pos[Y] >= map_data->size[HEIGHT] || map_pos[Y] < 0)
-		return (true);
-	return (false);
-}
-
 int	render_arrow(t_cub *cub_data, mlx_t *mlx, mlx_image_t *minimap)
 {
-	static mlx_image_t	*arrow = 0;
-	double				image_pos[2];
-	int					it[2];
+	static mlx_image_t		*arrow = 0;
+	double					image_pos[2];
+	int						it[2];
 
 	if (!arrow)
-	{
-		arrow = mlx_new_image(mlx, minimap->width / 5, minimap->height / 5);
-		mlx_image_to_window(mlx, arrow, minimap->instances->x
-			+ (minimap->width - arrow->width) / 2, minimap->instances->y
-			+ (minimap->height - arrow->height) / 2);
-		mlx_set_instance_depth(arrow->instances, 3);
-	}
+		arrow = init_arrow(mlx, minimap);
 	it[0] = -1;
 	while (++it[0] < (int)arrow->height)
 	{
@@ -76,23 +51,21 @@ int	render_arrow(t_cub *cub_data, mlx_t *mlx, mlx_image_t *minimap)
 		while (++it[1] < (int)arrow->width)
 			mlx_put_pixel(arrow, it[1], it[0], 0);
 	}
-	it[0] = -1;
-	image_pos[Y] = arrow->height / 2;
-	while (++it[0] < (int)arrow->height / 2)
+	it[0] = arrow->width / 2 - 1;
+	image_pos[X] = 0;
+	while (++it[0] < (int)arrow->width)
 	{
-		it[1] = -1;
-		image_pos[X] = arrow->width / 2;
-		while (++it[1] < (int)arrow->width / 2)
-		{
-			mlx_put_pixel(arrow, image_pos[X], image_pos[Y], 0xFF);
-			image_pos[X] -= cub_data->dir[X];
-		}
-		image_pos[Y] += cub_data->dir[Y];
+		image_pos[Y] = image_pos[X] * (cub_data->dir[Y] / -cub_data->dir[X]);
+		if (!cub_data->dir[X])
+			image_pos[Y] = (arrow->width / 2 - it[0]) * -cub_data->dir[Y];
+		mlx_put_pixel(arrow, image_pos[X] + (arrow->width / 2),
+			image_pos[Y] + (arrow->width / 2), 0xFF);
+		image_pos[X] -= cub_data->dir[X];
 	}
 	return (EXIT_SUCCESS);
 }
 
-int	minimap(t_cub *cub_data, mlx_t *mlx, t_map *map_data)
+int	render_minimap(t_cub *cub_data, mlx_t *mlx, t_map *map_data)
 {
 	double				map_pos[2];
 	int					image_pos[2];

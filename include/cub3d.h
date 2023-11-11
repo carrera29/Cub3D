@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/11 01:11:38 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:15:57 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 // GAME OPTIONS
 # define FOV					0.90
 # define HITBOX					0.7
-# define MOVE_SPEED				5.0
+# define MOVE_SPEED				4.0
 # define ROTATION_SPEED			2.0
 # define MOUSE_ACC				0.0015
 
@@ -143,49 +143,53 @@ typedef struct s_cub
 
 // init/
 	// check_map.c
-int		check_map(t_map *map_data);
+int			check_map(t_map *map_data);
 
 	// initialization.c
-t_map	*load_map_data(int fd);
-t_cub	*initialization(char *file);
+t_map		*load_map_data(int fd);
+t_cub		*initialization(char *file);
 
 	// load_from_file.c
-char	**load_map(int fd);
-void	load_texture_filename(char **texture, char *line);
-void	load_rgb_color(int *color, char *line);
+char		**load_map(int fd);
+void		load_texture_filename(char **texture, char *line);
+void		load_rgb_color(int *color, char *line);
 
 // game/
 	// mlx.c
-int		start_game(t_cub *cub_data);
+int			start_game(t_cub *cub_data);
 
 	// raycasting.c
-int		raycasting(t_cub *cub_data);
+int			raycasting(t_cub *cub_data);
 
 	// screen_rendering.c
-int		select_texture(t_ray *ray, double *pos);
-int		render_screen(t_cub *cub_data, t_ray ry, int screen_pos);
+int			select_texture(t_ray *ray, double *pos);
+int			render_screen(t_cub *cub_data, t_ray ry, int screen_pos);
 
 	// player.c
-void	rotate(t_cub *cub_data, double rot_speed);
-void	move(t_cub *cub_data, char **map, double dirX, double dirY);
+void		rotate(t_cub *cub_data, double rot_speed);
+void		move(t_cub *cub_data, char **map, double dirX, double dirY);
 
 	// hooks.c
-int		mouse_hook(t_cub *cub_data, mlx_t *mlx, double rot_speed);
-void	key_hook(t_cub *cub_data, char **map);
-void	loop_hook(void *param);
+int			mouse_hook(t_cub *cub_data, mlx_t *mlx, double rot_speed);
+void		key_hook(t_cub *cub_data, char **map);
+void		loop_hook(void *param);
 
 	// minimap.c
-int		minimap(t_cub *cub_data, mlx_t *mlx, t_map *map_data);
-int		render_minimap_hub(mlx_t *mlx);
+int			render_minimap(t_cub *cub_data, mlx_t *mlx, t_map *map_data);
+int			render_minimap_hub(mlx_t *mlx);
 
+	// minimap_utils.c
+mlx_image_t	*init_minimap(mlx_t *mlx);
+mlx_image_t	*init_arrow(mlx_t *mlx, mlx_image_t *minimap);
+int			check_boundaries(double *map_pos, t_map *map_data);
 // other/
 	// debug.c
-void	print_data(t_cub *cub_data);
+void		print_data(t_cub *cub_data);
 
 	// error.c
-void	error(const char *msg, int perror_function);
+void		error(const char *msg, int perror_function);
 
 	// free_mem.c
-void	free_all(t_cub *cub_data);
+void		free_all(t_cub *cub_data);
 
 #endif

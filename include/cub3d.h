@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/11 20:15:57 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:45:05 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 // GAME OPTIONS
 # define FOV					0.90
 # define HITBOX					0.7
-# define MOVE_SPEED				4.0
+# define MOVE_SPEED				3.0
 # define ROTATION_SPEED			2.0
 # define MOUSE_ACC				0.0015
 

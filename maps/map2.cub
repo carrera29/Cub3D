@@ -2,11 +2,11 @@
 
 
 
-      NO ./textures/bricks.xpm
-      EA ./textures/bricks.xpm
-      SO ./textures/sample.xpm
-  WE ./textures/wood.xpm
-      S ./sprites/tiger.png
+      NO ../textures/bricks.xpm42
+      EA ../textures/bricks.xpm42
+      SO ../textures/sample.xpm42
+  WE ../textures/wood.xpm42
+      S ../textures/wood.xpm42
 
      F    102, 79, 120
      C    160, 200, 222

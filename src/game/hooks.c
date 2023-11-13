@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:13:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/11 20:08:14 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:28:44 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	key_hook(t_cub *cub_data, char **map)
 {
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(cub_data->mlx);
+	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_LEFT_SHIFT))
+		cub_data->move_speed += 0.1;
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_W))
 		move(cub_data, map, cub_data->dir[X], cub_data->dir[Y]);
 	if (mlx_is_key_down(cub_data->mlx, MLX_KEY_A))

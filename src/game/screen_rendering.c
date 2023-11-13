@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:56:28 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/13 17:50:37 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:31:05 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int	get_pixel(uint8_t *pixels, int pixel_y, uint32_t width, int pixel_x)
 	return (pixel);
 }
 
-int	get_texture_pos(t_cub *cub_data, t_ray ry, int32_t width)
+double	get_texture_pos(t_cub *cub_data, t_ray ry)
 {
 	double	wall_x;
 
 	wall_x = cub_data->pos[ry.side ^ 1]
 		+ ry.perp_wall_dist * ry.raydir[ry.side ^ 1];
 	wall_x = fmod(wall_x, 1);
-	return (wall_x * width);
+	return (wall_x);
 }
 
 int	render_wall(t_cub *cub_data, t_ray ry, int screen_x)
@@ -44,7 +44,7 @@ int	render_wall(t_cub *cub_data, t_ray ry, int screen_x)
 
 	texture = cub_data->xpm[ry.wall_texture]->texture;
 	resize_factor = 1.0 * texture.height / (ry.line_height + 1);
-	pixel_x = get_texture_pos(cub_data, ry, texture.width);
+	pixel_x = get_texture_pos(cub_data, ry) * texture.width;
 	pixel_y = 0;
 	if (ry.line_height > SCREENHEIGHT)
 		pixel_y = (ry.line_height - SCREENHEIGHT) / 2 * resize_factor;
@@ -78,6 +78,8 @@ int	render_screen(t_cub *cub_data, t_ray ry, int screen_x)
 
 int	select_texture(t_ray *ray, double *pos)
 {
+	if (ray->wall_texture)
+		return (EXIT_FAILURE);
 	if (ray->side == X)
 	{
 		if (ray->ray_pos[X] > pos[X])

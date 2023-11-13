@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/13 13:17:31 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:33:22 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,7 @@ enum e_xpm
 	WEST_TEX,
 	EAST_TEX,
 	SPRITE_TEX,
-	FLOOR_TEX,
-	CEILING_TEX
+	DOOR_TEX
 };
 
 typedef struct s_map
@@ -130,7 +129,7 @@ typedef struct s_cub
 {
 	t_map			*map_data;
 	mlx_t			*mlx;
-	xpm_t			*xpm[5];
+	xpm_t			*xpm[6];
 	mlx_image_t		*screen;
 	mlx_image_t		*minimap;
 	int				center[2];

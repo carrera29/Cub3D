@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/11/13 13:26:13 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:00:40 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	load_texture_filename(char **texture, char *line)
 {
 	int	test_fd;
 
-	*texture = ft_strdup(ft_strnstr(line, "./", ft_strlen(line)));
+	*texture = ft_strdup(ft_strchr(line, '.'));
 	if (ft_strncmp(ft_strrchr(*texture, '.'), ".xpm42\0", 7))
 		error(TEXTURESYNTAX_ERROR, false);
 	test_fd = open(*texture, O_RDONLY);

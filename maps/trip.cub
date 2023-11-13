@@ -2,11 +2,11 @@
 
 
 
-      NO ../textures/trip5.xpm42
-      EA ../textures/trip2.xpm42
-      SO ../textures/trip3.xpm42
-  WE ../textures/trip4.xpm42
-      S ../textures/trip4.xpm42
+      NO ./textures/trip5.xpm42
+      EA ./textures/trip2.xpm42
+      SO ./textures/trip3.xpm42
+  WE ./textures/trip4.xpm42
+      S ./textures/trip4.xpm42
 
      F    38, 38, 38
      C    209, 209, 209

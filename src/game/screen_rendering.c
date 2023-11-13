@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:56:28 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/13 16:21:25 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/13 17:50:37 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ int	get_texture_pos(t_cub *cub_data, t_ray ry, int32_t width)
 {
 	double	wall_x;
 
-	wall_x = cub_data->pos[X] + ry.perp_wall_dist * ry.raydir[X];
-	if (ry.side == X)
-		wall_x = cub_data->pos[Y] + ry.perp_wall_dist * ry.raydir[Y];
+	wall_x = cub_data->pos[ry.side ^ 1]
+		+ ry.perp_wall_dist * ry.raydir[ry.side ^ 1];
 	wall_x = fmod(wall_x, 1);
 	return (wall_x * width);
 }

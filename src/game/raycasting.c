@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/13 20:31:43 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/13 21:08:10 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ int	step_by_step(t_cub *cub_data, t_ray *ry, char **map)
 		}
 		if (map[ry->ray_pos[Y]][ry->ray_pos[X]] == WALL)
 			hit = 1;
-		if (map[ry->ray_pos[Y]][ry->ray_pos[X]] == DOOR)
+		if (map[ry->ray_pos[Y]][ry->ray_pos[X]] == DOOR
+			&& ry->side_dist[ry->side ^ 1] > ry->delta_dist[ry->side]
+			* (ry->ray_pos[ry->side] - cub_data->pos[ry->side]
+			+ 0.5 * ry->step[ry->side]))
 		{
 			ry->wall_texture = DOOR_TEX;
 			hit = 1;

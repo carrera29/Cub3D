@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/10/31 20:26:32 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:26:13 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**load_map(int fd)
 			(free(line), line = get_next_line(fd));
 			continue ;
 		}
-		is_map = ft_strtrim(line, "NSEW01 ");
+		is_map = ft_strtrim(line, "NSEW01D ");
 		if (*is_map != '\n' && *is_map)
 			error(ELEM_ERROR, false);
 		free(is_map);

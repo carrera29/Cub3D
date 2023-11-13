@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:56:28 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/13 14:02:07 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:21:25 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	render_screen(t_cub *cub_data, t_ray ry, int screen_x)
 			mlx_put_pixel(cub_data->screen, screen_x, i,
 				cub_data->map_data->ceiling_color);
 	}
-
 	render_wall(cub_data, ry, screen_x);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/13 13:41:50 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:25:19 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,21 @@ int	step_by_step(t_ray *ry, char **map)
 	{
 		if (ry->side_dist[X] < ry->side_dist[Y])
 		{
+			ry->perp_wall_dist = ry->side_dist[X];
 			ry->side_dist[X] += ry->delta_dist[X];
 			ry->ray_pos[X] += ry->step[X];
-			ry->perp_wall_dist = ry->side_dist[X] - ry->delta_dist[X];
 			ry->side = X;
 		}
 		else
 		{
+			ry->perp_wall_dist = ry->side_dist[Y];
 			ry->side_dist[Y] += ry->delta_dist[Y];
 			ry->ray_pos[Y] += ry->step[Y];
-			ry->perp_wall_dist = ry->side_dist[Y] - ry->delta_dist[Y];
 			ry->side = Y;
 		}
 		if (map[ry->ray_pos[Y]][ry->ray_pos[X]] == WALL
 			|| map[ry->ray_pos[Y]][ry->ray_pos[X]] == DOOR)
 			hit = 1;
-		if (map[ry->ray_pos[Y]][ry->ray_pos[X]] == DOOR)
-			ry->perp_wall_dist += ry->delta_dist[Y] / 2;
 	}
 	return (EXIT_SUCCESS);
 }

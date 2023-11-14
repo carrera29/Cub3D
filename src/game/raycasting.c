@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/14 13:17:33 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:50:06 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,18 @@ int	raycasting_doors(t_ray *ry, double *pos)
 int	step_by_step(t_ray *ry, char **map, double *pos)
 {
 	int	hit;
+	int	index;
 
 	hit = 0;
 	while (hit == 0)
 	{
+		index = Y;
 		if (ry->side_dist[X] < ry->side_dist[Y])
-		{
-			ry->perp_wall_dist = ry->side_dist[X];
-			ry->side_dist[X] += ry->delta_dist[X];
-			ry->ray_pos[X] += ry->step[X];
-			ry->side = X;
-		}
-		else
-		{
-			ry->perp_wall_dist = ry->side_dist[Y];
-			ry->side_dist[Y] += ry->delta_dist[Y];
-			ry->ray_pos[Y] += ry->step[Y];
-			ry->side = Y;
-		}
+			index = X;
+		ry->perp_wall_dist = ry->side_dist[index];
+		ry->side_dist[index] += ry->delta_dist[index];
+		ry->ray_pos[index] += ry->step[index];
+		ry->side = index;
 		if (map[ry->ray_pos[Y]][ry->ray_pos[X]] == WALL)
 			hit = 1;
 		if (map[ry->ray_pos[Y]][ry->ray_pos[X]] == DOOR)

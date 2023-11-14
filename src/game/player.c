@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:47:14 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/14 13:28:59 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:33:33 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,16 @@
 void	move(t_cub *cub_data, char **map, double dirX, double dirY)
 {
 	if (dirX > 0 && fmod(cub_data->pos[X], 1) > HITBOX
-		&& (map[(int)cub_data->pos[Y]][(int)cub_data->pos[X] + 1] == WALL
-		|| map[(int)cub_data->pos[Y]][(int)cub_data->pos[X] + 1] == DOOR))
+		&& map[(int)cub_data->pos[Y]][(int)cub_data->pos[X] + 1] != SPACE)
 		dirX = 0;
 	if (dirX < 0 && fmod(cub_data->pos[X], 1) < 1 - HITBOX
-		&& (map[(int)cub_data->pos[Y]][(int)cub_data->pos[X] - 1] == WALL
-		|| map[(int)cub_data->pos[Y]][(int)cub_data->pos[X] - 1] == DOOR))
+		&& map[(int)cub_data->pos[Y]][(int)cub_data->pos[X] - 1] != SPACE)
 		dirX = 0;
 	if (dirY > 0 && fmod(cub_data->pos[Y], 1) > HITBOX
-		&& (map[(int)cub_data->pos[Y] + 1][(int)cub_data->pos[X]] == WALL
-		|| map[(int)cub_data->pos[Y] + 1][(int)cub_data->pos[X]] == DOOR))
+		&& map[(int)cub_data->pos[Y] + 1][(int)cub_data->pos[X]] != SPACE)
 		dirY = 0;
 	if (dirY < 0 && fmod(cub_data->pos[Y], 1) < 1 - HITBOX
-		&& (map[(int)cub_data->pos[Y] - 1][(int)cub_data->pos[X]] == WALL
-		|| map[(int)cub_data->pos[Y] - 1][(int)cub_data->pos[X]] == DOOR))
+		&& map[(int)cub_data->pos[Y] - 1][(int)cub_data->pos[X]] != SPACE)
 		dirY = 0;
 	cub_data->pos[X] += dirX * cub_data->move_speed;
 	cub_data->pos[Y] += dirY * cub_data->move_speed;

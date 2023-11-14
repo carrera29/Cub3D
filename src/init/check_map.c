@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 01:06:41 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/08 22:01:57 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:37:24 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	check_initial_pos(t_map *map_data, char **map)
 {
 	int			y;
 	int			x;
-	static int	space_count;
+	static int	space_count = 0;
 
 	y = -1;
 	while (map[++y])
@@ -108,6 +108,7 @@ int	check_map(t_map *map_data)
 		map_data->map);
 	rearrange_map(map_data->map, map_data->size[WIDTH]);
 	check_initial_pos(map_data, map_data->map);
+	map_data->map[map_data->initial_pos[Y]][map_data->initial_pos[X]] = SPACE;
 	if (!check_walls(map_data->map, map_data->size,
 			map_data->initial_pos[X], map_data->initial_pos[Y]))
 		error(WALL_ERROR, false);

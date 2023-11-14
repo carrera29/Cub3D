@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/13 21:08:10 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:17:33 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,20 @@ int	wall_height(t_ray *ry)
 	return (EXIT_SUCCESS);
 }
 
-int	step_by_step(t_cub *cub_data, t_ray *ry, char **map)
+int	raycasting_doors(t_ray *ry, double *pos)
+{
+	if (ry->side_dist[ry->side ^ 1] > fabs(ry->delta_dist[ry->side]
+			* (ry->ray_pos[ry->side] - pos[ry->side] + 0.5)))
+	{
+		ry->wall_texture = DOOR_TEX;
+		ry->perp_wall_dist += ry->delta_dist[ry->side] / 2;
+		return (true);
+	}
+	ry->wall_texture = DOORJAM_TEX;
+	return (false);
+}
+
+int	step_by_step(t_ray *ry, char **map, double *pos)
 {
 	int	hit;
 
@@ -47,22 +60,9 @@ int	step_by_step(t_cub *cub_data, t_ray *ry, char **map)
 		}
 		if (map[ry->ray_pos[Y]][ry->ray_pos[X]] == WALL)
 			hit = 1;
-		if (map[ry->ray_pos[Y]][ry->ray_pos[X]] == DOOR
-			&& ry->side_dist[ry->side ^ 1] > ry->delta_dist[ry->side]
-			* (ry->ray_pos[ry->side] - cub_data->pos[ry->side]
-			+ 0.5 * ry->step[ry->side]))
-		{
-			ry->wall_texture = DOOR_TEX;
-			hit = 1;
-			ry->perp_wall_dist += ry->delta_dist[ry->side] / 2;
-		}
-		// printf("side_dist = (%.2f, %.2f), side = %c, perp_dist = %.2f,"
-		// 	"pos = (%.2f, %.2f) door_pos = (%d, %d), delta_dis = (%.2f, %.2f)\n",
-		// 	ry->side_dist[X], ry->side_dist[Y], ry->side == X ? 'X' : 'Y',
-		// 	ry->perp_wall_dist, cub_data->pos[X], cub_data->pos[Y],
-		// 	ry->ray_pos[X], ry->ray_pos[Y], ry->delta_dist[X], ry->delta_dist[Y]);
+		if (map[ry->ray_pos[Y]][ry->ray_pos[X]] == DOOR)
+			hit = raycasting_doors(ry, pos);
 	}
-	(void) cub_data;
 	return (EXIT_SUCCESS);
 }
 
@@ -104,7 +104,7 @@ int	raycasting(t_cub *cub_data)
 		ry.raydir[X] = cub_data->dir[X] + cub_data->plane[X] * ry.camera;
 		ry.raydir[Y] = cub_data->dir[Y] + cub_data->plane[Y] * ry.camera;
 		step_calculator(&ry, cub_data->pos);
-		step_by_step(cub_data, &ry, cub_data->map_data->map);
+		step_by_step(&ry, cub_data->map_data->map, cub_data->pos);
 		select_texture(&ry, cub_data->pos);
 		wall_height(&ry);
 		render_screen(cub_data, ry, i);

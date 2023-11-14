@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:13:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/13 16:28:44 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:59:03 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,5 @@ void	loop_hook(void *param)
 	mouse_hook(cub_data, cub_data->mlx, cub_data->rot_speed);
 	raycasting(cub_data);
 	render_minimap(cub_data, cub_data->mlx, cub_data->map_data);
+	open_doors(cub_data, cub_data->pos, cub_data->map_data->map);
 }

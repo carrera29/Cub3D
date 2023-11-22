@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/16 19:49:23 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:46:24 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int			start_game(t_cub *cub_data);
 int			raycasting(t_cub *cub_data);
 
 	// screen_rendering.c
-int			select_texture(t_ray *ray, double *pos);
+int			select_texture(t_ray *ray, double *pos, char **map);
 int			render_screen(t_cub *cub_data, t_ray ry, int screen_pos);
 
 	// player.c

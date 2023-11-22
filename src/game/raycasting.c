@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/16 18:10:19 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:51:33 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	raycasting(t_cub *cub_data)
 		ry.raydir[Y] = cub_data->dir[Y] + cub_data->plane[Y] * ry.camera;
 		step_calculator(&ry, cub_data->pos);
 		step_by_step(&ry, cub_data->map_data->map, cub_data->pos);
-		select_texture(&ry, cub_data->pos);
+		select_texture(&ry, cub_data->pos, cub_data->map_data->map);
 		wall_height(&ry);
 		render_screen(cub_data, ry, i);
 	}

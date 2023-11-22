@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:56:28 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/16 17:59:04 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/22 23:21:49 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,27 @@ int	render_screen(t_cub *cub_data, t_ray ry, int screen_x)
 	return (EXIT_SUCCESS);
 }
 
-int	select_texture(t_ray *ray, double *pos)
+int	select_texture(t_ray *ray, double *pos, char **map)
 {
+	const int	table[4][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
+
 	if (ray->wall_texture)
 		return (EXIT_FAILURE);
 	if (ray->side == X)
 	{
+		ray->wall_texture = EAST_TEX;
 		if (ray->ray_pos[X] > pos[X])
 			ray->wall_texture = WEST_TEX;
-		else
-			ray->wall_texture = EAST_TEX;
 	}
 	else if (ray->side == Y)
 	{
+		ray->wall_texture = NORTH_TEX;
 		if (ray->ray_pos[Y] > pos[Y])
 			ray->wall_texture = SOUTH_TEX;
-		else
-			ray->wall_texture = NORTH_TEX;
 	}
+	if (map[(int)pos[Y] + table[ray->wall_texture][Y]]
+		[(int)pos[X] + table[ray->wall_texture][X]] == DOOR
+		&& map[ray->ray_pos[Y]][ray->ray_pos[X]] == DOOR)
+		ray->wall_texture = DOORJAM_TEX;
 	return (EXIT_SUCCESS);
 }

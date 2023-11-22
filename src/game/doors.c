@@ -6,11 +6,32 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:43:53 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/16 20:09:23 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:14:23 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	check_door(t_cub *cub_data, int door_trigger[][1024],
+	double door_state[][1024], int *it)
+{
+	if (door_trigger[it[Y]][it[X]] == false && door_state[it[Y]][it[X]])
+				door_state[it[Y]][it[X]] -= cub_data->door_speed;
+	else if (door_trigger[it[Y]][it[X]] == true
+		|| door_state[it[Y]][it[X]] > false)
+		door_state[it[Y]][it[X]] += cub_data->door_speed;
+	if (door_state[it[Y]][it[X]] < false)
+	{
+		cub_data->map_data->map[it[Y]][it[X]] = DOOR;
+		door_state[it[Y]][it[X]] = false;
+	}
+	else if (door_state[it[Y]][it[X]] >= true)
+	{
+		cub_data->map_data->map[it[Y]][it[X]] = SPACE;
+		door_state[it[Y]][it[X]] = true;
+	}
+	return (EXIT_SUCCESS);
+}
 
 int	check_doors_state(t_cub *cub_data, int door_trigger[][1024], int *size)
 {
@@ -22,17 +43,7 @@ int	check_doors_state(t_cub *cub_data, int door_trigger[][1024], int *size)
 	{
 		it[X] = -1;
 		while (++it[X] < size[WIDTH])
-		{
-			if (door_trigger[it[Y]][it[X]] == false && door_state[it[Y]][it[X]])
-				door_state[it[Y]][it[X]] -= cub_data->door_speed;
-			else if (door_trigger[it[Y]][it[X]] == true
-				|| door_state[it[Y]][it[X]])
-				door_state[it[Y]][it[X]] += cub_data->door_speed;
-			if (door_state[it[Y]][it[X]] < false)
-				cub_data->map_data->map[it[Y]][it[X]] = DOOR;
-			else if (door_state[it[Y]][it[X]] >= true)
-				cub_data->map_data->map[it[Y]][it[X]] = SPACE;
-		}
+			check_door(cub_data, door_trigger, door_state, it);
 	}
 	return (EXIT_SUCCESS);
 }

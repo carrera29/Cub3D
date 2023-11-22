@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/14 16:31:19 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:10:19 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,19 @@ int	wall_height(t_ray *ry)
 
 int	raycasting_doors(t_ray *ry, double *pos)
 {
-	if (ry->side_dist[ry->side ^ 1] < fabs(ry->delta_dist[ry->side]
-			* (ry->ray_pos[ry->side] - pos[ry->side] + 0.5)))
-	{
+	double	door_distance;
+
+	door_distance = fabs(ry->delta_dist[ry->side]
+			* (ry->ray_pos[ry->side] - pos[ry->side] + 0.5));
+	if (ry->side_dist[ry->side ^ 1] < door_distance)
 		ry->wall_texture = DOORJAM_TEX;
-		return (false);
+	else if (fabs(ry->side_dist[ry->side ^ 1] - door_distance) > 0.0001)
+	{
+		ry->wall_texture = DOOR_TEX;
+		ry->perp_wall_dist += ry->delta_dist[ry->side] / 2;
+		return (true);
 	}
-	ry->wall_texture = DOOR_TEX;
-	ry->perp_wall_dist += ry->delta_dist[ry->side] / 2;
-	return (true);
+	return (false);
 }
 
 int	step_by_step(t_ray *ry, char **map, double *pos)

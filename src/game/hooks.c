@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 17:13:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/14 15:59:03 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:46:16 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ void	loop_hook(void *param)
 	cub_data = param;
 	cub_data->move_speed = cub_data->mlx->delta_time * MOVE_SPEED;
 	cub_data->rot_speed = cub_data->mlx->delta_time * ROTATION_SPEED;
+	cub_data->door_speed = cub_data->mlx->delta_time * DOOR_SPEED;
 	key_hook(cub_data, cub_data->map_data->map);
 	mouse_hook(cub_data, cub_data->mlx, cub_data->rot_speed);
 	raycasting(cub_data);
 	render_minimap(cub_data, cub_data->mlx, cub_data->map_data);
-	open_doors(cub_data, cub_data->pos, cub_data->map_data->map);
+	door_animation(cub_data, cub_data->pos, cub_data->map_data->map);
 }

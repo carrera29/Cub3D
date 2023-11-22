@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 10:47:14 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/14 16:28:48 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:44:39 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,3 @@ void	rotate(t_cub *cub_data, double rot_speed)
 	cub_data->plane[Y] = old_plane_x * sin(rot_speed)
 		+ cub_data->plane[Y] * cos(rot_speed);
 }
-
-void	open_doors(t_cub *cub_data, double *pos, char **map)
-{
-	if ((fmod(cub_data->pos[X], 1) > HITBOX
-			&& map[(int)pos[Y]][(int)pos[X] + 1] == DOOR)
-			|| (fmod(cub_data->pos[X], 1) < 1 - HITBOX
-			&& map[(int)pos[Y]][(int)pos[X] - 1] == DOOR)
-			|| (fmod(cub_data->pos[Y], 1) > HITBOX
-			&& map[(int)pos[Y] + 1][(int)pos[X]] == DOOR)
-			|| (fmod(cub_data->pos[Y], 1) < 1 - HITBOX
-			&& map[(int)pos[Y] - 1][(int)pos[X]] == DOOR))
-			cub_data->door_speed = 0;
-}
-

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/24 16:52:06 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:25:23 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ enum e_mapchar
 	WEST =		'W',
 	SPACE =		'0',
 	WALL =		'1',
-	DOOR =		'D'
+	DOOR =		'D',
+	OP_DOOR =	'O'
 };
 
 enum e_door

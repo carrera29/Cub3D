@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:43:53 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/24 17:07:21 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:25:44 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_door(int door_trigger, double *door_state,
 		*door_state = WAIT_DOOR;
 	*map_char = DOOR;
 	if (*door_state == OPEN_DOOR)
-		*map_char = SPACE;
+		*map_char = OP_DOOR;
 	printf("door_state = %.2f\n", *door_state);
 	return (EXIT_SUCCESS);
 }
@@ -54,16 +54,20 @@ void	door_animation(t_cub *cub_data, double *pos, char **map)
 
 	ft_memset(door_trigger, 0, sizeof(door_trigger));
 	if (fmod(cub_data->pos[X], 1) > HITBOX
-		&& map[(int)pos[Y]][(int)pos[X] + 1] == DOOR)
+		&& (map[(int)pos[Y]][(int)pos[X] + 1] == DOOR
+		|| map[(int)pos[Y]][(int)pos[X] + 1] == OP_DOOR))
 		door_trigger[(int)pos[Y]][(int)pos[X] + 1] = true;
 	if (fmod(cub_data->pos[X], 1) < 1 - HITBOX
-		&& map[(int)pos[Y]][(int)pos[X] - 1] == DOOR)
+		&& (map[(int)pos[Y]][(int)pos[X] - 1] == DOOR
+		|| map[(int)pos[Y]][(int)pos[X] - 1] == OP_DOOR))
 		door_trigger[(int)pos[Y]][(int)pos[X] - 1] = true;
 	if (fmod(cub_data->pos[Y], 1) > HITBOX
-		&& map[(int)pos[Y] + 1][(int)pos[X]] == DOOR)
+		&& (map[(int)pos[Y] + 1][(int)pos[X]] == DOOR
+		|| map[(int)pos[Y] + 1][(int)pos[X]] == OP_DOOR))
 		door_trigger[(int)pos[Y] + 1][(int)pos[X]] = true;
 	if (fmod(cub_data->pos[Y], 1) < 1 - HITBOX
-		&& map[(int)pos[Y] - 1][(int)pos[X]] == DOOR)
+		&& (map[(int)pos[Y] - 1][(int)pos[X]] == DOOR
+		|| map[(int)pos[Y] - 1][(int)pos[X]] == OP_DOOR))
 		door_trigger[(int)pos[Y] - 1][(int)pos[X]] = true;
 	check_doors_state(cub_data, door_trigger, cub_data->map_data->size);
 }

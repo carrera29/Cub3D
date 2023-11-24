@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:43:53 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/24 17:25:44 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:53:10 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	check_doors_state(t_cub *cub_data, int door_trigger[][1024], int *size)
 	{
 		it[X] = -1;
 		while (++it[X] < size[WIDTH])
-			if (cub_data->map_data->map[it[Y]][it[X]] == DOOR)
+			if (cub_data->map_data->map[it[Y]][it[X]] == DOOR
+				|| cub_data->map_data->map[it[Y]][it[X]] == OP_DOOR)
 				check_door(door_trigger[it[Y]][it[X]],
 					&door_state[it[Y]][it[X]], cub_data->door_speed,
 					&cub_data->map_data->map[it[Y]][it[X]]);
@@ -69,5 +70,7 @@ void	door_animation(t_cub *cub_data, double *pos, char **map)
 		&& (map[(int)pos[Y] - 1][(int)pos[X]] == DOOR
 		|| map[(int)pos[Y] - 1][(int)pos[X]] == OP_DOOR))
 		door_trigger[(int)pos[Y] - 1][(int)pos[X]] = true;
+	if (map[(int)pos[Y]][(int)pos[X]] == OP_DOOR)
+		door_trigger[(int)pos[Y]][(int)pos[X]] = true;
 	check_doors_state(cub_data, door_trigger, cub_data->map_data->size);
 }

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:37:46 by pollo             #+#    #+#             */
-/*   Updated: 2023/11/13 17:00:40 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:43:00 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	load_rgb_color(int *color, char *line)
 		|| rgb[2] < 0 || rgb[2] > 255 || (!rgb[2] && *rgb_str[2] != '0'))
 		error(RGB_ERROR, false);
 	*color = (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | 0xFF);
-	ft_freedp(rgb_str);
+	ft_freedp((void **)rgb_str, 0);
 }
 
 char	**load_map(int fd)

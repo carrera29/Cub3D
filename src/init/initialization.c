@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:17:04 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/09 12:50:20 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:46:13 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,7 @@ t_cub	*initialization(char *file)
 	init_vct(cub_data->map_data->initial_dir, cub_data->dir, cub_data->plane);
 	cub_data->pos[X] = cub_data->map_data->initial_pos[X] + 0.5;
 	cub_data->pos[Y] = cub_data->map_data->initial_pos[Y] + 0.5;
+	cub_data->door_state = (double **)ft_callocdp(cub_data->map_data
+			->size[HEIGHT], cub_data->map_data->size[WIDTH], sizeof(double));
 	return (cub_data);
 }

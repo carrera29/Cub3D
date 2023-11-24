@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:17:14 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/14 13:40:01 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:49:14 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	free_all(t_cub *cub_data)
 		return ;
 	}
 	if (cub_data->map_data->map)
-		ft_freedp(cub_data->map_data->map);
+		ft_freedp((void **)cub_data->map_data->map, 0);
+	if (cub_data->door_state)
+		ft_freedp((void **)cub_data->door_state,
+			cub_data->map_data->size[HEIGHT]);
 	i = -1;
 	while (++i <= SPRITE_TEX)
 	{

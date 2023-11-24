@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/24 17:25:23 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:33:23 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ typedef struct s_cub
 	xpm_t			*xpm[7];
 	mlx_image_t		*screen;
 	mlx_image_t		*minimap;
+	double			**door_state;
 	int				center[2];
 	double			pos[2];
 	double			dir[2];

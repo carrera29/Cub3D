@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:43:53 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/24 18:14:42 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:41:32 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ int	check_door(int door_trigger, double *door_state,
 	return (EXIT_SUCCESS);
 }
 
-int	check_doors_state(t_cub *cub_data, int door_trigger[][1024], int *size)
+int	check_doors_state(t_cub *cub_data, int **door_trigger, int *size)
 {
-	static double	door_state[1024][1024];
-	int				it[2];
+	int	it[2];
 
 	it[Y] = -1;
 	while (++it[Y] < size[HEIGHT])
@@ -43,7 +42,7 @@ int	check_doors_state(t_cub *cub_data, int door_trigger[][1024], int *size)
 			if (cub_data->map_data->map[it[Y]][it[X]] == DOOR
 				|| cub_data->map_data->map[it[Y]][it[X]] == OP_DOOR)
 				check_door(door_trigger[it[Y]][it[X]],
-					&door_state[it[Y]][it[X]], cub_data->door_speed,
+					&cub_data->door_state[it[Y]][it[X]], cub_data->door_speed,
 					&cub_data->map_data->map[it[Y]][it[X]]);
 	}
 	return (EXIT_SUCCESS);
@@ -51,9 +50,10 @@ int	check_doors_state(t_cub *cub_data, int door_trigger[][1024], int *size)
 
 void	door_animation(t_cub *cub_data, double *pos, char **map)
 {
-	int	door_trigger[1024][1024];
+	int	**door_trigger;
 
-	ft_memset(door_trigger, 0, sizeof(door_trigger));
+	door_trigger = (int **)ft_callocdp(cub_data->map_data->size[HEIGHT],
+			cub_data->map_data->size[WIDTH], sizeof(int));
 	if (fmod(cub_data->pos[X], 1) > HITBOX
 		&& (map[(int)pos[Y]][(int)pos[X] + 1] == DOOR
 		|| map[(int)pos[Y]][(int)pos[X] + 1] == OP_DOOR))
@@ -73,4 +73,5 @@ void	door_animation(t_cub *cub_data, double *pos, char **map)
 	if (map[(int)pos[Y]][(int)pos[X]] == OP_DOOR)
 		door_trigger[(int)pos[Y]][(int)pos[X]] = true;
 	check_doors_state(cub_data, door_trigger, cub_data->map_data->size);
+	ft_freedp((void **)door_trigger, cub_data->map_data->size[HEIGHT]);
 }

@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/24 18:17:43 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:57:57 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int	raycasting_doors(t_ray *ry, double *pos)
 
 	door_distance = fabs(ry->delta_dist[ry->side]
 			* (ry->ray_pos[ry->side] - pos[ry->side] + 0.5));
-	if (ry->side_dist[ry->side ^ 1] < door_distance)
-		ry->wall_texture = DOORJAM_TEX;
-	else if (fabs(ry->side_dist[ry->side ^ 1] - door_distance) > 0.0001)
+	if (ry->side_dist[ry->side ^ 1] > door_distance)
 	{
 		ry->wall_texture = DOOR_TEX;
 		ry->perp_wall_dist += ry->delta_dist[ry->side] / 2;

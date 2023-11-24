@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:56:28 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/22 23:21:49 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:54:02 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,10 @@ int	select_texture(t_ray *ray, double *pos, char **map)
 		if (ray->ray_pos[Y] > pos[Y])
 			ray->wall_texture = SOUTH_TEX;
 	}
-	if (map[(int)pos[Y] + table[ray->wall_texture][Y]]
-		[(int)pos[X] + table[ray->wall_texture][X]] == DOOR
-		&& map[ray->ray_pos[Y]][ray->ray_pos[X]] == DOOR)
+	if (map[ray->ray_pos[Y] + table[ray->wall_texture][Y]]
+		[ray->ray_pos[X] + table[ray->wall_texture][X]] == DOOR
+		|| map[ray->ray_pos[Y] + table[ray->wall_texture][Y]]
+		[ray->ray_pos[X] + table[ray->wall_texture][X]] == OP_DOOR)
 		ray->wall_texture = DOORJAM_TEX;
 	return (EXIT_SUCCESS);
 }

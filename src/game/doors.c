@@ -6,30 +6,27 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:43:53 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/22 20:14:23 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:07:21 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_door(t_cub *cub_data, int door_trigger[][1024],
-	double door_state[][1024], int *it)
+int	check_door(int door_trigger, double *door_state,
+	double door_speed, char *map_char)
 {
-	if (door_trigger[it[Y]][it[X]] == false && door_state[it[Y]][it[X]])
-				door_state[it[Y]][it[X]] -= cub_data->door_speed;
-	else if (door_trigger[it[Y]][it[X]] == true
-		|| door_state[it[Y]][it[X]] > false)
-		door_state[it[Y]][it[X]] += cub_data->door_speed;
-	if (door_state[it[Y]][it[X]] < false)
-	{
-		cub_data->map_data->map[it[Y]][it[X]] = DOOR;
-		door_state[it[Y]][it[X]] = false;
-	}
-	else if (door_state[it[Y]][it[X]] >= true)
-	{
-		cub_data->map_data->map[it[Y]][it[X]] = SPACE;
-		door_state[it[Y]][it[X]] = true;
-	}
+	if (door_trigger && *door_state == WAIT_DOOR)
+		*door_state = OPENING_DOOR;
+	if (*door_state >= OPENING_DOOR)
+		*door_state += door_speed;
+	if (*door_state >= OPEN_DOOR && door_trigger)
+		*door_state = OPEN_DOOR;
+	if (*door_state >= CLOSING_DOOR)
+		*door_state = WAIT_DOOR;
+	*map_char = DOOR;
+	if (*door_state == OPEN_DOOR)
+		*map_char = SPACE;
+	printf("door_state = %.2f\n", *door_state);
 	return (EXIT_SUCCESS);
 }
 
@@ -43,7 +40,10 @@ int	check_doors_state(t_cub *cub_data, int door_trigger[][1024], int *size)
 	{
 		it[X] = -1;
 		while (++it[X] < size[WIDTH])
-			check_door(cub_data, door_trigger, door_state, it);
+			if (cub_data->map_data->map[it[Y]][it[X]] == DOOR)
+				check_door(door_trigger[it[Y]][it[X]],
+					&door_state[it[Y]][it[X]], cub_data->door_speed,
+					&cub_data->map_data->map[it[Y]][it[X]]);
 	}
 	return (EXIT_SUCCESS);
 }

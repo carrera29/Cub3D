@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/22 20:46:24 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 16:52:06 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,10 @@ enum e_mapchar
 
 enum e_door
 {
-	CLOSED_DOOR,
+	WAIT_DOOR,
 	OPENING_DOOR,
-	OPEN_DOOR
+	OPEN_DOOR,
+	CLOSING_DOOR
 };
 
 enum e_xpm

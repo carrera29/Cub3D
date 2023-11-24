@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:08:03 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/24 17:26:24 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:17:43 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,12 @@ int	step_calculator(t_ray *ry, double *pos)
 	{
 		ry->delta_dist[i] = fabs(1 / ry->raydir[i]);
 		ry->ray_pos[i] = (int)pos[i];
+		ry->step[i] = 1;
+		ry->side_dist[i] = (ry->ray_pos[i] + 1 - pos[i]) * ry->delta_dist[i];
 		if (ry->raydir[i] < 0)
 		{
 			ry->step[i] = -1;
 			ry->side_dist[i] = (pos[i] - ry->ray_pos[i])
-				* ry->delta_dist[i];
-		}
-		else
-		{
-			ry->step[i] = 1;
-			ry->side_dist[i] = (ry->ray_pos[i] + 1 - pos[i])
 				* ry->delta_dist[i];
 		}
 	}

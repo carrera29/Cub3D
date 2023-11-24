@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:43:53 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/24 17:53:10 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:14:42 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	check_door(int door_trigger, double *door_state,
 		*door_state = OPENING_DOOR;
 	if (*door_state >= OPENING_DOOR)
 		*door_state += door_speed;
-	if (*door_state >= OPEN_DOOR && door_trigger)
+	if (*door_state >= OPEN_DOOR
+		&& *door_state <= OPEN_DOOR + door_speed && door_trigger)
 		*door_state = OPEN_DOOR;
 	if (*door_state >= CLOSING_DOOR)
 		*door_state = WAIT_DOOR;
 	*map_char = DOOR;
 	if (*door_state == OPEN_DOOR)
 		*map_char = OP_DOOR;
-	printf("door_state = %.2f\n", *door_state);
 	return (EXIT_SUCCESS);
 }
 

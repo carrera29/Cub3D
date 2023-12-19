@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:17:04 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/24 19:46:13 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/12/19 18:12:20 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*trim(char *line)
 {
 	char	*trim_line;
 
-	if (*line == '\n')
+	if (!line || *line == '\n')
 		return (line);
 	trim_line = ft_strtrim(line, " \n");
 	free(line);

@@ -3,22 +3,19 @@
 rm -rf *.txt
 make -C ..
 
-if [ -z $1 ]
-then
-	exit
-fi
 
-{ for invalid_map in "$1/"*
+for invalid_map in *
 	do
 	echo -n "$invalid_map: "
-	if [ -z $(../cub3D $invalid_map 2>&1 | grep "Error") ]
+	output="$(../cub3D $invalid_map 2>&1)"
+	if [ -z "$(echo $output | grep "Error")" ]
 	then
 		echo ×
 		echo "$invalid_map:" >> error.txt
 		echo >> error.txt
-		cat $invalid_map | sed '1,7d' >> error.txt
+		cat $invalid_map >> error.txt
 		echo >> error.txt
 	else
-		echo ✓
+		echo "✓ ${output#*$'\n'}"
 	fi
-done }
+done

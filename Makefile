@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/11/16 18:45:57 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/12/19 15:46:13 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ all: $(NAME)
 debug: CFLAGS += -g
 debug: WERROR =
 debug: MINILIBXDEBUG = -DDEBUG=1
+debug: LIBFLAGS += -fsanitize=address
 debug: re
 
 $(NAME): $(SRCOBJ)

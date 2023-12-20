@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/24 19:33:23 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/12/20 12:13:55 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # define MAPNOTVALID_ERROR		"Map content not valid"
 
 # define MLXINIT_ERROR			"MLX initialization failed"
-
 
 // RESOLUTION
 # define SCREENWIDTH			1024

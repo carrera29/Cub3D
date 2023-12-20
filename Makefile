@@ -6,7 +6,7 @@
 #    By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/04 18:57:22 by fmarin-p          #+#    #+#              #
-#    Updated: 2023/12/19 15:46:13 by fmarin-p         ###   ########.fr        #
+#    Updated: 2023/12/20 13:31:55 by fmarin-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ LIBFTDIR =		libft/
 MINILIBXDIR =	minilibx/
 
 SRCFILES =	$(addprefix $(INITDIR), initialization.c load_from_file.c check_map.c) \
-			$(addprefix $(OTHERDIR), debug.c error.c free_mem.c) \
+			$(addprefix $(OTHERDIR), error.c free_mem.c) \
 			$(addprefix $(GAMEDIR), raycasting.c mlx.c player.c hooks.c \
 			minimap.c minimap_utils.c screen_rendering.c doors.c) \
 			main.c
@@ -49,22 +49,25 @@ SRCOBJ =	$(addprefix $(OBJDIR), $(OBJFILES))
 all: $(NAME)
 
 debug: CFLAGS += -g
-debug: WERROR =
-debug: MINILIBXDEBUG = -DDEBUG=1
-debug: LIBFLAGS += -fsanitize=address
+debug: WERROR :=
+debug: MINILIBXDEBUG := -DDEBUG=1
+debug: 
+ifeq ($(UNAME_S), Darwin)
+	LIBFLAGS += -fsanitize=address
+endif
 debug: re
-
+	
 $(NAME): $(SRCOBJ)
-	cmake $(MINILIBXDIR) $(MINILIBXDEBUG) -DGLFW_FETCH=1 -B $(MINILIBXDIR)build
-	cmake --build $(MINILIBXDIR)build -j4 
+	@cmake $(MINILIBXDIR) $(MINILIBXDEBUG) -DGLFW_FETCH=1 -B $(MINILIBXDIR)build > /dev/null
+	cmake --build $(MINILIBXDIR)build -j4
 	$(MAKE) -C $(LIBFTDIR)
 	gcc $^ $(LIBFLAGS) -o $@
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
-	mkdir -p $(OBJDIR)
-	mkdir -p $(OBJDIR)$(INITDIR)
-	mkdir -p $(OBJDIR)$(OTHERDIR)
-	mkdir -p $(OBJDIR)$(GAMEDIR)
+	@mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)$(INITDIR)
+	@mkdir -p $(OBJDIR)$(OTHERDIR)
+	@mkdir -p $(OBJDIR)$(GAMEDIR)
 	gcc -c $(CFLAGS) $^ -o $@
 
 clean:

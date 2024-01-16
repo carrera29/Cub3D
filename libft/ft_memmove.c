@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmarin-p <fmarin-p@student.42madrid>       +#+  +:+       +#+        */
+/*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 12:45:24 by fmarin-p          #+#    #+#             */
-/*   Updated: 2022/03/29 15:26:29 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:23:20 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	{
 		while (len--)
 			*((char *)dst + len) = *((char *)src + len);
-	*(char *)dst = *(char *)src;
+		*(char *)dst = *(char *)src;
 	}
 	return (p);
 }

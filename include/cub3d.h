@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:16:33 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/12/19 18:43:25 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:07:30 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 
 // ERROR MESAGGES
 # define USAGE_ERROR			"Usage: ./cub3D [.cub extension map]"
-
 # define RGB_ERROR				"Bad syntax for RGB color(s)"
 # define EXT_ERROR				"Extension not valid"
 # define EMPTYFILE_ERROR		"Empty file"
@@ -32,7 +31,6 @@
 # define TEXTUREPATH_ERROR		"Texture(s) path not valid"
 # define WALL_ERROR				"Map walls not closed"
 # define MAPNOTVALID_ERROR		"Map content not valid"
-
 # define MLXINIT_ERROR			"MLX initialization failed"
 
 // RESOLUTION
@@ -43,6 +41,7 @@
 # define FOV					0.90
 # define HITBOX					0.7
 # define MOVE_SPEED				3.0
+# define SPRINT_SPEED			0.05
 # define ROTATION_SPEED			2.0
 # define MOUSE_ACC				0.0015
 # define DOOR_SPEED				0.8
@@ -183,7 +182,6 @@ void		move(t_cub *cub_data, char **map, double dirX, double dirY);
 
 	// hooks.c
 int			mouse_hook(t_cub *cub_data, mlx_t *mlx, double rot_speed);
-void		key_hook(t_cub *cub_data, char **map);
 void		loop_hook(void *param);
 
 	// minimap.c

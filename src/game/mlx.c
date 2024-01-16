@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:45:34 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/11/14 13:16:48 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:05:42 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	start_game(t_cub *cub_data)
 	load_images(cub_data, cub_data->map_data);
 	get_screen_center(cub_data->center, cub_data->mlx);
 	mlx_set_cursor_mode(cub_data->mlx, MLX_MOUSE_HIDDEN);
-	mlx_set_mouse_pos(cub_data->mlx, cub_data->center[X], cub_data->center[Y]);
 	mlx_loop_hook(cub_data->mlx, loop_hook, cub_data);
 	mlx_loop(cub_data->mlx);
 	mlx_terminate(cub_data->mlx);

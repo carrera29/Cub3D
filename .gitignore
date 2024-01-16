@@ -1,6 +1,7 @@
 .DS_Store
 *.log
 *.o
+*.a
 *.txt
 cub3D*
 .vscode

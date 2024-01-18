@@ -1,0 +1,14 @@
+NO        ./textures/bricks.xpm42
+F 250,10,10
+S     ./textures/brick.xpm42
+C                  45,30,0
+SO        ./textures/trip4.xpm42
+WE        ./textures/wood.xpm42
+EA ./textures/plant.xpm42
+
+11111
+10001
+10W01
+10001
+11111
+

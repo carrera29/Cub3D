@@ -6,7 +6,7 @@
 /*   By: fmarin-p <fmarin-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 12:56:28 by fmarin-p          #+#    #+#             */
-/*   Updated: 2023/12/20 13:16:24 by fmarin-p         ###   ########.fr       */
+/*   Updated: 2024/01/18 13:55:53 by fmarin-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int	select_texture(t_ray *ray, double *pos, char **map)
 		return (EXIT_FAILURE);
 	if (ray->side == X)
 	{
-		ray->wall_texture = EAST_TEX;
+		ray->wall_texture = WEST_TEX;
 		if (ray->ray_pos[X] > pos[X])
-			ray->wall_texture = WEST_TEX;
+			ray->wall_texture = EAST_TEX;
 	}
 	else if (ray->side == Y)
 	{

@@ -1,4 +1,4 @@
-# cub3d - My First RayCaster with miniLibX - ✅Grade 105/100
+# cub3d - RayCasting - ✅Grade 105/100
 
 #### Grade rating
 - ✅ = Okay project
